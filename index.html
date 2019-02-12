@@ -1,17 +1,79 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <title>Example</title>
+      <title>Tic Tac Toe</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
       <!-- Do not add `link` tags-->
-      <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+      <link rel="shortcut icon" type="image/x-icon" href="public/images/favicon.png">
 
       <!-- Do not add `script` tags-->
       <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
       <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
     </head>
     <body>
-      <h1>Browser Template</h1>
+      <header>
+        <h1 class="heading">Tic Tac Toe</h1>
+        <span id="user-feedback"></span>
+
+      </header>
+      <main class="game-options">
+        <div id="game-options-panel" class="form">
+          <span class="development">this form is visible by default, but is
+            replaced by game board after form is submitted</span>
+          <h2>Game Options</h2>
+          <form id="optionsForm">
+
+            <div class="form-entry">
+              <label>Do you want play a live opponent, or against a computer?</label>
+              <span class="option-group">
+                <input name="options[mode]" id="opt-mode-live" type="radio" value="live" />
+                <label for="mode-live">Live</label>
+                <input name="options[mode]" id="opt-mode-ai" type="radio" value="ai" checked />
+                <label for="mode-ai">Computer</label>
+              </span>
+            </div>
+            <div id="human-player-select" class="form-entry dependant">
+              <label>Do you want to play X or O?</label>
+              <span class="option-group">
+                <input name="options[player]" id="opt-player-x" type="radio" value="X" checked />
+                <label for="player-x">X</label>
+                <input name="options[player]" id="opt-player-o" type="radio" value="O" />
+                <label for="player-o">O</label>
+              </span>
+            </div>
+            <div class="form-entry">
+              <label>Size of Game Board</label>
+              <select name="options[size]" id="select-board-size">
+                <option value="3">3 x 3</option>
+                <option value="4">4 x 4</option>
+                <option value="5">5 x 5</option>
+                <option value="6">6 x 6</option>
+              </select>
+            </div>
+            <input type="submit" value="Start Game" class="submit">
+          </form>
+        </div>
+
+        <div id="game-board-panel" class="panel">
+          <aside class="info">
+            <div id="player-info">
+              Player <span id="player-name"></span>
+            </div>
+          </aside>
+          <div id="GameBoard" data-size="3"></div>
+
+          <div id="game-controls" class="control-panel">
+            <button id="reset-button">Reset</button>
+            <button id="options-button">Options</button>
+          </div>
+
+        </div>
+      </main>
+
+      <footer>
+        <span class="development todo">make this look better</span>
+        <span class="copyright">&copy; 2019</span>
+      </footer>
     </body>
 </html>
