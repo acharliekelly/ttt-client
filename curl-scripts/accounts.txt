@@ -1,0 +1,3 @@
+This is just to keep track of accounts I created in the development API
+
+ID: 9, EMAIL: 'me@domain.com', PASSWORD: 'password'
