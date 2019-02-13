@@ -7,10 +7,19 @@
 // require('./example')
 
 const gameEvents = require('./game/events')
+const authUi = require('./auth/ui')
 // const players = require('./game/player')
 
 $(() => {
-  // // TODO: base these options on the dependant entry class
+  $('.panel').hide()
+
+  $('#options-btn').on('click', function () {
+    $('.panel').hide()
+    $('#game-options-panel').show()
+  })
+  $('#auth-btn').on('click', authUi.showAuthPanel)
+  $('#game-btn').on('click', gameEvents.onShowGameBoard)
+
   $('#opt-players-both').on('click', function () {
     $('#human-player-select').hide()
   })

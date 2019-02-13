@@ -17,13 +17,18 @@
         <span id="user-feedback"></span>
 
       </header>
-      <main class="game-options">
-        <div id="game-options-panel" class="form">
-          <span class="development">this form is visible by default, but is
-            replaced by game board after form is submitted</span>
+      <main >
+        <div class="buttons">
+          <button id="options-btn">Options</button>
+          <button id="auth-btn">Login</button>
+          <button id="game-btn">Game</button>
+        </div>
+
+        <!-- Options Panel  -->
+        <div id="game-options-panel" class="form panel">
+
           <h2>Game Options</h2>
           <form id="optionsForm">
-
             <div class="form-entry">
               <label>Do you want play a live opponent, or against a computer?</label>
               <span class="option-group">
@@ -55,10 +60,42 @@
           </form>
         </div>
 
+        <!-- Login Panel  -->
+        <div id="auth-panel" class="panel">
+          <div class="auth-buttons" >
+            <button id="login-button" class="no-token">Log In</button>
+            <button id="signup-button" class="no-token">Sign Up</button>
+            <button id="changepw-button" class="auth-token">Change Password</button>
+            <button id="signout-button" class="auth-token">Sign Out</button>
+          </div>
+
+          <form id="authentication-form">
+            <label for="email-field">Email: </label>
+            <input id="email-field" name="credentials[email]" type="email">
+
+            <label for="password-field">Password</label>
+            <input id="password-field" name="credentials[password]" type="password">
+
+            <label for="password-conf-field">Confirm Password: </label>
+            <input id="password-conf-field" name="credentials[password_confirmation]" type="password">
+
+            <label for="old-password-field">Old Password: </label>
+            <input id="old-password-field" name="passwords[old]" type="password">
+
+            <label for="new-password-field">New Password: </label>
+            <input id="new-password-field" name="passwords[new]" type="password">
+            <input id="submit-button" type="submit">
+          </form>
+
+        </div>
+
         <div id="game-board-panel" class="panel">
           <aside class="info">
             <div id="player-info">
               Player <span id="player-name"></span>
+            </div>
+            <div id="player-stats">
+              <span class="todo">Player statistics go here</span>
             </div>
           </aside>
           <div id="GameBoard" data-size="3"></div>
@@ -72,7 +109,7 @@
       </main>
 
       <footer>
-        <span class="development todo">make this look better</span>
+        <span class="todo">make this look better</span>
         <span class="copyright">&copy; 2019</span>
       </footer>
     </body>
