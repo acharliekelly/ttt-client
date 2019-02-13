@@ -1,15 +1,16 @@
 'use strict'
 
 const players = require('./player')
+const winning = require('./winning')
 
-const drawBoard = function (size) {
-  console.log('drawing board: ' + size + ' x ' + size + ' squares')
+const BOARD_SIZE = 3 // originally planned to make this arbitrary
 
+const drawBoard = function () {
   $('#GameBoard').html('')
 
-  for (let col = 0; col < size; col++) {
+  for (let col = 0; col < BOARD_SIZE; col++) {
     let colStr = '<div class="column">'
-    for (let row = 0; row < size; row++) {
+    for (let row = 0; row < BOARD_SIZE; row++) {
       colStr += `<span id="cell-${col}-${row}" class="square">`
       colStr += '<img src="public/images/x.png" alt="X" class="x">'
       colStr += '<img src="public/images/o.png" alt="O" class="o">'
@@ -18,21 +19,37 @@ const drawBoard = function (size) {
     colStr += '</div>'
     $('#GameBoard').append(colStr)
   }
-  $('#GameBoard').attr('data-size', size)
 }
 
 const showWinner = function (player) {
   console.log('displaying winner: Player ' + player.name)
   // TODO: set div class to player.winClass
+
   userMessage(`Player ${player} Wins!`)
+
+  // TODO: submit win stats to API
+  gameOver()
+}
+
+const showStalemate = function () {
+  console.log('no winner')
+  // TODO: display draw
+  userMessage('No winner')
+  gameOver()
+}
+
+const gameOver = function () {
+  $('#GameBoard .square').off('click')
 }
 
 const showOptions = function () {
-  $('main').removeClass().addClass('game-options')
+  $('.panel').hide()
+  $('#game-options-panel').show()
 }
 
 const showGameBoard = function () {
-  $('main').removeClass().addClass('game-board')
+  $('.panel').hide()
+  $('#game-board-panel').show()
 }
 
 const userMessage = function (message) {
@@ -64,7 +81,14 @@ const errorMessage = function (message) {
 }
 
 const nextTurn = function () {
-  initTurn(players.nextPlayerTurn())
+  const p = players.getCurrentPlayer()
+  if (winning.checkForWin(p)) {
+    showWinner(p)
+  } else if (winning.checkForDraw()) {
+    showStalemate()
+  } else { // proceed with next turn
+    initTurn(players.nextPlayerTurn())
+  }
 }
 
 const initTurn = function (player) {
@@ -87,5 +111,6 @@ module.exports = {
   errorMessage,
   failure,
   nextTurn,
-  initGame
+  initGame,
+  gameOver
 }

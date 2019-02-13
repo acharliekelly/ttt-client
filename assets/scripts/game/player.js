@@ -9,14 +9,6 @@ const Player = function (name, color, imageFile) {
   this.image = imageFile
 }
 
-const getImage = function (player) {
-  return `<img src="${player.image}" class="${player.name}" alt="${player.name}>"`
-}
-
-const getSizedImage = function (player, size) {
-  return `<img src="${player.image}" class="${player.name}" alt="${player.name} width="${size}">"`
-}
-
 const playerX = new Player('x', '#f00', 'public/images/x.png')
 const playerO = new Player('o', '#00f', 'public/images/o.png')
 const gamePlayers = [playerX, playerO]
@@ -34,7 +26,5 @@ const nextPlayerTurn = function () {
 
 module.exports = {
   getCurrentPlayer,
-  nextPlayerTurn,
-  getImage,
-  getSizedImage
+  nextPlayerTurn
 }
