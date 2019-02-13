@@ -6,36 +6,32 @@ const showAuthPanel = () => {
   $('.panel').hide()
   $('#auth-panel').show()
   $('#authentication-form').hide()
-  if (store.user) {
-    $('#auth-panel .auth-token').show().on('click', showAuthForm)
-    $('#auth-panel .no-token').hide()
-  } else {
-    $('#auth-panel .auth-token').hide()
-    $('#auth-panel .no-token').show().on('click', showAuthForm)
-  }
+  $('#auth-panel .auth-token').toggle(store.user)
+  $('#auth-panel .no-token').toggle(!store.user)
+  $('#auth-panel .auth-buttons button').on('click', showAuthForm)
 }
 
 const showAuthForm = (event) => {
   const btn = event.target.id
   const operation = btn.replace(/-button/, '')
-  $('#authentication-form input').hide()
+  $('#authentication-form .field-enclosure').hide()
 
   if (operation !== 'signout') {
     $('#submit-button').show()
     $('#authentication-form').show()
     switch (operation) {
       case 'signup':
-        $('#email-field').show()
-        $('#password-field').show()
-        $('#password-conf-field').show()
+        $('#email-field-enclosure').show()
+        $('#password-field-enclosure').show()
+        $('#password-conf-field-enclosure').show()
         break
       case 'login':
-        $('#email-field').show()
-        $('#password-field').show()
+        $('#email-field-enclosure').show()
+        $('#password-field-enclosure').show()
         break
       case 'changepw':
-        $('#old-password-field').show()
-        $('#new-password-field').show()
+        $('#old-password-field-enclosure').show()
+        $('#new-password-field-enclosure').show()
     }
   }
 }

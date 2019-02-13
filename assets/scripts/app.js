@@ -6,33 +6,18 @@
 // use require without a reference to ensure a file is bundled
 // require('./example')
 
-const gameEvents = require('./game/events')
+const events = require('./tic/events')
 const authUi = require('./auth/ui')
-// const players = require('./game/player')
+const options = require('./tic/options')
 
 $(() => {
-  $('.panel').hide()
+  // $('.panel').hide() // hidden by CSS
+  // show login form if no token exists
 
-  $('#options-btn').on('click', function () {
-    $('.panel').hide()
-    $('#game-options-panel').show()
-  })
   $('#auth-btn').on('click', authUi.showAuthPanel)
-  $('#game-btn').on('click', gameEvents.onShowGameBoard)
+  $('#game-btn').on('click', events.onShowGameBoard)
+  $('#options-btn').on('click', options.onOptions)
 
-  $('#opt-players-both').on('click', function () {
-    $('#human-player-select').hide()
-  })
-  $('#opt-players-computer').on('click', function () {
-    $('#human-player-select').show()
-  })
-
-  $('#optionsForm').on('submit', gameEvents.onOptionSubmit)
-  //
-  $('#reset-button').on('click', function () {
-    const size = $('#GameBoard').attr('data-size')
-    gameEvents.onReset(size)
-  })
-
-  $('#options-button').on('click', gameEvents.onOptions)
+  // put this somewhere else
+  $('#reset-button').on('click', events.onReset)
 })
