@@ -1,15 +1,15 @@
 
 /* Game Board */
 
-$square-size: 150px;
-$square-gutter: 10px;
+$square-size: 20vh;
+$square-gutter: 1vh;
 
 #GameBoard {
   display: flex;
   justify-content: center;
   margin-top: 1em;
 	padding: 3px;
-  min-height: ($square-size + ($square-gutter * 2)) * 3;
+  min-height: ($square-size + ($square-gutter*2)) * 3;
 
   .column {
     display: flex;
@@ -20,9 +20,9 @@ $square-gutter: 10px;
       border: 2px solid #000;
       display: block;
       text-align: center;
-      width: 148px;
-      height: 148px;
-      margin: 20px;
+      width: $square-size;
+      height: $square-size;
+      margin: $square-gutter;
       background-color: transparent;
     }
   }
@@ -30,6 +30,8 @@ $square-gutter: 10px;
 
 .square img {
   display: none;
+  width: 100%;
+  height: 100%;
 }
 .square.x img.x {
   display: block;
@@ -59,6 +61,6 @@ $square-gutter: 10px;
 .x-turn #player-turn {
   color: #f00;
 }
-.o-turn #player-name {
+.o-turn #player-turn {
   color: #00f;
 }

@@ -1,7 +1,7 @@
 @import '~bootstrap/scss/bootstrap';
 
 @import 'colors';
-@import 'form';
+//@import 'form';
 @import 'layout';
 @import 'game';
 @import 'theme';
@@ -41,4 +41,6 @@
   color: #000;
   padding: 5px 10px;
   font-size: 18px;
+  width: 40vw;
+  margin: 1vh auto;
 }
