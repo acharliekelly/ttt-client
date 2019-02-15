@@ -1,116 +1,173 @@
 <!DOCTYPE html>
 <html>
-    <head>
-      <title>Tic Tac Toe</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <title>Tic Tac Toe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      <!-- Do not add `link` tags-->
-      <link rel="shortcut icon" type="image/x-icon" href="public/images/favicon.png">
+    <!-- Do not add `link` tags-->
+    <link rel="shortcut icon" type="image/x-icon" href="public/images/favicon.png">
 
-      <!-- Do not add `script` tags-->
-      <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
-      <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
-    </head>
-    <body>
-      <header>
-        <h1 class="heading">Tic Tac Toe</h1>
-        <span id="user-feedback"></span>
+    <!-- Do not add `script` tags-->
+    <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+    <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Tic Tac Toe</h1>
+      <div id="userMessage">User Message</div>
 
-      </header>
-      <main >
-        <div class="buttons">
-          <button id="options-btn">Options</button>
-          <button id="auth-btn">Login</button>
-          <button id="game-btn">Game</button>
-        </div>
-
-        <!-- Options Panel  -->
-        <div id="game-options-panel" class="form panel">
-
-          <h2>Game Options</h2>
-          <form id="optionsForm">
-            <div class="form-entry">
-              <label>Do you want play a live opponent, or against a computer?</label>
-              <span class="option-group">
-                <input name="options[mode]" id="opt-mode-live" type="radio" value="live" />
-                <label for="mode-live">Live</label>
-                <input name="options[mode]" id="opt-mode-ai" type="radio" value="ai" checked />
-                <label for="mode-ai">Computer</label>
-              </span>
+      <button id="test-signup">Sign-Up Test</button>
+      <button id="test-login">Log In Test</button>
+    </header>
+    <main class="container">
+      <div class="row">
+        <div class="col-md-4 col-12 grid">
+          <div id="authPanel" class="panel">
+            <!-- Authentication status / buttons -->
+            <div id="userInfo"></div>
+            <div class="button-set">
+              <!-- <button id="loginBtn" class="no-token btn btn-primary" data-toggle="modal" data-target="#loginForm">Log In</button> -->
+              <button id="loginBtn" class="no-token btn btn-primary" data-operation="login">Log In</button>
+              <button id="signupBtn" class="no-token btn btn-primary" data-operation="signup">Sign Up</button>
+              <button id="changepwBtn" class="auth-token btn btn-primary" data-operation="changepw">Change Password</button>
+              <button id="signoutBtn" class="auth-token btn btn-primary" data-operation="signout">Sign Out</button>
             </div>
-            <div id="human-player-select" class="form-entry dependant">
-              <label>Do you want to play X or O?</label>
-              <span class="option-group">
-                <input name="options[player]" id="opt-player-x" type="radio" value="X" checked />
-                <label for="player-x">X</label>
-                <input name="options[player]" id="opt-player-o" type="radio" value="O" />
-                <label for="player-o">O</label>
-              </span>
-            </div>
-            <div class="form-entry">
-              <label>Size of Game Board</label>
-              <select name="options[size]" id="select-board-size">
-                <option value="3">3 x 3</option>
-                <option value="4">4 x 4</option>
-                <option value="5">5 x 5</option>
-                <option value="6">6 x 6</option>
-              </select>
-            </div>
-            <input type="submit" value="Start Game" class="submit">
-          </form>
-        </div>
-
-        <!-- Login Panel  -->
-        <div id="auth-panel" class="panel">
-          <div class="auth-buttons" >
-            <button id="login-button" class="no-token">Log In</button>
-            <button id="signup-button" class="no-token">Sign Up</button>
-            <button id="changepw-button" class="auth-token">Change Password</button>
-            <button id="signout-button" class="auth-token">Sign Out</button>
           </div>
-
-          <form id="authentication-form">
-            <label for="email-field">Email: </label>
-            <input id="email-field" name="credentials[email]" type="email">
-
-            <label for="password-field">Password</label>
-            <input id="password-field" name="credentials[password]" type="password">
-
-            <label for="password-conf-field">Confirm Password: </label>
-            <input id="password-conf-field" name="credentials[password_confirmation]" type="password">
-
-            <label for="old-password-field">Old Password: </label>
-            <input id="old-password-field" name="passwords[old]" type="password">
-
-            <label for="new-password-field">New Password: </label>
-            <input id="new-password-field" name="passwords[new]" type="password">
-            <input id="submit-button" type="submit">
-          </form>
-
-        </div>
-
-        <div id="game-board-panel" class="panel">
-          <aside class="info">
-            <div id="player-info">
-              Player <span id="player-name"></span>
-            </div>
-            <div id="player-stats">
-              <span class="todo">Player statistics go here</span>
-            </div>
-          </aside>
-          <div id="GameBoard" data-size="3"></div>
-
-          <div id="game-controls" class="control-panel">
-            <button id="reset-button">Reset</button>
-            <button id="options-button">Options</button>
+         </div> <!--grid -->
+         <div class="col-md-8 col-12 grid">
+          <div id="movePanel" class="panel">
+            <strong class="no-token">You must be logged in to see current game info</strong>
+            <!-- player turn / current move  -->
+            <div id="playerTurn" class="auth-token"></div>
+            <div id="moveInfo" class="auth-token"></div>
+            <button id="gameOptionsBtn" class="btn btn-secondary float-right auth-enable">Options</button>
           </div>
-
         </div>
-      </main>
+      </div> <!-- top row -->
+      <div class="row">
+        <div class="col-md-4 col-12 grid">
+          <div id="playerPanel" class="panel">
+            <strong class="no-token">You must be logged in to see user stats</strong>
+            <!-- player info / stats -->
+            <div id="playerInfo" class="info auth-token">
+              <h3>Current User: <span id="userEmail"></span></h3>
+              <div id="playerStats"></div>
 
-      <footer>
-        <span class="todo">make this look better</span>
-        <span class="copyright">&copy; 2019</span>
-      </footer>
-    </body>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-md-8 col-12 grid">
+          <div id="gamePanel" class="panel">
+            <strong class="no-token">You must be logged in to play.</strong>
+            <div id="GameBoard">
+              <div class="column" id="column-0">
+                <span id="cell-0-0" class="square" data-index="0">
+                  <img src="public/images/x.png" alt="X" class="x">
+                  <img src="public/images/o.png" alt="O" class="o">
+                </span>
+                <span id="cell-0-1" class="square" data-index="1">
+                  <img src="public/images/x.png" alt="X" class="x">
+                  <img src="public/images/o.png" alt="O" class="o">
+                </span>
+                <span id="cell-0-2" class="square" data-index="2">
+                  <img src="public/images/x.png" alt="X" class="x">
+                  <img src="public/images/o.png" alt="O" class="o">
+                </span>
+              </div>
+              <div class="column" id="column-1">
+                <span id="cell-1-0" class="square" data-index="3">
+                  <img src="public/images/x.png" alt="X" class="x">
+                  <img src="public/images/o.png" alt="O" class="o">
+                </span>
+                <span id="cell-1-1" class="square" data-index="4">
+                  <img src="public/images/x.png" alt="X" class="x">
+                  <img src="public/images/o.png" alt="O" class="o">
+                </span>
+                <span id="cell-1-2" class="square" data-index="5">
+                  <img src="public/images/x.png" alt="X" class="x">
+                  <img src="public/images/o.png" alt="O" class="o">
+                </span>
+              </div>
+              <div class="column" id="column-2">
+                <span id="cell-2-0" class="square" data-index="6">
+                  <img src="public/images/x.png" alt="X" class="x">
+                  <img src="public/images/o.png" alt="O" class="o">
+                </span>
+                <span id="cell-2-1" class="square" data-index="7">
+                  <img src="public/images/x.png" alt="X" class="x">
+                  <img src="public/images/o.png" alt="O" class="o">
+                </span>
+                <span id="cell-2-2" class="square" data-index="8">
+                  <img src="public/images/x.png" alt="X" class="x">
+                  <img src="public/images/o.png" alt="O" class="o">
+                </span>
+              </div>
+            </div>
+
+            <div class="control-panel button-set justify-content-center">
+              <button id="resetBtn" class="btn btn-primary auth-enable">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div><!-- row -->
+    </main>
+    <footer class="fixed-bottom">
+
+      <span class="copyright">&copy; 2019</span>
+    </footer>
+
+
+  <!-- Authentication Form -->
+    <div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="authModalTitle">Authentication</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="authenticationForm">
+              <span id="emailFieldEnclosure" class="field-enclosure" data-include="login">
+                <label for="emailField">Email: </label>
+                <input id="emailField" name="credentials[email]" type="email">
+              </span>
+              <span id="passwordFieldEnclosure" class="field-enclosure" data-include="login signup">
+                <label for="passwordField">Password</label>
+                <input id="passwordField" name="credentials[password]" type="password">
+              </span>
+              <span id="passwordConfFieldEnclosure" class="field-enclosure" data-include="signup">
+                <label for="passwordConfField">Confirm Password: </label>
+                <input id="passwordConfField" name="credentials[password_confirmation]" type="password">
+              </span>
+              <span id="oldPasswordFieldEnclosure" class="field-enclosure" data-include="changepw">
+                <label for="oldPasswordField">Old Password: </label>
+                <input id="oldPasswordField" name="passwords[old]" type="password">
+              </span>
+              <span id="newPasswordFieldEnclosure" class="field-enclosure" data-include="changepw">
+                <label for="newPasswordField">New Password: </label>
+                <input id="newPasswordField" name="passwords[new]" type="password">
+              </span>
+              <span id="newPasswordFieldEnclosure2" class="field-enclosure" data-include="changepw">
+                <label for="newPasswordField2">Re-type New Password: </label>
+                <input id="newPasswordField2" type="password">
+              </span>
+              <span id="signoutConfirmEnclosure" class="field-enclosure" data-include="signout">
+                Are you sure you want to sign out?
+              </span>
+              <input id="authOperation" name="operation" type="hidden" >
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button id="authSubmitBtn" type="button" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </body>
 </html>
