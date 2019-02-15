@@ -1,60 +1,41 @@
 
 /* Game Board */
 
-.panel {
-  margin: 10px auto;
-  background-color: #aaa;
-  border: inset thin #999;
-  border-radius: 5px;
-}
+$square-size: 150px;
+$square-gutter: 10px;
 
 #GameBoard {
-	display: flex;
+  display: flex;
   justify-content: center;
-	padding: 3px;
   margin-top: 1em;
-}
+	padding: 3px;
+  min-height: ($square-size + ($square-gutter * 2)) * 3;
 
-.column {
+  .column {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    .square {
+      border: 2px solid #000;
+      display: block;
+      text-align: center;
+      width: 148px;
+      height: 148px;
+      margin: 20px;
+      background-color: transparent;
+    }
+  }
 }
 
-.square {
-  border: 2px solid #000;
-  display: block;
-  text-align: center;
-  width: 148px;
-  height: 148px;
-  margin: 20px;
-  background-color: transparent;
-}
 .square img {
   display: none;
 }
 .square.x img.x {
   display: block;
 }
-.square.x img.o {
-  display: none;
-}
-.square.o img.x {
-  display: none;
-}
 .square.o img.o {
   display: block;
-}
-
-
-.x-turn .square:hover {
-  background-color: #f00;
-}
-.o-turn .square:hover {
-  background-color: #00f;
-}
-.square.x:hover, .square.o:hover, .x-turn .square.x:hover, .o-turn .square.o:hover {
-  background-color: transparent;
 }
 
 
@@ -75,7 +56,7 @@
   font-weight: bold;
   text-align: center;
 }
-.x-turn #player-name {
+.x-turn #player-turn {
   color: #f00;
 }
 .o-turn #player-name {

@@ -2,6 +2,7 @@
 
 @import 'colors';
 @import 'form';
+@import 'layout';
 @import 'game';
 @import 'theme';
 
@@ -26,36 +27,18 @@
   color: green;
 }
 
-header {
-  text-align: center;
-  margin: 20px auto;
+.button-set {
+  border: groove thin #999;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
 }
 
-main {
-  margin: 0 10%;
-}
-
-//
-// /* controls which panel is visible */
-// .game-options #game-options-panel {
-//   display: block;
-// }
-// .game-options #game-board-panel {
-//   display: none;
-// }
-// .game-board #game-options-panel {
-//   display: none;
-// }
-// .game-board #game-board-panel {
-//   display: block;
-// }
-
-
-
-footer {
-  text-align: center;
-  margin: 0 auto;
-  position: absolute;
-  bottom: 1%;
-  display: none;
+#userMessage {
+  background-color: #bbb;
+  border: thin solid #888;
+  border-radius: 3px;
+  color: #000;
+  padding: 5px 10px;
+  font-size: 18px;
 }

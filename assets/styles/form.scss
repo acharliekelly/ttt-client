@@ -5,9 +5,13 @@
   border: outset thin #999;
   border-radius: 5px;
   background-color: #aaa;
-  margin: 0 auto;
+  margin: 10px auto;
   padding: 5px;
   width: 50%;
+}
+.field-enclosure {
+  display: block;
+  padding: 5px;
 }
 .form-entry {
   margin: 5px;
