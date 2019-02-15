@@ -14,10 +14,8 @@
   <body>
     <header>
       <h1>Tic Tac Toe</h1>
-      <div id="userMessage">User Message</div>
+      <div id="userMessage"></div>
 
-      <button id="test-signup">Sign-Up Test</button>
-      <button id="test-login">Log In Test</button>
     </header>
     <main class="container">
       <div class="row">
@@ -31,9 +29,10 @@
               <button id="signupBtn" class="no-token btn btn-primary" data-operation="signup">Sign Up</button>
               <button id="changepwBtn" class="auth-token btn btn-primary" data-operation="changepw">Change Password</button>
               <button id="signoutBtn" class="auth-token btn btn-primary" data-operation="signout">Sign Out</button>
+              <button id="refreshBtn" class="test btn btn-secondary" data-operation="refresh">Refresh</button>
             </div>
           </div>
-         </div> <!--grid -->
+        </div> <!--auth -->
          <div class="col-md-8 col-12 grid">
           <div id="movePanel" class="panel">
             <strong class="no-token">You must be logged in to see current game info</strong>
@@ -47,15 +46,17 @@
       <div class="row">
         <div class="col-md-4 col-12 grid">
           <div id="playerPanel" class="panel">
-            <strong class="no-token">You must be logged in to see user stats</strong>
+            <strong class="no-token">You must be logged in to see user stats </strong>
             <!-- player info / stats -->
             <div id="playerInfo" class="info auth-token">
-              <h3>Current User: <span id="userEmail"></span></h3>
-              <div id="playerStats"></div>
+              <h5>Current User: <span id="userEmail"></span></h5>
+              <div id="playerStats">
+                <!-- Player Stats -->
 
+              </div>
             </div>
 
-          </div>
+          </div> <!-- player -->
         </div>
         <div class="col-md-8 col-12 grid">
           <div id="gamePanel" class="panel">
@@ -106,12 +107,13 @@
             </div>
 
             <div class="control-panel button-set justify-content-center">
-              <button id="resetBtn" class="btn btn-primary auth-enable">Reset</button>
+              <button id="resetBtn" class="btn btn-primary auth-enable">Start</button>
             </div>
           </div>
         </div>
       </div><!-- row -->
     </main>
+
     <footer class="fixed-bottom">
 
       <span class="copyright">&copy; 2019</span>
@@ -130,31 +132,31 @@
           </div>
           <div class="modal-body">
             <form id="authenticationForm">
-              <span id="emailFieldEnclosure" class="field-enclosure" data-include="login">
+              <span id="emailFieldEnclosure" class="form-group" data-include="login">
                 <label for="emailField">Email: </label>
-                <input id="emailField" name="credentials[email]" type="email">
+                <input id="emailField" class="form-control" name="credentials[email]" type="email">
               </span>
-              <span id="passwordFieldEnclosure" class="field-enclosure" data-include="login signup">
+              <span id="passwordFieldEnclosure" class="form-group" data-include="login signup">
                 <label for="passwordField">Password</label>
-                <input id="passwordField" name="credentials[password]" type="password">
+                <input id="passwordField" class="form-control" name="credentials[password]" type="password">
               </span>
-              <span id="passwordConfFieldEnclosure" class="field-enclosure" data-include="signup">
+              <span id="passwordConfFieldEnclosure" class="form-group" data-include="signup">
                 <label for="passwordConfField">Confirm Password: </label>
-                <input id="passwordConfField" name="credentials[password_confirmation]" type="password">
+                <input id="passwordConfField" class="form-control" name="credentials[password_confirmation]" type="password">
               </span>
-              <span id="oldPasswordFieldEnclosure" class="field-enclosure" data-include="changepw">
+              <span id="oldPasswordFieldEnclosure" class="form-group" data-include="changepw">
                 <label for="oldPasswordField">Old Password: </label>
-                <input id="oldPasswordField" name="passwords[old]" type="password">
+                <input id="oldPasswordField" class="form-control" name="passwords[old]" type="password">
               </span>
-              <span id="newPasswordFieldEnclosure" class="field-enclosure" data-include="changepw">
+              <span id="newPasswordFieldEnclosure" class="form-group" data-include="changepw">
                 <label for="newPasswordField">New Password: </label>
-                <input id="newPasswordField" name="passwords[new]" type="password">
+                <input id="newPasswordField" class="form-control" name="passwords[new]" type="password">
               </span>
-              <span id="newPasswordFieldEnclosure2" class="field-enclosure" data-include="changepw">
+              <span id="newPasswordFieldEnclosure2" class="form-group" data-include="changepw">
                 <label for="newPasswordField2">Re-type New Password: </label>
-                <input id="newPasswordField2" type="password">
+                <input id="newPasswordField2" class="form-control" type="password">
               </span>
-              <span id="signoutConfirmEnclosure" class="field-enclosure" data-include="signout">
+              <span id="signoutConfirmEnclosure" class="form-group" data-include="signout">
                 Are you sure you want to sign out?
               </span>
               <input id="authOperation" name="operation" type="hidden" >
