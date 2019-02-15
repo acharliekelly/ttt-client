@@ -17,7 +17,8 @@ const utils = require('../main/utility')
 
 // Public: check for token, update all elements
 const refreshAuthElements = () => {
-  const token = authEvents.isAuthenticated()
+  const token = utils.isAuthenticated()
+  console.log('refreshing auth with ' + (token ? '' : 'no') + ' token')
   $('.auth-token').toggle(token)
   $('.no-token').toggle(!token)
   $('.auth-enable').prop('disabled', !token)
@@ -36,33 +37,46 @@ const modalForm = (event) => {
   const btn = $(event.target)
   const currentOp = btn.data('operation')
   $('#authOperation').val(currentOp)
-  $('#authenticationForm .field-enclosure').hide()
+  $('#authenticationForm .form-group').hide()
 
-  let target
+  let target, title
   switch (currentOp) {
     case 'login':
       target = authEvents.onLoginSubmit
       $('#emailFieldEnclosure').show()
       $('#passwordFieldEnclosure').show()
+      title = 'Login'
       break
     case 'signup':
       target = authEvents.onSignupSubmit
       $('#emailFieldEnclosure').show()
       $('#passwordFieldEnclosure').show()
       $('#passwordConfFieldEnclosure').show()
+      title = 'Sign Up'
       break
     case 'changepw':
       target = authEvents.onChangePasswordSubmit
       $('#oldPasswordFieldEnclosure').show()
       $('#newPasswordFieldEnclosure').show()
+      title = 'Change Password'
       break
     case 'signout':
       target = authEvents.onSignoutConfirm
       $('#signoutConfirmEnclosure').show()
+      title = 'Sign Out'
+      break
+    case 'refresh':
+      refreshAuthElements()
+      return false
   }
+  $('#authModalTitle').text(title)
   $('#authenticationForm').on('submit', target)
-  $('authSubmitBtn').on('click', () => {
+
+  // make this button submit the modal form and also close the modal
+  $('#authSubmitBtn').on('click', () => {
+    console.log('submitting auth form to: ' + target)
     $('#authenticationForm').submit()
+    $('#authModal').modal('hide')
   })
 
   $('#authModal').modal('show')
@@ -75,14 +89,13 @@ const authFail = () => {
 }
 
 // Public
-const authenticationSuccess = (responseData) => {
+const loginSuccess = (responseData) => {
   const msg = 'Authentication successful'
   console.log(msg)
   store.user = responseData.user
   utils.userMessage(msg)
-  refreshAuthElements()
-  $('#authForm').modal('hide')
   $('#userEmail').text(store.user.email)
+  refreshAuthElements()
 }
 
 // Public
@@ -93,22 +106,18 @@ const authenticationError = () => {
 // Public
 const changePasswordSuccess = () => {
   utils.userMessage('Password changed.')
-
-  $('#authForm').modal('hide')
 }
 
 // Public
 const signUpSuccess = (responseData) => {
   utils.userMessage(`Account created for "${responseData.user.email}".`)
   // TODO: automatically login after account creation
-  $('#authForm').modal('hide')
 }
 
 // Public
 const signOutSuccess = () => {
   store.user = null
   utils.userMessage('You are signed out')
-  $('#authForm').modal('hide')
   refreshAuthElements()
 }
 
@@ -117,7 +126,7 @@ module.exports = {
   modalForm,
   authFail,
   authenticationError,
-  authenticationSuccess,
+  loginSuccess,
   changePasswordSuccess,
   signUpSuccess,
   signOutSuccess

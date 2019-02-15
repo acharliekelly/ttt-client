@@ -6,12 +6,21 @@
 const authApi = require('./api')
 const authUi = require('./ui')
 const getFormFields = require('../../../lib/get-form-fields')
+const store = require('../store')
+const utils = require('../main/utility')
 
 const onLoginSubmit = (event) => {
   const formData = getFormData(event)
-  console.log('Form:', formData)
   authApi.signIn(formData)
-    .then(authUi.authenticationSuccess)
+    .then(function (responseData) {
+      // because loginSuccess isn't working
+      const msg = 'Login successful'
+      console.log(msg)
+      store.user = responseData.user
+      utils.userMessage(msg)
+      $('#userEmail').text(store.user.email)
+      // authUi.loginSuccess
+    })
     .catch(authUi.authFail)
 }
 
