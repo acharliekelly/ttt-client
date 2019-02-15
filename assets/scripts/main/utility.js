@@ -5,35 +5,41 @@ const store = require('../store')
 
 // returns boolean value for whether token exists
 const isAuthenticated = () => {
-  if (store.user && store.user.token) return true
+  if (store.user) {
+    console.log('User #' + store.user.id)
+    if (store.user.token) {
+      console.log('Token: ' + store.user.token)
+      return true
+    }
+  }
   return false
 }
 
 const userMessage = function (message) {
-  $('#user-feedback').html(message).addClass('message')
+  $('#userMessage').html(message).addClass('message')
 
   setTimeout(() => {
-    $('#user-feedback').html('').removeClass('message')
+    $('#userMessage').html('').removeClass('message')
   }, 5000)
 }
 
 const failure = function () {
-  $('#user-feedback')
+  $('#userMessage')
     .html('Something went wrong, please try again.')
     .addClass('error')
 
   setTimeout(() => {
-    $('#user-feedback').html('').removeClass('error')
+    $('#userMessage').html('').removeClass('error')
   }, 5000)
 }
 
 const errorMessage = function (message) {
-  $('#user-feedback')
+  $('#userMessage')
     .html('Error: ' + message)
     .addClass('error')
 
   setTimeout(() => {
-    $('#user-feedback').html('').removeClass('error')
+    $('#userMessage').html('').removeClass('error')
   }, 5000)
 }
 

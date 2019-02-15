@@ -23,10 +23,28 @@
 //  - set player name to #player-name
 
 const players = require('./player')
-const utils = require('./utility')
-const gameApi = require('../game/api')
-const gameEvents = require('./game/events')
+const utils = require('../main/utility')
+const gameApi = require('./api')
+const gameEvents = require('./events')
 const store = require('../store')
+
+let _currentMove
+
+const resetMoves = function () {
+  _currentMove = 0
+}
+
+const nextMove = function () {
+  if (players.getCurrentPlayer().name === 'X') {
+    _currentMove++
+  }
+  return _currentMove
+}
+
+// Public: current move counter
+const getCurrentMove = function () {
+  return _currentMove
+}
 
 // Public: intitialize board
 const startGame = function () {
@@ -38,6 +56,8 @@ const startGame = function () {
     .then(createGameSuccess)
     .catch(gameApiFailure)
   initTurn(players.getCurrentPlayer())
+  resetMoves()
+  $('#resetBtn').text('Reset')
 }
 
 const createGameSuccess = function (responseData) {
@@ -47,32 +67,12 @@ const createGameSuccess = function (responseData) {
   utils.userMessage(msg)
 }
 
-/**
- * drawBoard - draw the board
- *
- */
-// const drawBoard = function () {
-//   // put this in index.html instead
-//   $('#GameBoard').html('')
-//   for (let col = 0; col < BOARD_SIZE; col++) {
-//     let colStr = '<div class="column">'
-//     for (let row = 0; row < BOARD_SIZE; row++) {
-//       colStr += `<span id="cell-${col}-${row}" class="square">`
-//       colStr += '<img src="public/images/x.png" alt="X" class="x">'
-//       colStr += '<img src="public/images/o.png" alt="O" class="o">'
-//       colStr += '</span>'
-//     }
-//     colStr += '</div>'
-//     $('#GameBoard').append(colStr)
-//   }
-// }
-
 const initBoardBindings = function () {
-  // has to run after board is drawn
   $('#GameBoard .square')
     .on('click', gameEvents.onClickSquare)
     .on('mouseover', gameEvents.onHoverSquare)
     .on('mouseout', gameEvents.onLeaveSquare)
+    .css('background-color', '#888')
 }
 
 /**
@@ -121,12 +121,16 @@ const gameOver = function () {
 const finishTurn = function (responseData) {
   store.currentGame = responseData.game
   initTurn(players.nextPlayerTurn())
+  nextMove()
 }
 
 const initTurn = function (player) {
   const turn = player.turnClass
-  $('#GameBoard').removeClass().addClass(turn)
-  $('#playerInfo').removeClass().addClass(turn)
+  $('#GameBoard').removeClass('x-turn o-turn').addClass(turn)
+  $('#playerTurn')
+    .removeClass('x-turn o-turn')
+    .addClass(turn)
+    .text('Player ' + player.name)
 }
 
 module.exports = {
@@ -137,5 +141,7 @@ module.exports = {
   showStalemate,
   clearBoard,
   finishTurn,
-  gameOver
+  gameOver,
+  getCurrentMove,
+  nextMove
 }

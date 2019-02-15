@@ -4,7 +4,6 @@
 
 const authUi = require('./auth/ui')
 const gameEvents = require('./game/events')
-const test = require('./test/events')
 
 $(() => {
   // bind event handlers
@@ -16,7 +15,4 @@ $(() => {
 
   // // show/hide/disable objects based on auth status
   authUi.refreshAuthElements()
-
-  $('#test-signup').on('click', test.testSignUp)
-  $('#test-login').on('click', test.testLogin)
 })
