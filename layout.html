@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tic Tac Toe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Do not add `link` tags-->
+    <link rel="shortcut icon" type="image/x-icon" href="public/images/favicon.png">
+
+    <!-- Do not add `script` tags-->
+    <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+    <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Tic Tac Toe</h1>
+      <div id="userMessage"></div>
+    </header>
+    <main class="container">
+      <div class="row">
+        <div id="authPanel" class="col-md-4 col-12">
+          <!-- Authentication status/ buttons -->
+          <span id="userInfo"></span>
+          <button id="loginBtn" class="no-token">Log In</button>
+          <button id="signupBtn" class="no-token">Sign Up</button>
+          <button id="changepwBtn" class="auth-token">Change Password</button>
+          <button id="signoutBtn" class="auth-token">Sign Out</button>
+        </div>
+        <div id="movePanel" class="col-md-8 col-12">
+          <!-- player turn / current move  -->
+          <div id="player-turn"></div>
+          <div id="move-info"></div>
+          <button id="gameOptionsBtn">Options</button>
+        </div>
+      </div>
+      <div class="row">
+        <div id="playerPanel" class="col-md-4 col-12">
+          <!-- player info / stats -->
+          <div id="player-info"></div>
+
+        </div>
+        <div id="gamePanel" class="col-md-8 col-12">
+          <div id="GameBoard"></div>
+
+          <button id="resetBtn">Reset</button>
+        </div>
+      </div>
+    </main>
+    <footer class="fixed-bottom">
+
+      <span class="copyright">&copy; 2019</span>
+    </footer>
+  </body>
+</html>
