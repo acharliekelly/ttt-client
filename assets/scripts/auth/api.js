@@ -1,4 +1,5 @@
 'use strict'
+// auth/api.js
 
 const store = require('../store')
 const config = require('../config')
