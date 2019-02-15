@@ -10,6 +10,12 @@ $(() => {
   $('#resetBtn').on('click', gameEvents.onReset)
   // set click events for all .auth-enable buttons
   $('#authPanel .btn').on('click', authUi.modalForm)
+  $('#GameBoard .square')
+    .on('click', gameEvents.onClickSquare)
+    .on('mouseover', gameEvents.onHoverSquare)
+    .on('mouseout', gameEvents.onLeaveSquare)
+
+  $('#refreshBtn').on('click', authUi.refreshAuthElements)
 
   // $('#gameOptionsBtn').on('click', gameEvents.onOptions)
 

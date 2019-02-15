@@ -85,6 +85,9 @@ build/Release
 node_modules
 jspm_packages
 
+# Wireframe pencil sketches
+.epgz
+
 # Optional npm cache directory
 .npm
 

@@ -64,17 +64,12 @@ const modalForm = (event) => {
       target = authEvents.onSignoutConfirm
       $('#signoutConfirmEnclosure').show()
       title = 'Sign Out'
-      break
-    case 'refresh':
-      refreshAuthElements()
-      return false
   }
   $('#authModalTitle').text(title)
   $('#authenticationForm').on('submit', target)
 
   // make this button submit the modal form and also close the modal
   $('#authSubmitBtn').on('click', () => {
-    console.log('submitting auth form to: ' + target)
     $('#authenticationForm').submit()
     $('#authModal').modal('hide')
   })

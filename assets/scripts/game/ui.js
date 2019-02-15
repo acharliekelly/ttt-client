@@ -41,6 +41,11 @@ const nextMove = function () {
   return _currentMove
 }
 
+const displayMove = function () {
+  if (_currentMove === undefined) resetMoves()
+  $('#moveInfo').text('Move ' + _currentMove)
+}
+
 // Public: current move counter
 const getCurrentMove = function () {
   return _currentMove
@@ -48,15 +53,17 @@ const getCurrentMove = function () {
 
 // Public: intitialize board
 const startGame = function () {
-  // board already drawn
-  // just need to bind square handlers
   clearBoard()
   initBoardBindings()
-  gameApi.createGame()
-    .then(createGameSuccess)
-    .catch(gameApiFailure)
-  initTurn(players.getCurrentPlayer())
+
+  if (utils.isAuthenticated()) {
+    gameApi.createGame()
+      .then(createGameSuccess)
+      .catch(gameApiFailure)
+  }
   resetMoves()
+  initTurn(players.getCurrentPlayer())
+  utils.userMessage('New Game')
   $('#resetBtn').text('Reset')
 }
 
@@ -68,11 +75,12 @@ const createGameSuccess = function (responseData) {
 }
 
 const initBoardBindings = function () {
+  console.log('binding game squares to events')
   $('#GameBoard .square')
     .on('click', gameEvents.onClickSquare)
     .on('mouseover', gameEvents.onHoverSquare)
     .on('mouseout', gameEvents.onLeaveSquare)
-    .css('background-color', '#888')
+    .css('background-color', '#eee')
 }
 
 /**
@@ -108,10 +116,12 @@ const showStalemate = function () {
 }
 
 const clearBoard = function () {
+  console.log('clearing game board')
   $('#GameBoard .square').removeClass('x o')
 }
 
 const gameOver = function () {
+  console.log('Game Over')
   // remove turn-classes, handlers
   $('#GameBoard').removeClass('x-turn o-turn')
   $('#GameBoard .square').off()
@@ -124,6 +134,12 @@ const finishTurn = function (responseData) {
   nextMove()
 }
 
+// same as finishTurn but without API response
+const endTurn = function () {
+  initTurn(players.nextPlayerTurn())
+  nextMove()
+}
+
 const initTurn = function (player) {
   const turn = player.turnClass
   $('#GameBoard').removeClass('x-turn o-turn').addClass(turn)
@@ -131,6 +147,7 @@ const initTurn = function (player) {
     .removeClass('x-turn o-turn')
     .addClass(turn)
     .text('Player ' + player.name)
+  displayMove()
 }
 
 module.exports = {
@@ -141,7 +158,9 @@ module.exports = {
   showStalemate,
   clearBoard,
   finishTurn,
+  endTurn,
   gameOver,
   getCurrentMove,
-  nextMove
+  nextMove,
+  initBoardBindings
 }

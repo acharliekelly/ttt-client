@@ -5,15 +5,37 @@ const gameUi = require('./ui')
 const players = require('./player')
 const gameApi = require('./api')
 const winning = require('./winning')
+const utils = require('../main/utility')
 
 // Public: when user clicks Reset button
 const onReset = function () {
-  console.log('Re-drawing board')
   gameUi.startGame()
 }
 
-// Public: when user clicks square
-const onClickSquare = function (event) {
+const onClickSquareTokenless = function (event) {
+  console.log('Square clicked: ' + event.target.id)
+  const square = getEmptySquare(event)
+  if (square) {
+    // square is empty, proceed with move
+    console.log('square is empty')
+    const p = players.getCurrentPlayer()
+
+    // update html board
+    markSquare(square, p)
+
+    if (winning.checkForWin(p)) {
+      gameUi.showWinner(p)
+    } else if (winning.checkForDraw()) {
+      gameUi.showStalemate()
+    } else {
+      gameUi.endTurn()
+    }
+  } else {
+    console.log('square is already used')
+  }
+}
+
+const onClickSquareToken = function (event) {
   console.log('Square clicked: ' + event.target.id)
   const square = getEmptySquare(event)
   if (square) {
@@ -44,7 +66,16 @@ const onClickSquare = function (event) {
   }
 }
 
-// Public: when mouse hovers empty square
+// Public: when user clicks square
+const onClickSquare = function (event) {
+  if (utils.isAuthenticated()) {
+    onClickSquareToken(event)
+  } else {
+    onClickSquareTokenless(event)
+  }
+}
+
+// Public: when mouse hovers over empty square
 const onHoverSquare = function (event) {
   const square = getEmptySquare(event)
   if (square) {
