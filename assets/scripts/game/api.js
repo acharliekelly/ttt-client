@@ -1,5 +1,5 @@
 'use strict'
-
+// game/api.js
 // method calls for Single-Player Game API
 
 const config = require('../config')
@@ -66,7 +66,8 @@ const showGame = function (gameId) {
   })
 }
 
-const updateGame = function (gameId, player, index, isFinal) {
+const updateGame = function (mark, index, isFinal) {
+  const gameId = store.game.id
   return $.ajax({
     url: `${config.apiUrl}/games/${gameId}`,
     method: 'PATCH',
@@ -77,7 +78,7 @@ const updateGame = function (gameId, player, index, isFinal) {
       'game': {
         'cell': {
           'index': index,
-          'value': player.squareClass
+          'value': mark
         },
         'over': isFinal
       }
@@ -100,7 +101,6 @@ module.exports = {
   myFinishedGames,
   myUnfinishedGames,
   createGame,
-  createTwoPlayerGame,
   showGame,
   updateGame,
   watchGame

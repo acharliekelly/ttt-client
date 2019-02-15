@@ -1,4 +1,5 @@
 'use strict'
+// game/player.js
 
 const Player = function (name, color, imageFile) {
   this.name = name.toUpperCase()
@@ -24,7 +25,12 @@ const nextPlayerTurn = function () {
   return getCurrentPlayer()
 }
 
+const getPlayer = function (mark) {
+  return (mark === 'x') ? playerX : playerO
+}
+
 module.exports = {
   getCurrentPlayer,
-  nextPlayerTurn
+  nextPlayerTurn,
+  getPlayer
 }
