@@ -22,7 +22,7 @@
           <div id="authPanel" class="panel">
             <!-- Authentication status / buttons -->
             <div id="userInfo"></div>
-            <div class="button-set">
+            <div class="button-set justify-content-center">
               <button id="loginBtn" class="no-token btn btn-primary" data-operation="login">Log In</button>
               <button id="signupBtn" class="no-token btn btn-primary" data-operation="signup">Sign Up</button>
               <button id="changepwBtn" class="auth-token btn btn-primary" data-operation="changepw">Change Password</button>
@@ -31,13 +31,12 @@
           </div>
         </div> <!--auth -->
          <div class="col-md-8 col-12 grid">
-          <div id="movePanel" class="panel">
-            <!-- <strong class="no-token">Not logged in</strong> -->
+          <div id="movePanel" class="panel justify-content-right">
             <!-- player turn / current move  -->
             <div id="playerTurn"></div>
             <div id="moveInfo"></div>
-            <div class="button-set">
-              <button id="refreshBtn" class="test btn btn-secondary">Refresh</button>
+            <div class="button-set align-items-right">
+              <!-- <button id="refreshBtn" class="test btn btn-secondary">Refresh</button> -->
               <button id="gameOptionsBtn" class="btn btn-secondary auth-enable">Options</button>
             </div>
           </div>
@@ -46,13 +45,15 @@
       <div class="row">
         <div class="col-md-4 col-12 grid">
           <div id="playerPanel" class="panel">
-            <strong class="no-token">You must be logged in to see user stats </strong>
+            <strong class="no-token">You must be logged in to see stats</strong>
             <!-- player info / stats -->
             <div id="playerInfo" class="info auth-token">
+
               <div>Current User: <span id="userEmail"></span></div>
               <div id="playerStats">
+                <button id="statsBtn" class="btn btn-secondary">Stats</button>
                 <!-- Player Stats -->
-
+                Games Played: <span class="games-played"></span>
               </div>
             </div>
 
@@ -60,7 +61,7 @@
         </div>
         <div class="col-md-8 col-12 grid">
           <div id="gamePanel" class="panel">
-            <!-- <strong class="no-token">You must be logged in to play.</strong> -->
+            <strong class="no-token">You must be logged in to play.</strong>
             <div id="GameBoard">
               <div class="column" id="column-0">
                 <span id="cell-0-0" class="square" data-index="0">
@@ -107,7 +108,7 @@
             </div>
 
             <div class="control-panel button-set justify-content-center">
-              <button id="resetBtn" class="btn btn-primary">Reset</button>
+              <button id="resetBtn" class="btn btn-primary auth-enable">Start</button>
             </div>
           </div>
         </div>
