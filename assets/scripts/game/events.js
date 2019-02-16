@@ -92,6 +92,14 @@ const onLeaveSquare = function (event) {
   }
 }
 
+const getPlayerStats = function () {
+  if (utils.isAuthenticated()) {
+    gameApi.myFinishedGames()
+      .then(gameUi.displayStatistics)
+      .catch(gameUi.gameApiFailure)
+  }
+}
+
 const markSquare = function (square, player) {
   square.addClass(player.squareClass)
   square.css('background-color', 'transparent')
@@ -113,5 +121,6 @@ module.exports = {
   onReset,
   onClickSquare,
   onHoverSquare,
-  onLeaveSquare
+  onLeaveSquare,
+  getPlayerStats
 }

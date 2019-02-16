@@ -25,7 +25,7 @@
 const players = require('./player')
 const utils = require('../main/utility')
 const gameApi = require('./api')
-const gameEvents = require('./events')
+// const gameEvents = require('./events')
 const store = require('../store')
 
 let _currentMove
@@ -53,8 +53,8 @@ const getCurrentMove = function () {
 
 // Public: intitialize board
 const startGame = function () {
+  // debugger
   clearBoard()
-  initBoardBindings()
 
   if (utils.isAuthenticated()) {
     gameApi.createGame()
@@ -72,15 +72,6 @@ const createGameSuccess = function (responseData) {
   const msg = `Game #${responseData.game.id} created`
   console.log(msg)
   utils.userMessage(msg)
-}
-
-const initBoardBindings = function () {
-  console.log('binding game squares to events')
-  $('#GameBoard .square')
-    .on('click', gameEvents.onClickSquare)
-    .on('mouseover', gameEvents.onHoverSquare)
-    .on('mouseout', gameEvents.onLeaveSquare)
-    .css('background-color', '#eee')
 }
 
 /**
@@ -150,6 +141,11 @@ const initTurn = function (player) {
   displayMove()
 }
 
+const displayStatistics = function (responseData) {
+  const gamesPlayed = responseData.games.length
+  $('#playerStats .games-played').text(gamesPlayed)
+}
+
 module.exports = {
   startGame,
   createGameSuccess,
@@ -162,5 +158,5 @@ module.exports = {
   gameOver,
   getCurrentMove,
   nextMove,
-  initBoardBindings
+  displayStatistics
 }
