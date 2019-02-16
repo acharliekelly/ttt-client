@@ -1,1 +1,46 @@
 @import '~bootstrap/scss/bootstrap';
+
+@import 'colors';
+//@import 'form';
+@import 'layout';
+@import 'game';
+@import 'theme';
+
+/* Hide all comments for production */
+.development {
+  display: none;
+  font-family: monospace;
+}
+.todo {
+  background-color: #000;
+  color: #0ff;
+  font-family: monospace;
+}
+
+.error {
+  font-weight: bold;
+  color: red;
+}
+
+.success {
+  font-weight: bold;
+  color: green;
+}
+
+.button-set {
+  border: groove thin #999;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+}
+
+#userMessage {
+  background-color: #bbb;
+  border: thin solid #888;
+  border-radius: 3px;
+  color: #000;
+  padding: 5px 10px;
+  font-size: 18px;
+  width: 40vw;
+  margin: 1vh auto;
+}

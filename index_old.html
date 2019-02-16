@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Tic Tac Toe</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <!-- Do not add `link` tags-->
+      <link rel="shortcut icon" type="image/x-icon" href="public/images/favicon.png">
+
+      <!-- Do not add `script` tags-->
+      <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+      <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+    </head>
+    <body>
+      <header>
+        <h1 class="heading">Tic Tac Toe</h1>
+        <span id="user-feedback"></span>
+
+      </header>
+      <main>
+        <div class="buttons">
+          <button id="auth-btn">Login</button>
+          <button id="game-btn">Game</button>
+          <button id="options-btn">Options</button>
+        </div>
+
+        <!-- Login Panel  -->
+        <div id="auth-panel" class="panel form">
+          <div class="auth-buttons" >
+            <button id="login-button" class="no-token">Log In</button>
+            <button id="signup-button" class="no-token">Sign Up</button>
+            <button id="changepw-button" class="auth-token">Change Password</button>
+            <button id="signout-button" class="auth-token">Sign Out</button>
+          </div>
+
+          <!-- Login Form -->
+          <div class="modal fade" id="loginForm" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header text-center">
+                  <h4 class="modal-title w-100 font-weight-bold">Log In</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body mx-3">
+                  <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input type="email" id="loginForm-email" name="credentials[email]" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="loginForm-email">Your email</label>
+                  </div>
+                  <div class="md-form mb-4">
+                    <i class="fas fa-lock prefix grey-text"></i>
+                    <input type="password" id="loginForm-pass" name="credentials[password]" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="loginForm-pass">Your password</label>
+                  </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                  <input id="loginForm-submit" type="submit" value="Login" class="btn btn-primary"/>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <!-- Signup Form -->
+          <div class="modal fade" id="signupForm" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header text-center">
+                  <h4 class="modal-title w-100 font-weight-bold">Sign Up</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body mx-3">
+                  <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input type="email" id="signupForm-email" name="credentials[email]" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="signupForm-email">Your email</label>
+                  </div>
+                  <div class="md-form mb-4">
+                    <i class="fas fa-lock prefix grey-text"></i>
+                    <input type="password" id="signupForm-pass" name="credentials[password]" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="signupForm-pass">Your password</label>
+                  </div>
+                  <div class="md-form mb-4">
+                    <i class="fas fa-lock prefix grey-text"></i>
+                    <input type="password" id="signupForm-pass-conf" name="credentials[confirm_password]" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="signupForm-pass-conf">Confirm password</label>
+                  </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                  <input type="submit" value="Submit" class="btn btn-primary"/>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <!-- Change Password Form -->
+        <div class="modal fade" id="changePasswordForm" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Change Password</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body mx-3">
+                <div class="md-form mb-5">
+                  <i class="fas fa-envelope prefix grey-text"></i>
+                  <input type="email" id="changePasswordForm-email" name="passwords[old]" class="form-control validate">
+                  <label data-error="wrong" data-success="right" for="changePasswordForm-email">Old Password</label>
+                </div>
+                <div class="md-form mb-4">
+                  <i class="fas fa-lock prefix grey-text"></i>
+                  <input type="password" id="changePasswordForm-pass" name="passwords[new]" class="form-control validate">
+                  <label data-error="wrong" data-success="right" for="changePasswordForm-pass">New Password</label>
+                </div>
+                <div class="md-form mb-4">
+                  <i class="fas fa-lock prefix grey-text"></i>
+                  <input type="password" id="changePasswordForm-pass-conf" name="passwords[new2]" class="form-control validate">
+                  <label data-error="wrong" data-success="right" for="changePasswordForm-pass-conf">Re-enter New Password</label>
+                </div>
+              </div>
+              <div class="modal-footer d-flex justify-content-center">
+                <input type="submit" value="Submit" class="btn btn-primary"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sign Out -->
+        <div class="modal fade" id="signoutForm" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Sign Out</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body mx-3">
+                Are you sure you want to sign out?
+              </div>
+              <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="close btn btn-primary" data-dismiss="modal">No</button>
+                <input type="submit" value="Yes" class="btn btn-danger"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        </div>
+
+        <!-- Game Panel -->
+        <div id="game-board-panel" class="panel">
+
+          <aside class="info">
+            <div id="player-info">
+              Player <span id="player-name"></span>
+            </div>
+            <div id="player-stats">
+              <span class="todo">Player statistics go here</span>
+            </div>
+          </aside>
+          <div id="GameBoard" data-size="3"></div>
+
+          <div id="game-controls" class="control-panel">
+            <button id="reset-button">Reset</button>
+            <button id="options-button">Options</button>
+          </div>
+
+        </div>
+
+        <!-- Options Panel  -->
+        <div id="game-options-panel" class="form panel">
+
+          <h2>Game Options</h2>
+          <form id="optionsForm">
+            <div class="form-entry">
+              <label>Play Mode: </label>
+              <fieldset id="mode-fields">
+                <input name="options[mode]" id="opt-mode-local" type="radio" value="local" checked />
+                <label for="opt-mode-local">Local</label>
+                <input name="options[mode]" id="opt-mode-remote" type="radio" value="remote" disabled />
+                <label for="opt-mode-remote">Remote</label>
+                <input name="options[mode]" id="opt-mode-ai" type="radio" value="ai" disabled />
+                <label for="opt-mode-ai">AI</label>
+              </fieldset>
+            </div>
+            <div class="form-entry">
+              <fieldset id="theme-fields">
+                <input name="options[theme]" id="opt-theme-default" type="radio" value="default" checked />
+                <label for="opt-theme-default">Default</label>
+                <input name="options[theme]" id="opt-theme-alt" type="radio" value="alt" disabled />
+                <label for="opt-theme-alt">Alternate</label>
+              </fieldset>
+            </div>
+            <input type="submit" class="submit" value="Start Game">
+          </form>
+        </div>
+      </main>
+
+      <footer>
+        <span class="todo">make this look better</span>
+        <span class="copyright">&copy; 2019</span>
+      </footer>
+    </body>
+</html>

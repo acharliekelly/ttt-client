@@ -1,0 +1,35 @@
+/* Layout */
+
+.grid {
+  margin: 5px auto;
+  background: none;
+
+}
+
+.panel {
+  margin: 10px auto;
+  background-image: url('public/images/wavegrid.png');
+  background-repeat: repeat;
+  border: inset thin #999;
+  border-radius: 5px;
+  padding: 5px;
+  height: 100%;
+}
+
+header {
+  text-align: center;
+  margin: 20px auto;
+}
+
+
+main {
+  margin: 0 10%;
+}
+
+
+footer {
+  text-align: center;
+  margin: 0 auto;
+  position: absolute;
+  bottom: 1%;
+}

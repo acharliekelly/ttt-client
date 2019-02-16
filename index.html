@@ -1,17 +1,176 @@
 <!DOCTYPE html>
 <html>
-    <head>
-      <title>Example</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <title>Tic Tac Toe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      <!-- Do not add `link` tags-->
-      <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <!-- Do not add `link` tags-->
+    <link rel="shortcut icon" type="image/x-icon" href="public/images/favicon.png">
 
-      <!-- Do not add `script` tags-->
-      <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
-      <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
-    </head>
-    <body>
-      <h1>Browser Template</h1>
-    </body>
+    <!-- Do not add `script` tags-->
+    <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+    <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Tic Tac Toe</h1>
+      <div id="userMessage"></div>
+    </header>
+    <main class="container">
+      <div class="row">
+        <div class="col-md-4 col-12 grid">
+          <div id="authPanel" class="panel">
+            <!-- Authentication status / buttons -->
+            <div id="userInfo"></div>
+            <div class="button-set justify-content-center">
+              <button id="loginBtn" class="no-token btn btn-primary" data-operation="login">Log In</button>
+              <button id="signupBtn" class="no-token btn btn-primary" data-operation="signup">Sign Up</button>
+              <button id="changepwBtn" class="auth-token btn btn-primary" data-operation="changepw">Change Password</button>
+              <button id="signoutBtn" class="auth-token btn btn-primary" data-operation="signout">Sign Out</button>
+            </div>
+          </div>
+        </div> <!--auth -->
+         <div class="col-md-8 col-12 grid">
+          <div id="movePanel" class="panel justify-content-right">
+            <!-- player turn / current move  -->
+            <div id="playerTurn"></div>
+            <div id="moveInfo"></div>
+            <div class="button-set align-items-right">
+              <!-- <button id="refreshBtn" class="test btn btn-secondary">Refresh</button> -->
+              <button id="gameOptionsBtn" class="btn btn-secondary auth-enable">Options</button>
+            </div>
+          </div>
+        </div>
+      </div> <!-- top row -->
+      <div class="row">
+        <div class="col-md-4 col-12 grid">
+          <div id="playerPanel" class="panel">
+            <strong class="no-token">You must be logged in to see stats</strong>
+            <!-- player info / stats -->
+            <div id="playerInfo" class="info auth-token">
+
+              <div>Current User: <span id="userEmail"></span></div>
+              <div id="playerStats">
+                <button id="statsBtn" class="btn btn-secondary">Stats</button>
+                <!-- Player Stats -->
+                Games Played: <span class="games-played"></span>
+              </div>
+            </div>
+
+          </div> <!-- player -->
+        </div>
+        <div class="col-md-8 col-12 grid">
+          <div id="gamePanel" class="panel">
+            <strong class="no-token">You must be logged in to play.</strong>
+            <div id="GameBoard">
+              <div class="column" id="column-0">
+                <span id="cell-0-0" class="square" data-index="0">
+                  <img src="public/images/x.png" alt="X" class="x">
+                  <img src="public/images/o.png" alt="O" class="o">
+                </span>
+                <span id="cell-0-1" class="square" data-index="1">
+                  <img src="public/images/x.png" alt="X" class="x">
+                  <img src="public/images/o.png" alt="O" class="o">
+                </span>
+                <span id="cell-0-2" class="square" data-index="2">
+                  <img src="public/images/x.png" alt="X" class="x">
+                  <img src="public/images/o.png" alt="O" class="o">
+                </span>
+              </div>
+              <div class="column" id="column-1">
+                <span id="cell-1-0" class="square" data-index="3">
+                  <img src="public/images/x.png" alt="X" class="x">
+                  <img src="public/images/o.png" alt="O" class="o">
+                </span>
+                <span id="cell-1-1" class="square" data-index="4">
+                  <img src="public/images/x.png" alt="X" class="x">
+                  <img src="public/images/o.png" alt="O" class="o">
+                </span>
+                <span id="cell-1-2" class="square" data-index="5">
+                  <img src="public/images/x.png" alt="X" class="x">
+                  <img src="public/images/o.png" alt="O" class="o">
+                </span>
+              </div>
+              <div class="column" id="column-2">
+                <span id="cell-2-0" class="square" data-index="6">
+                  <img src="public/images/x.png" alt="X" class="x">
+                  <img src="public/images/o.png" alt="O" class="o">
+                </span>
+                <span id="cell-2-1" class="square" data-index="7">
+                  <img src="public/images/x.png" alt="X" class="x">
+                  <img src="public/images/o.png" alt="O" class="o">
+                </span>
+                <span id="cell-2-2" class="square" data-index="8">
+                  <img src="public/images/x.png" alt="X" class="x">
+                  <img src="public/images/o.png" alt="O" class="o">
+                </span>
+              </div>
+            </div>
+
+            <div class="control-panel button-set justify-content-center">
+              <button id="resetBtn" class="btn btn-primary auth-enable">Start</button>
+            </div>
+          </div>
+        </div>
+      </div><!-- row -->
+    </main>
+
+    <footer class="fixed-bottom">
+
+      <span class="copyright">&copy; 2019</span>
+    </footer>
+
+
+  <!-- Authentication Form -->
+    <div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="authModalTitle">Authentication</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="authenticationForm">
+              <span id="emailFieldEnclosure" class="form-group" data-include="login">
+                <label for="emailField">Email: </label>
+                <input id="emailField" class="form-control" name="credentials[email]" type="email">
+              </span>
+              <span id="passwordFieldEnclosure" class="form-group" data-include="login signup">
+                <label for="passwordField">Password</label>
+                <input id="passwordField" class="form-control" name="credentials[password]" type="password">
+              </span>
+              <span id="passwordConfFieldEnclosure" class="form-group" data-include="signup">
+                <label for="passwordConfField">Confirm Password: </label>
+                <input id="passwordConfField" class="form-control" name="credentials[password_confirmation]" type="password">
+              </span>
+              <span id="oldPasswordFieldEnclosure" class="form-group" data-include="changepw">
+                <label for="oldPasswordField">Old Password: </label>
+                <input id="oldPasswordField" class="form-control" name="passwords[old]" type="password">
+              </span>
+              <span id="newPasswordFieldEnclosure" class="form-group" data-include="changepw">
+                <label for="newPasswordField">New Password: </label>
+                <input id="newPasswordField" class="form-control" name="passwords[new]" type="password">
+              </span>
+              <span id="newPasswordFieldEnclosure2" class="form-group" data-include="changepw">
+                <label for="newPasswordField2">Re-type New Password: </label>
+                <input id="newPasswordField2" class="form-control" type="password">
+              </span>
+              <span id="signoutConfirmEnclosure" class="form-group" data-include="signout">
+                Are you sure you want to sign out?
+              </span>
+              <input id="authOperation" name="operation" type="hidden" >
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button id="authSubmitBtn" type="button" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </body>
 </html>

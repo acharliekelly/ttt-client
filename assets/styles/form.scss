@@ -1,0 +1,34 @@
+
+/* Game Options */
+
+.form {
+  border: outset thin #999;
+  border-radius: 5px;
+  background-color: #aaa;
+  margin: 10px auto;
+  padding: 5px;
+  width: 50%;
+}
+.field-enclosure {
+  display: block;
+  padding: 5px;
+}
+.form-entry {
+  margin: 5px;
+  color: #000;
+  border: inset thin #777;
+  border-radius: 3px;
+  padding: 5px;
+}
+.option-group {
+  padding: 2px;
+  border: groove thin #777;
+  border-radius: 3px;
+  margin-top: 2px;
+}
+.form .submit {
+  text-align: center;
+  padding: 3px;
+  margin: 5px auto;
+  margin-left: 50%;
+}
