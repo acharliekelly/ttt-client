@@ -25,31 +25,7 @@
 const players = require('./player')
 const utils = require('../main/utility')
 const gameApi = require('./api')
-// const gameEvents = require('./events')
 const store = require('../store')
-
-let _currentMove
-
-const resetMoves = function () {
-  _currentMove = 0
-}
-
-const nextMove = function () {
-  if (players.getCurrentPlayer().name === 'X') {
-    _currentMove++
-  }
-  return _currentMove
-}
-
-const displayMove = function () {
-  if (_currentMove === undefined) resetMoves()
-  $('#moveInfo').text('Move ' + _currentMove)
-}
-
-// Public: current move counter
-const getCurrentMove = function () {
-  return _currentMove
-}
 
 // Public: intitialize board
 const startGame = function () {
@@ -61,7 +37,6 @@ const startGame = function () {
       .then(createGameSuccess)
       .catch(gameApiFailure)
   }
-  resetMoves()
   initTurn(players.getCurrentPlayer())
   utils.userMessage('New Game')
   $('#resetBtn').text('Reset')
@@ -120,7 +95,6 @@ const gameOver = function () {
 const finishTurn = function (responseData) {
   store.currentGame = responseData.game
   initTurn(players.nextPlayerTurn())
-  nextMove()
 }
 
 const initTurn = function (player) {
@@ -130,7 +104,6 @@ const initTurn = function (player) {
     .removeClass('x-turn o-turn')
     .addClass(turn)
     .text('Player ' + player.name)
-  displayMove()
 }
 
 const displayStatistics = function (responseData) {
@@ -196,8 +169,6 @@ module.exports = {
   clearBoard,
   finishTurn,
   gameOver,
-  getCurrentMove,
-  nextMove,
   displayStatistics,
   showFinishedGames,
   showUnfinishedGames,
