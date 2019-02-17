@@ -2,6 +2,7 @@
 // main/utility.js
 
 const store = require('../store')
+const themes = require('./theme.js')
 
 // returns boolean value for whether token exists
 const isAuthenticated = () => {
@@ -36,7 +37,7 @@ const alertMessage = function (message, cls = 'info', timeout = 5000) {
   }, timeout)
 }
 
-/**
+/**  NOT WORKING
  * toastMessage - sends Bootstrap Toast message to #userMessage element
  * @param  {type} message          description
  * @param  {type} title            description
@@ -75,6 +76,11 @@ const getCurrentGameId = function () {
   }
 }
 
+// easier access to theme from other files
+const getTheme = function () {
+  return themes.getCurrentTheme()
+}
+
 module.exports = {
   isAuthenticated,
   userMessage,
@@ -83,5 +89,6 @@ module.exports = {
   successMessage,
   toastMessage,
   getStoreValue,
-  getCurrentGameId
+  getCurrentGameId,
+  getTheme
 }
