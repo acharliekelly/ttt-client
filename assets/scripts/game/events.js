@@ -7,40 +7,20 @@ const gameApi = require('./api')
 const winning = require('./winning')
 const utils = require('../main/utility')
 
+const SQUARE_BACKGROUND_COLOR = '#ffffff'
+
 // Public: when user clicks Reset button
 const onReset = function () {
+  // TODO: check if moves made in current game;
+  // if not, ignore reset
   gameUi.startGame()
 }
 
-const onClickSquareTokenless = function (event) {
-  console.log('Square clicked: ' + event.target.id)
+// Public: when user clicks square
+const onClickSquare = function (event) {
   const square = getEmptySquare(event)
   if (square) {
     // square is empty, proceed with move
-    console.log('square is empty')
-    const p = players.getCurrentPlayer()
-
-    // update html board
-    markSquare(square, p)
-
-    if (winning.checkForWin(p)) {
-      gameUi.showWinner(p)
-    } else if (winning.checkForDraw()) {
-      gameUi.showStalemate()
-    } else {
-      gameUi.endTurn()
-    }
-  } else {
-    console.log('square is already used')
-  }
-}
-
-const onClickSquareToken = function (event) {
-  console.log('Square clicked: ' + event.target.id)
-  const square = getEmptySquare(event)
-  if (square) {
-    // square is empty, proceed with move
-    console.log('square is empty')
     const p = players.getCurrentPlayer()
 
     // update html board
@@ -48,30 +28,22 @@ const onClickSquareToken = function (event) {
 
     // update API board
     const index = square.data('index')
-    let success = gameUi.finishTurn
+    let successFn = gameUi.finishTurn
     let isOver = false
 
     if (winning.checkForWin(p)) {
-      success = gameUi.showWinner
+      successFn = gameUi.showWinner
       isOver = true
     } else if (winning.checkForDraw()) {
-      success = gameUi.showStalemate
+      successFn = gameUi.showStalemate
       isOver = true
     }
-    gameApi.updateGame(p.squareClass, index, isOver)
-      .then(success)
+    const gameId = utils.getCurrentGameId()
+    gameApi.updateGame(gameId, p.xo, index, isOver)
+      .then(successFn)
       .catch(gameUi.gameApiFailure)
   } else {
-    console.log('square is already used')
-  }
-}
-
-// Public: when user clicks square
-const onClickSquare = function (event) {
-  if (utils.isAuthenticated()) {
-    onClickSquareToken(event)
-  } else {
-    onClickSquareTokenless(event)
+    utils.userMessage('That square is already taken', 'warning')
   }
 }
 
@@ -88,29 +60,53 @@ const onHoverSquare = function (event) {
 const onLeaveSquare = function (event) {
   const square = getEmptySquare(event)
   if (square) {
-    square.css('background-color', 'transparent')
+    square.css('background-color', SQUARE_BACKGROUND_COLOR)
   }
 }
 
-const getPlayerStats = function () {
+const onPlayerStats = function () {
   if (utils.isAuthenticated()) {
-    gameApi.myFinishedGames()
+    gameApi.myGames()
       .then(gameUi.displayStatistics)
       .catch(gameUi.gameApiFailure)
   }
 }
 
+const onGetFinishedGames = function () {
+  if (utils.isAuthenticated()) {
+    gameApi.myFinishedGames()
+      .then(gameUi.showFinishedGames)
+      .catch(gameUi.gameApiFailure)
+  }
+}
+
+const onGetUnfinishedGames = function () {
+  if (utils.isAuthenticated()) {
+    gameApi.myUnfinishedGames()
+      .then(gameUi.showUnfinishedGames)
+      .catch(gameUi.gameApiFailure)
+  }
+}
+
+const onShowGame = function (gameId) {
+  gameApi.showGame(gameId)
+    .then(gameUi.displayGame)
+    .catch(gameUi.gameApiFailure)
+}
+
 const markSquare = function (square, player) {
   square.addClass(player.squareClass)
   square.css('background-color', 'transparent')
-  square.off()
+  square.data('enabled', 'false')
 }
 
 // return square as jq object only if empty
 const getEmptySquare = function (event) {
   // get square as $ object
   const square = $(event.target)
-  if (square.hasClass('x') || square.hasClass('o')) {
+  if (square.hasClass('x') ||
+      square.hasClass('o') ||
+      square.data('enabled') !== 'true') {
     return false
   } else {
     return square
@@ -122,5 +118,9 @@ module.exports = {
   onClickSquare,
   onHoverSquare,
   onLeaveSquare,
-  getPlayerStats
+  onPlayerStats,
+  onGetFinishedGames,
+  onGetUnfinishedGames,
+  onShowGame,
+  SQUARE_BACKGROUND_COLOR
 }

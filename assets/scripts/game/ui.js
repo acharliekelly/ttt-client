@@ -70,7 +70,6 @@ const startGame = function () {
 const createGameSuccess = function (responseData) {
   store.currentGame = responseData.game
   const msg = `Game #${responseData.game.id} created`
-  console.log(msg)
   utils.userMessage(msg)
 }
 
@@ -107,26 +106,19 @@ const showStalemate = function () {
 }
 
 const clearBoard = function () {
-  console.log('clearing game board')
-  $('#GameBoard .square').removeClass('x o')
+  $('#GameBoard .square').removeClass('x o').data('enabled', 'true')
 }
 
 const gameOver = function () {
   console.log('Game Over')
   // remove turn-classes, handlers
   $('#GameBoard').removeClass('x-turn o-turn')
-  $('#GameBoard .square').off()
+  $('#GameBoard .square').data('enabled', 'false')
 }
 
 // return from API
 const finishTurn = function (responseData) {
   store.currentGame = responseData.game
-  initTurn(players.nextPlayerTurn())
-  nextMove()
-}
-
-// same as finishTurn but without API response
-const endTurn = function () {
   initTurn(players.nextPlayerTurn())
   nextMove()
 }
@@ -143,7 +135,56 @@ const initTurn = function (player) {
 
 const displayStatistics = function (responseData) {
   const gamesPlayed = responseData.games.length
-  $('#playerStats .games-played').text(gamesPlayed)
+  $('#playerStats .all-games').text(gamesPlayed)
+  // TODO: figure out the rest of the stats
+}
+
+const showFinishedGames = function (responseData) {
+  $('#gameHistory .card-header').text('Completed Games')
+  responseData.games.forEach(game => {
+    const item = `<li class="list-group-item">Game #${game.id} <a class="game" href="#${game.id}>view</a></li>"`
+    $('#gameHistory').append(item)
+  })
+  $('#gameHistory a').on('click', (event) => {
+    event.preventDefault()
+    // TODO: show game
+    console.log('Show Game #' + event.target.href)
+  })
+  $('#gameHistory .card').show()
+}
+
+const showUnfinishedGames = function (responseData) {
+  $('#gameHistory .card-header').text('In-Progress Games')
+  responseData.games.forEach(game => {
+    const item = `<li class="list-group-item">Game #${game.id} <a class="game" href="#load-${game.id}>view</a></li>"`
+    $('#gameHistory').append(item)
+  })
+  $('#gameHistory a').on('click', (event) => {
+    event.preventDefault()
+    // TODO: show game
+    console.log('Show Game #' + event.target.href)
+  })
+  $('#gameHistory .card').show()
+}
+
+const displayGame = function (responseData) {
+  console.log('Display Game')
+  clearBoard()
+  const isOver = responseData.game.over
+  const cells = responseData.game.cells
+  $('#GameBoard .square').each(() => {
+    const index = $(this).data('index')
+    if (cells[index].length > 0) {
+      $(this).addClass(cells[index])
+        .css('background-color', 'transparent')
+        .data('enabled', 'false')
+    } else {
+      $(this).data('enabled', isOver)
+    }
+  })
+  if (!isOver) {
+    // TODO: figure out whose turn it is
+  }
 }
 
 module.exports = {
@@ -154,9 +195,11 @@ module.exports = {
   showStalemate,
   clearBoard,
   finishTurn,
-  endTurn,
   gameOver,
   getCurrentMove,
   nextMove,
-  displayStatistics
+  displayStatistics,
+  showFinishedGames,
+  showUnfinishedGames,
+  displayGame
 }

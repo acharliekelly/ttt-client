@@ -1,11 +1,12 @@
 'use strict'
 // game/player.js
 
-const Player = function (name, color, imageFile) {
-  this.name = name.toUpperCase()
-  this.turnClass = name + '-turn'
-  this.winClass = name + '-win'
-  this.squareClass = name
+const Player = function (mark, color, imageFile) {
+  this.name = mark.toUpperCase()
+  this.turnClass = mark + '-turn'
+  this.winClass = mark + '-win'
+  this.squareClass = mark
+  this.xo = mark
   this.color = color
   this.image = imageFile
 }

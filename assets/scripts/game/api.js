@@ -66,8 +66,7 @@ const showGame = function (gameId) {
   })
 }
 
-const updateGame = function (mark, index, isFinal) {
-  const gameId = store.game.id
+const updateGame = function (gameId, mark, index, isFinal) {
   return $.ajax({
     url: `${config.apiUrl}/games/${gameId}`,
     method: 'PATCH',
