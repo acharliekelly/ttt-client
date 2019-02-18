@@ -56,11 +56,12 @@
               <div>Current User: <span id="userEmail"></span></div>
               <section id="playerStats" class="card">
                 <div class="card-header">Statistics</div>
-                <button id="statsBtn" class="btn btn-secondary">View Stats</button>
+                <button id="statsBtn" class="btn btn-info">View Stats</button>
                 <!-- Player Stats -->
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item">Games Started: <span class="all-games"></span></li>
+                  <li class="list-group-item">Games Created: <span class="all-games">?</span></li>
                   <li class="list-group-item">Games Finished: <span class="complete-games">?</span></li>
+                  <li class="list-group-item">Games Not Started: <span class="unstarted-games">?</span></li>
                   <li class="list-group-item">Games Won: <span class="games-won">?</span></li>
                   <li class="list-group-item">Win Percent: <span class="win-pct">?</span></li>
                 </ul>
@@ -69,16 +70,12 @@
               <section id="gameHistory">
                 <h5 class="section-head">Game History</h5>
                 <div class="button-group">
-                  <button id="finishedGamesBtn" type="button">Finished Games</button>
-                  <button id="unfinishedGamesBtn" type="button">Unfinished Games</button>
+                  <button id="finishedGamesBtn" type="button" class="btn btn-dark">Finished Games</button>
+                  <button id="unfinishedGamesBtn" type="button" class="btn btn-dark">Unfinished Games</button>
                 </div>
                 <div class="card">
                   <div class="card-header"></div>
-                  <ul id="pastGames" class="list-group list-group-flush">
-                    <li class="list-group-item">Game 1 <a href="#">view</a></li>
-                    <li class="list-group-item">Game 2 <a href="#">view</a></li>
-                    <li class="list-group-item">Game 3 <a href="#">view</a></li>
-                  </ul>
+                  <ul id="pastGames" class="list-group list-group-flush"></ul>
                 </div>
               </section>
             </div>
@@ -90,46 +87,19 @@
             <strong class="no-token">You must be logged in to play.</strong>
             <div id="GameBoard">
               <div class="column" id="column-0">
-                <span id="cell-0-0" class="square" data-index="0">
-                  <img src="public/images/x.png" alt="X" class="x">
-                  <img src="public/images/o.png" alt="O" class="o">
-                </span>
-                <span id="cell-0-1" class="square" data-index="1">
-                  <img src="public/images/x.png" alt="X" class="x">
-                  <img src="public/images/o.png" alt="O" class="o">
-                </span>
-                <span id="cell-0-2" class="square" data-index="2">
-                  <img src="public/images/x.png" alt="X" class="x">
-                  <img src="public/images/o.png" alt="O" class="o">
-                </span>
+                <span id="cell-0-0" class="square" data-index="0"></span>
+                <span id="cell-0-1" class="square" data-index="1"></span>
+                <span id="cell-0-2" class="square" data-index="2"></span>
               </div>
               <div class="column" id="column-1">
-                <span id="cell-1-0" class="square" data-index="3">
-                  <img src="public/images/x.png" alt="X" class="x">
-                  <img src="public/images/o.png" alt="O" class="o">
-                </span>
-                <span id="cell-1-1" class="square" data-index="4">
-                  <img src="public/images/x.png" alt="X" class="x">
-                  <img src="public/images/o.png" alt="O" class="o">
-                </span>
-                <span id="cell-1-2" class="square" data-index="5">
-                  <img src="public/images/x.png" alt="X" class="x">
-                  <img src="public/images/o.png" alt="O" class="o">
-                </span>
+                <span id="cell-1-0" class="square" data-index="3"></span>
+                <span id="cell-1-1" class="square" data-index="4"></span>
+                <span id="cell-1-2" class="square" data-index="5"></span>
               </div>
               <div class="column" id="column-2">
-                <span id="cell-2-0" class="square" data-index="6">
-                  <img src="public/images/x.png" alt="X" class="x">
-                  <img src="public/images/o.png" alt="O" class="o">
-                </span>
-                <span id="cell-2-1" class="square" data-index="7">
-                  <img src="public/images/x.png" alt="X" class="x">
-                  <img src="public/images/o.png" alt="O" class="o">
-                </span>
-                <span id="cell-2-2" class="square" data-index="8">
-                  <img src="public/images/x.png" alt="X" class="x">
-                  <img src="public/images/o.png" alt="O" class="o">
-                </span>
+                <span id="cell-2-0" class="square" data-index="6"></span>
+                <span id="cell-2-1" class="square" data-index="7"></span>
+                <span id="cell-2-2" class="square" data-index="8"></span>
               </div>
             </div>
           </div>
