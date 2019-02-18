@@ -15,30 +15,6 @@ const jQueryWins = [
   '#cell-0-2.PLAYER, #cell-1-1.PLAYER, #cell-2-0.PLAYER' // diagonal 2
 ]
 
-const possibleWins = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6]
-]
-
-// Public: takes a 9-item string array game representation from API
-// if game is won by xo ('x'|'o'), return
-// the win method it matched from possibleWins array (0-7)
-// if player xo did not win, return -1
-const isWin = (game, xo) => {
-  for (let i = 0; i < possibleWins.length; i++) {
-    if (possibleWins[i].map(w => game[w]).every(cell => cell === xo)) {
-      return i
-    }
-  }
-  return -1
-}
-
 /** Public
  * checkForWin (Player)
  * checks for win by player
@@ -62,8 +38,23 @@ const checkForDraw = () => {
   return (squares.length === maximumMoves)
 }
 
+// Convert board state to Game API array
+const toGameArray = () => {
+  const cells = []
+  $('#GameBoard .squares').each(() => {
+    if ($(this).hasClass('x')) {
+      cells.push('x')
+    } else if ($(this).hasClass('o')) {
+      cells.push('o')
+    } else {
+      cells.push('')
+    }
+  })
+  return cells
+}
+
 module.exports = {
   checkForWin,
   checkForDraw,
-  isWin
+  toGameArray
 }
