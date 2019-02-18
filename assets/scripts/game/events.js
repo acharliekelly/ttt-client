@@ -43,7 +43,7 @@ const onClickSquare = function (event) {
       .then(successFn)
       .catch(gameUi.gameApiFailure)
   } else {
-    utils.userMessage('That square is already taken', 'warning')
+    utils.userMessage('Invalid Move', 'warning')
   }
 }
 
@@ -52,7 +52,8 @@ const onHoverSquare = function (event) {
   const square = getEmptySquare(event)
   if (square) {
     const p = players.getCurrentPlayer()
-    square.css('background-color', p.color)
+    const theme = utils.getTheme()
+    square.css('background-color', p.getColor(theme))
   }
 }
 
@@ -94,8 +95,11 @@ const onShowGame = function (gameId) {
     .catch(gameUi.gameApiFailure)
 }
 
+// Mark Square
 const markSquare = function (square, player) {
-  square.addClass(player.squareClass)
+  square.addClass(player.xo)
+  const img = utils.getMarkImage(player.xo)
+  square.html(img)
   square.css('background-color', 'transparent')
   square.data('enabled', 'false')
 }
@@ -104,8 +108,7 @@ const markSquare = function (square, player) {
 const getEmptySquare = function (event) {
   // get square as $ object
   const square = $(event.target)
-  if (square.hasClass('x') ||
-      square.hasClass('o') ||
+  if ((square.children('img').length > 0) ||
       square.data('enabled') !== 'true') {
     return false
   } else {
