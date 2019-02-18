@@ -26,6 +26,7 @@ const players = require('./player')
 const utils = require('../main/utility')
 const gameApi = require('./api')
 const store = require('../store')
+const logic = require('./logic')
 
 // Public: intitialize board
 const startGame = function () {
@@ -81,13 +82,15 @@ const showStalemate = function () {
 }
 
 const clearBoard = function () {
-  $('#GameBoard .square').removeClass('x o').data('enabled', 'true')
+  $('#GameBoard .square').empty()
+    .removeClass('x o')
+    .data('enabled', 'true')
+  $('#playerTurn').css('color', '#000').text('')
 }
 
 const gameOver = function () {
   console.log('Game Over')
   // remove turn-classes, handlers
-  $('#GameBoard').removeClass('x-turn o-turn')
   $('#GameBoard .square').data('enabled', 'false')
 }
 
@@ -98,65 +101,103 @@ const finishTurn = function (responseData) {
 }
 
 const initTurn = function (player) {
-  const turn = player.turnClass
-  $('#GameBoard').removeClass('x-turn o-turn').addClass(turn)
-  $('#playerTurn')
-    .removeClass('x-turn o-turn')
-    .addClass(turn)
-    .text('Player ' + player.name)
+  const th = utils.getTheme()
+  $('#playerTurn').text('Player ' + player.name)
+    .css('color', player.getColor(th))
 }
 
 const displayStatistics = function (responseData) {
-  const gamesPlayed = responseData.games.length
-  $('#playerStats .all-games').text(gamesPlayed)
-  // TODO: figure out the rest of the stats
+  // Calculate player stats
+  const games = responseData.games
+  const numTotal = games.length
+  $('#playerStats .all-games').text(numTotal)
+
+  const finishedGames = games.filter(game => game.over === true)
+  const finishedCnt = finishedGames.length
+  $('#playerStats .complete-games').text(finishedCnt)
+
+  const unstarted = logic.gamesUnstarted(games)
+  const unstartedCnt = unstarted.length
+  $('#playerStats .unstarted-games').text(unstartedCnt)
+
+  const wonByX = logic.gamesWonByX(finishedGames)
+  const wonCnt = wonByX.length
+  $('#playerStats .games-won').text(wonCnt)
+
+  let winPct = 0
+  if (finishedCnt > 0 && wonCnt > 0) {
+    winPct = wonCnt / finishedCnt
+  }
+  $('#playerStats .win-pct').text(winPct)
 }
 
 const showFinishedGames = function (responseData) {
-  $('#gameHistory .card-header').text('Completed Games')
-  responseData.games.forEach(game => {
-    const item = `<li class="list-group-item">Game #${game.id} <a class="game" href="#${game.id}>view</a></li>"`
-    $('#gameHistory').append(item)
-  })
-  $('#gameHistory a').on('click', (event) => {
-    event.preventDefault()
-    // TODO: show game
-    console.log('Show Game #' + event.target.href)
-  })
-  $('#gameHistory .card').show()
+  showGameHistory(responseData, true)
 }
 
 const showUnfinishedGames = function (responseData) {
-  $('#gameHistory .card-header').text('In-Progress Games')
+  showGameHistory(responseData, false)
+}
+
+const showGameHistory = function (responseData, isFinished) {
+  const title = isFinished ? 'Completed Games' : 'Games In-Progress'
+  $('#gameHistory .card-header').text(title)
+  $('#pastGames').html('')
   responseData.games.forEach(game => {
-    const item = `<li class="list-group-item">Game #${game.id} <a class="game" href="#load-${game.id}>view</a></li>"`
-    $('#gameHistory').append(item)
+    const btnColor = isFinished ? 'light' : 'dark'
+    const item = `<li class="list-group-item"><button id="g${game.id}" class="btn btn-${btnColor}">Game #${game.id}</button></li>`
+    $('#pastGames').append(item)
   })
-  $('#gameHistory a').on('click', (event) => {
-    event.preventDefault()
-    // TODO: show game
-    console.log('Show Game #' + event.target.href)
-  })
+  $('#pastGames button').on('click', onShowGame)
+
   $('#gameHistory .card').show()
 }
 
+// Kind of unnecessary, come to think of it
+const onShowGame = function (event) {
+  const gameId = event.target.id.substring(1)
+  console.log('Show Game #' + gameId)
+  gameApi.showGame(gameId)
+    .then(displayGame)
+    .catch(gameApiFailure)
+}
+
 const displayGame = function (responseData) {
-  console.log('Display Game')
+  console.log('Display Game:', responseData.game)
   clearBoard()
   const isOver = responseData.game.over
   const cells = responseData.game.cells
-  $('#GameBoard .square').each(() => {
-    const index = $(this).data('index')
-    if (cells[index].length > 0) {
-      $(this).addClass(cells[index])
-        .css('background-color', 'transparent')
-        .data('enabled', 'false')
+  if (logic.isEmpty(cells)) {
+    console.log('Board is empty')
+    $('#GameBoard .square').data('enabled', isOver ? 'true' : 'false')
+  } else {
+    console.log('Cell Array:', cells)
+    $('#GameBoard .square').each((index) => {
+      // const index = $(this).data('index')
+      const mark = cells[index]
+      console.log('Cell ' + index + ': ' + mark)
+      if (mark !== '') {
+        console.log('marking cell: ' + mark)
+        // same as events.markSquare
+        const img = utils.getMarkImage(mark)
+        $(this).addClass(mark)
+          .css('background-color', 'transparent')
+          .data('enabled', 'false')
+          .html(img)
+      } else {
+        $(this).data('enabled', isOver ? 'true' : 'false')
+      }
+    })
+  }
+  if (!isOver) { // play
+    const xo = logic.playerTurn(cells)
+    if (xo === null) {
+      // board is full, yet somehow inexplicably the game is not over
+      utils.userMessage('Board is Full!')
     } else {
-      $(this).data('enabled', isOver)
+      const player = players.getPlayer(xo)
+      initTurn(player)
     }
-  })
-  if (!isOver) {
-    // TODO: figure out whose turn it is
   }
 }
 

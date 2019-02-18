@@ -81,6 +81,12 @@ const getTheme = function () {
   return themes.getCurrentTheme()
 }
 
+const getMarkImage = function (mark) {
+  const theme = themes.getCurrentTheme()
+  const src = theme.path + mark + '.png'
+  return `<img src="${src}" alt="${mark}" class="${mark}">`
+}
+
 module.exports = {
   isAuthenticated,
   userMessage,
@@ -90,5 +96,6 @@ module.exports = {
   toastMessage,
   getStoreValue,
   getCurrentGameId,
-  getTheme
+  getTheme,
+  getMarkImage
 }

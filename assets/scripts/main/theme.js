@@ -22,7 +22,7 @@ const availableThemes = [
   gothicTheme
 ]
 
-let _currentThemeIndex
+let _currentThemeIndex = 0
 
 const getCurrentTheme = function () {
   return availableThemes[_currentThemeIndex]
