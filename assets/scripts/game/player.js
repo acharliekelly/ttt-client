@@ -11,7 +11,7 @@ const Player = function (mark) {
   this.xo = mark
 }
 
-Player.prototype.getImage = function (theme) {
+Player.prototype.getImagePath = function (theme) {
   return theme.path + this.xo + '.png'
 }
 
@@ -34,7 +34,18 @@ const nextPlayerTurn = function () {
   return getCurrentPlayer()
 }
 
+const getPlayer = function (mark) {
+  if (mark.toLowerCase() === 'x') {
+    return playerX
+  } else if (mark.toLowerCase() === 'o') {
+    return playerO
+  } else {
+    return null
+  }
+}
+
 module.exports = {
   getCurrentPlayer,
-  nextPlayerTurn
+  nextPlayerTurn,
+  getPlayer
 }
