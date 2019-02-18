@@ -105,3 +105,5 @@ jspm_packages
 
 
 # End of https://www.gitignore.io/api/node
+
+curl-scripts/game-data\.json

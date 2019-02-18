@@ -25,31 +25,8 @@
 const players = require('./player')
 const utils = require('../main/utility')
 const gameApi = require('./api')
-// const gameEvents = require('./events')
 const store = require('../store')
-
-let _currentMove
-
-const resetMoves = function () {
-  _currentMove = 0
-}
-
-const nextMove = function () {
-  if (players.getCurrentPlayer().name === 'X') {
-    _currentMove++
-  }
-  return _currentMove
-}
-
-const displayMove = function () {
-  if (_currentMove === undefined) resetMoves()
-  $('#moveInfo').text('Move ' + _currentMove)
-}
-
-// Public: current move counter
-const getCurrentMove = function () {
-  return _currentMove
-}
+const logic = require('./logic')
 
 // Public: intitialize board
 const startGame = function () {
@@ -61,7 +38,6 @@ const startGame = function () {
       .then(createGameSuccess)
       .catch(gameApiFailure)
   }
-  resetMoves()
   initTurn(players.getCurrentPlayer())
   utils.userMessage('New Game')
   $('#resetBtn').text('Reset')
@@ -70,7 +46,6 @@ const startGame = function () {
 const createGameSuccess = function (responseData) {
   store.currentGame = responseData.game
   const msg = `Game #${responseData.game.id} created`
-  console.log(msg)
   utils.userMessage(msg)
 }
 
@@ -107,43 +82,123 @@ const showStalemate = function () {
 }
 
 const clearBoard = function () {
-  console.log('clearing game board')
-  $('#GameBoard .square').removeClass('x o')
+  $('#GameBoard .square').empty()
+    .removeClass('x o')
+    .data('enabled', 'true')
+  $('#playerTurn').css('color', '#000').text('')
 }
 
 const gameOver = function () {
   console.log('Game Over')
   // remove turn-classes, handlers
-  $('#GameBoard').removeClass('x-turn o-turn')
-  $('#GameBoard .square').off()
+  $('#GameBoard .square').data('enabled', 'false')
 }
 
 // return from API
 const finishTurn = function (responseData) {
   store.currentGame = responseData.game
   initTurn(players.nextPlayerTurn())
-  nextMove()
-}
-
-// same as finishTurn but without API response
-const endTurn = function () {
-  initTurn(players.nextPlayerTurn())
-  nextMove()
 }
 
 const initTurn = function (player) {
-  const turn = player.turnClass
-  $('#GameBoard').removeClass('x-turn o-turn').addClass(turn)
-  $('#playerTurn')
-    .removeClass('x-turn o-turn')
-    .addClass(turn)
-    .text('Player ' + player.name)
-  displayMove()
+  const th = utils.getTheme()
+  $('#playerTurn').text('Player ' + player.name)
+    .css('color', player.getColor(th))
 }
 
 const displayStatistics = function (responseData) {
-  const gamesPlayed = responseData.games.length
-  $('#playerStats .games-played').text(gamesPlayed)
+  // Calculate player stats
+  const games = responseData.games
+  const numTotal = games.length
+  $('#playerStats .all-games').text(numTotal)
+
+  const finishedGames = games.filter(game => game.over === true)
+  const finishedCnt = finishedGames.length
+  $('#playerStats .complete-games').text(finishedCnt)
+
+  const unstarted = logic.gamesUnstarted(games)
+  const unstartedCnt = unstarted.length
+  $('#playerStats .unstarted-games').text(unstartedCnt)
+
+  const wonByX = logic.gamesWonByX(finishedGames)
+  const wonCnt = wonByX.length
+  $('#playerStats .games-won').text(wonCnt)
+
+  let winPct = 0
+  if (finishedCnt > 0 && wonCnt > 0) {
+    winPct = wonCnt / finishedCnt
+  }
+  $('#playerStats .win-pct').text(winPct)
+}
+
+const showFinishedGames = function (responseData) {
+  showGameHistory(responseData, true)
+}
+
+const showUnfinishedGames = function (responseData) {
+  showGameHistory(responseData, false)
+}
+
+const showGameHistory = function (responseData, isFinished) {
+  const title = isFinished ? 'Completed Games' : 'Games In-Progress'
+  $('#gameHistory .card-header').text(title)
+  $('#pastGames').html('')
+  responseData.games.forEach(game => {
+    const btnColor = isFinished ? 'light' : 'dark'
+    const item = `<li class="list-group-item"><button id="g${game.id}" class="btn btn-${btnColor}">Game #${game.id}</button></li>`
+    $('#pastGames').append(item)
+  })
+  $('#pastGames button').on('click', onShowGame)
+
+  $('#gameHistory .card').show()
+}
+
+// Kind of unnecessary, come to think of it
+const onShowGame = function (event) {
+  const gameId = event.target.id.substring(1)
+  console.log('Show Game #' + gameId)
+  gameApi.showGame(gameId)
+    .then(displayGame)
+    .catch(gameApiFailure)
+}
+
+const displayGame = function (responseData) {
+  console.log('Display Game:', responseData.game)
+  clearBoard()
+  const isOver = responseData.game.over
+  const cells = responseData.game.cells
+  if (logic.isEmpty(cells)) {
+    console.log('Board is empty')
+    $('#GameBoard .square').data('enabled', isOver ? 'true' : 'false')
+  } else {
+    console.log('Cell Array:', cells)
+    $('#GameBoard .square').each((index) => {
+      // const index = $(this).data('index')
+      const mark = cells[index]
+      console.log('Cell ' + index + ': ' + mark)
+      if (mark !== '') {
+        console.log('marking cell: ' + mark)
+        // same as events.markSquare
+        const img = utils.getMarkImage(mark)
+        $(this).addClass(mark)
+          .css('background-color', 'transparent')
+          .data('enabled', 'false')
+          .html(img)
+      } else {
+        $(this).data('enabled', isOver ? 'true' : 'false')
+      }
+    })
+  }
+  if (!isOver) { // play
+    const xo = logic.playerTurn(cells)
+    if (xo === null) {
+      // board is full, yet somehow inexplicably the game is not over
+      utils.userMessage('Board is Full!')
+    } else {
+      const player = players.getPlayer(xo)
+      initTurn(player)
+    }
+  }
 }
 
 module.exports = {
@@ -154,9 +209,9 @@ module.exports = {
   showStalemate,
   clearBoard,
   finishTurn,
-  endTurn,
   gameOver,
-  getCurrentMove,
-  nextMove,
-  displayStatistics
+  displayStatistics,
+  showFinishedGames,
+  showUnfinishedGames,
+  displayGame
 }

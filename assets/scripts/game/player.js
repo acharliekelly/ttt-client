@@ -1,32 +1,47 @@
 'use strict'
 // game/player.js
 
-const Player = function (name, color, imageFile) {
-  this.name = name.toUpperCase()
-  this.turnClass = name + '-turn'
-  this.winClass = name + '-win'
-  this.squareClass = name
-  this.color = color
-  this.image = imageFile
+// TODO: simplify - color & image are handled by theme
+
+const Player = function (mark) {
+  this.name = mark.toUpperCase()
+  this.turnClass = mark + '-turn'
+  this.winClass = mark + '-win'
+  this.squareClass = mark
+  this.xo = mark
 }
 
-const playerX = new Player('x', '#f00', 'public/images/x.png')
-const playerO = new Player('o', '#00f', 'public/images/o.png')
+Player.prototype.getImagePath = function (theme) {
+  return theme.path + this.xo + '.png'
+}
+
+Player.prototype.getColor = function (theme) {
+  return (this.xo === 'x' ? theme.xColor : theme.oColor)
+}
+
+const playerX = new Player('x')
+const playerO = new Player('o')
 const gamePlayers = [playerX, playerO]
 
-let currentPlayerIndex = 0
+let _currentPlayerIndex = 0
 
 const getCurrentPlayer = function () {
-  return gamePlayers[currentPlayerIndex]
+  return gamePlayers[_currentPlayerIndex]
 }
 
 const nextPlayerTurn = function () {
-  currentPlayerIndex = (currentPlayerIndex + 1) % 2
+  _currentPlayerIndex = (_currentPlayerIndex + 1) % 2
   return getCurrentPlayer()
 }
 
 const getPlayer = function (mark) {
-  return (mark === 'x') ? playerX : playerO
+  if (mark.toLowerCase() === 'x') {
+    return playerX
+  } else if (mark.toLowerCase() === 'o') {
+    return playerO
+  } else {
+    return null
+  }
 }
 
 module.exports = {

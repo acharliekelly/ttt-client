@@ -18,7 +18,7 @@ const utils = require('../main/utility')
 // Public: check for token, update all elements
 const refreshAuthElements = () => {
   const token = utils.isAuthenticated()
-  console.log('refreshing auth with ' + (token ? '' : 'no') + ' token')
+  // console.log('refreshing auth with ' + (token ? '' : 'no') + ' token')
   $('.auth-token').toggle(token)
   $('.no-token').toggle(!token)
   $('.auth-enable').prop('disabled', !token)
@@ -30,6 +30,8 @@ const refreshAuthElements = () => {
 const clearUserData = () => {
   $('#userEmail').html('')
   // Clear stats
+  $('#playerStats li span').text('')
+  $('#pastGames').children().empty()
 }
 
 // Public
@@ -42,7 +44,7 @@ const authFail = () => {
 const loginSuccess = (responseData) => {
   const msg = 'Authentication successful'
   store.user = responseData.user
-  utils.userMessage(msg)
+  utils.successMessage(msg)
   $('#userEmail').text(store.user.email)
   refreshAuthElements()
 }

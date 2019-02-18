@@ -1,6 +1,7 @@
 'use strict'
 
 // assets/scripts/app.js
+const config = require('./config')
 const authUi = require('./auth/ui')
 const authEvents = require('./auth/events')
 const gameEvents = require('./game/events')
@@ -14,9 +15,13 @@ $(() => {
   // set click events for all .auth-enable buttons
   $('#authPanel .btn').on('click', modalForm)
 
-  $('#statsBtn').on('click', gameEvents.getPlayerStats)
+  $('#statsBtn').on('click', gameEvents.onPlayerStats)
 
-  $('#refreshBtn').on('click', authUi.refreshAuthElements)
+  $('#finishedGamesBtn').on('click', gameEvents.onGetFinishedGames)
+
+  $('#unfinishedGamesBtn').on('click', gameEvents.onGetUnfinishedGames)
+
+  // $('#refreshBtn').on('click', authUi.refreshAuthElements)
 
   // $('#gameOptionsBtn').on('click', gameEvents.onOptions)
 
@@ -37,6 +42,10 @@ const modalForm = (event) => {
       $('#emailFieldEnclosure').show()
       $('#passwordFieldEnclosure').show()
       title = 'Login'
+      if (config.testMode) {
+        $('#emailField').val('tictactoe@cantimaginewhy.com')
+        $('#passwordField').val('password')
+      }
       break
     case 'signup':
       target = authEvents.onSignupSubmit
@@ -73,5 +82,6 @@ const initBoardBindings = function () {
     .on('click', gameEvents.onClickSquare)
     .on('mouseover', gameEvents.onHoverSquare)
     .on('mouseout', gameEvents.onLeaveSquare)
-    .css('background-color', '#fff')
+    .css('background-color', gameEvents.SQUARE_BACKGROUND_COLOR)
+    .data('enabled', 'true')
 }
