@@ -12,6 +12,7 @@ const onLoginSubmit = (event) => {
   authApi.signIn(formData)
     .then(authUi.loginSuccess)
     .catch(authUi.authFail)
+  $('#modalForm').modal('hide')
 }
 
 const onSignupSubmit = (event) => {
@@ -19,6 +20,7 @@ const onSignupSubmit = (event) => {
   authApi.signUp(formData)
     .then(authUi.signUpSuccess)
     .catch(authUi.authFail)
+  $('#modalForm').modal('hide')
 }
 
 const onChangePasswordSubmit = (event) => {
@@ -26,13 +28,14 @@ const onChangePasswordSubmit = (event) => {
   authApi.changePassword(formData)
     .then(authUi.changePasswordSuccess)
     .catch(authUi.authenticationError)
+  $('#modalForm').modal('hide')
 }
 
 const onSignoutConfirm = (event) => {
   event.preventDefault()
   authApi.signOut()
     .then(authUi.signOutSuccess)
-    .catch(authUi.authenticationError)
+    .catch(authUi.signOutSuccess)
 }
 
 const getFormData = (event) => {
