@@ -7,9 +7,8 @@
 }
 
 .panel {
-  margin: 10px auto;
-  background-image: url('public/images/wavegrid.png');
   background-repeat: repeat;
+  margin: 10px auto;
   border: inset thin #999;
   border-radius: 5px;
   padding: 5px;
@@ -19,8 +18,11 @@
 header {
   text-align: center;
   margin: 20px auto;
-}
 
+  .title-image {
+    height: 15vh;
+  }
+}
 
 main {
   margin: 0 10%;
