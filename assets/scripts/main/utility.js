@@ -14,6 +14,10 @@ const userMessage = function (message, alertClass = 'info') {
   alertMessage(message, alertClass)
 }
 
+const warningMessage = function (message) {
+  alertMessage(message, 'warning')
+}
+
 const successMessage = function (message) {
   // toastMessage(message, 'Success', 'bg-success')
   alertMessage(message, 'success')
@@ -25,6 +29,10 @@ const failure = function () {
 
 const errorMessage = function (message) {
   alertMessage(message, 'danger')
+}
+
+const fatalError = function () {
+  errorMessage('You know what? Go fuck yourself!')
 }
 
 const alertMessage = function (message, cls = 'info', timeout = 5000) {
@@ -69,9 +77,9 @@ const getStoreValue = function (propertyName) {
 }
 
 const getCurrentGameId = function () {
-  if (store.currentGame && store.currentGame.id) {
+  try {
     return store.currentGame.id
-  } else {
+  } catch (e) {
     return 0
   }
 }
@@ -87,15 +95,29 @@ const getMarkImage = function (mark) {
   return `<img src="${src}" alt="${mark}" class="${mark}">`
 }
 
+const getMarkColor = function (mark) {
+  const theme = themes.getCurrentTheme()
+  return (mark === 'x' ? theme.xColor : theme.oColor)
+}
+
+const allowReset = function () {
+  const squaresUsed = $('#GameBoard .squares img').length
+  return (getCurrentGameId() === 0 || squaresUsed > 0)
+}
+
 module.exports = {
   isAuthenticated,
   userMessage,
   failure,
   errorMessage,
+  warningMessage,
   successMessage,
+  fatalError,
   toastMessage,
   getStoreValue,
   getCurrentGameId,
   getTheme,
-  getMarkImage
+  getMarkImage,
+  getMarkColor,
+  allowReset
 }
