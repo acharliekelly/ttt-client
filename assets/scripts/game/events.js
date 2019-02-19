@@ -11,9 +11,13 @@ const SQUARE_BACKGROUND_COLOR = '#ffffff'
 
 // Public: when user clicks Reset button
 const onReset = function () {
-  // TODO: check if moves made in current game;
+  // check if moves made in current game;
   // if not, ignore reset
-  gameUi.startGame()
+  if (utils.allowReset()) {
+    gameUi.startGame()
+  } else {
+    utils.userMessage('You already started a game. How about finishing that one before you start a new one?')
+  }
 }
 
 // Public: when user clicks square
@@ -31,7 +35,11 @@ const onClickSquare = function (event) {
     let successFn = gameUi.finishTurn
     let isOver = false
 
-    if (winning.checkForWin(p)) {
+    // callback depends on current board state,
+    // so determine that first. if current player
+    // won, the winning squares will be highlighted
+    // by checkForWin (which is why it has to get the theme)
+    if (winning.checkForWin(p, utils.getTheme())) {
       successFn = gameUi.showWinner
       isOver = true
     } else if (winning.checkForDraw()) {
