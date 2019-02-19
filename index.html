@@ -5,11 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Do not add `link` tags-->
-    <link rel="shortcut icon" type="image/x-icon" href="public/images/favicon.png">
+    <link id="favicon" rel="shortcut icon" type="image/x-icon" href="public/images/favicon.png">
 
     <!-- Do not add `script` tags-->
     <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
     <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+<!-- prevent flash of unstyled content before jQuery loads -->
+    <style type="text/css">
+      body {
+      animation: fadein 2s;
+      }
+      @keyframes fadein {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    </style>
   </head>
   <body>
     <header>
