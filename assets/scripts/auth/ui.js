@@ -24,8 +24,7 @@ const refreshAuthElements = () => {
   $('.auth-enable').prop('disabled', !(token))
   if (!(token)) {
     clearUserData()
-    gameUi.clearBoard()
-    $('#GameBoard .square').css('background-color', '#000')
+    gameUi.clearBoard(false) // disable squares
   }
 }
 
