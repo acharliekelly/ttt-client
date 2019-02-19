@@ -14,20 +14,23 @@
 const store = require('../store')
 // const authEvents = require('./events') // circular reference
 const utils = require('../main/utility')
+const gameUi = require('../game/ui')
 
 // Public: check for token, update all elements
 const refreshAuthElements = () => {
   const token = utils.isAuthenticated()
-  // console.log('refreshing auth with ' + (token ? '' : 'no') + ' token')
   $('.auth-token').toggle(token)
-  $('.no-token').toggle(!token)
-  $('.auth-enable').prop('disabled', !token)
-  if (!token) {
+  $('.no-token').toggle(!(token))
+  $('.auth-enable').prop('disabled', !(token))
+  if (!(token)) {
     clearUserData()
+    gameUi.clearBoard()
+    $('#GameBoard .square').css('background-color', '#000')
   }
 }
 
 const clearUserData = () => {
+  if (store.currentGame) store.currentGame = null
   $('#userEmail').html('')
   // Clear stats
   $('#playerStats li span').text('')
@@ -72,6 +75,13 @@ const signOutSuccess = () => {
   refreshAuthElements()
 }
 
+// Public
+const signOutFail = () => {
+  store.user = null
+  utils.userMessage('OK, technically the sign-out failed, but the effect is the same.', 'warning')
+  refreshAuthElements()
+}
+
 module.exports = {
   refreshAuthElements,
   authFail,
@@ -79,5 +89,6 @@ module.exports = {
   loginSuccess,
   changePasswordSuccess,
   signUpSuccess,
-  signOutSuccess
+  signOutSuccess,
+  signOutFail
 }
