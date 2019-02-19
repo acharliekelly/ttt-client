@@ -7,8 +7,6 @@ const gameApi = require('./api')
 const winning = require('./winning')
 const utils = require('../main/utility')
 
-const SQUARE_BACKGROUND_COLOR = '#ffffff'
-
 // Public: when user clicks Reset button
 const onReset = function () {
   // check if moves made in current game;
@@ -69,7 +67,7 @@ const onHoverSquare = function (event) {
 const onLeaveSquare = function (event) {
   const square = getEmptySquare(event)
   if (square) {
-    square.css('background-color', SQUARE_BACKGROUND_COLOR)
+    square.css('background-color', utils.getTheme().readySquare)
   }
 }
 
@@ -132,6 +130,5 @@ module.exports = {
   onPlayerStats,
   onGetFinishedGames,
   onGetUnfinishedGames,
-  onShowGame,
-  SQUARE_BACKGROUND_COLOR
+  onShowGame
 }
