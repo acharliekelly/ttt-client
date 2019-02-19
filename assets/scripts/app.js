@@ -5,25 +5,34 @@ const config = require('./config')
 const authUi = require('./auth/ui')
 const authEvents = require('./auth/events')
 const gameEvents = require('./game/events')
+const options = require('./main/options')
+
+const testLogin = {
+  email: 'tictactoe@cantimaginewhy.com',
+  pw: 'password'
+}
 
 $(() => {
-  // bind event handlers
+  // Event Handlers
+
+  // Game Reset button
   $('#resetBtn').on('click', () => {
-    initBoardBindings()
+    initBoardBindings() // initialize game board
     gameEvents.onReset()
   })
-  // set click events for all .auth-enable buttons
-  $('#authPanel .btn').on('click', modalForm)
 
+  // set click events for all the modal form buttons
+  $('.modal-btn').on('click', modalForm)
+
+  // just sign out, no need to confirm
+  $('#signoutBtn').on('click', authEvents.onSignoutConfirm)
+
+  // get player stats
   $('#statsBtn').on('click', gameEvents.onPlayerStats)
 
   $('#finishedGamesBtn').on('click', gameEvents.onGetFinishedGames)
 
   $('#unfinishedGamesBtn').on('click', gameEvents.onGetUnfinishedGames)
-
-  // $('#refreshBtn').on('click', authUi.refreshAuthElements)
-
-  // $('#gameOptionsBtn').on('click', gameEvents.onOptions)
 
   // // show/hide/disable objects based on auth status
   authUi.refreshAuthElements()
@@ -31,50 +40,45 @@ $(() => {
 
 const modalForm = (event) => {
   const btn = $(event.target)
-  const currentOp = btn.data('operation')
-  $('#authOperation').val(currentOp)
-  $('#authenticationForm .form-group').hide()
-
+  const form = btn.data('form')
+  const formId = form + 'FormContent'
+  $('#modalForm').load('public/snippets/forms.html #' + formId)
   let target, title
-  switch (currentOp) {
+  switch (form) {
     case 'login':
       target = authEvents.onLoginSubmit
-      $('#emailFieldEnclosure').show()
-      $('#passwordFieldEnclosure').show()
       title = 'Login'
       if (config.testMode) {
-        $('#emailField').val('tictactoe@cantimaginewhy.com')
-        $('#passwordField').val('password')
+        $('#emailField').val(testLogin.email)
+        $('#passwordField').val(testLogin.pw)
       }
       break
     case 'signup':
       target = authEvents.onSignupSubmit
-      $('#emailFieldEnclosure').show()
-      $('#passwordFieldEnclosure').show()
-      $('#passwordConfFieldEnclosure').show()
       title = 'Sign Up'
       break
-    case 'changepw':
+    case 'changePassword':
       target = authEvents.onChangePasswordSubmit
-      $('#oldPasswordFieldEnclosure').show()
-      $('#newPasswordFieldEnclosure').show()
       title = 'Change Password'
       break
-    case 'signout':
-      target = authEvents.onSignoutConfirm
-      $('#signoutConfirmEnclosure').show()
-      title = 'Sign Out'
+    case 'options':
+      target = options.onOptionSubmit
+      title = 'Game Options'
+      // options.loadThemeOptions('radio')
+      break
   }
-  $('#authModalTitle').text(title)
-  $('#authenticationForm').on('submit', target)
+  // set the modal title and form target according to which button was clicked
+  $('#modalTitle').text(title)
+  $('#modalForm').on('submit', target)
 
-  // make this button submit the modal form and also close the modal
-  $('#authSubmitBtn').on('click', () => {
-    $('#authenticationForm').submit()
-    $('#authModal').modal('hide')
+  // make the modal submit button submit the form, and also close the modal
+  $('#modalSubmitBtn').on('click', () => {
+    $('#modalForm').trigger('submit')
+    $('#modalFormDialog').modal('hide')
   })
 
-  $('#authModal').modal('show')
+  // finally, display the modal form
+  $('#modalFormDialog').modal('show')
 }
 
 const initBoardBindings = function () {
@@ -85,3 +89,46 @@ const initBoardBindings = function () {
     .css('background-color', gameEvents.SQUARE_BACKGROUND_COLOR)
     .data('enabled', 'true')
 }
+
+// const modalAuthForm = (event) => {
+//   const btn = $(event.target)
+//   const currentOp = btn.data('operation')
+//   $('#authOperation').val(currentOp)
+//   $('#authenticationForm .form-group').hide()
+//
+//   let target, title
+//   switch (currentOp) {
+//     case 'login':
+//       target = authEvents.onLoginSubmit
+//       $('#emailFieldEnclosure').show()
+//       $('#passwordFieldEnclosure').show()
+//       title = 'Login'
+//       if (config.testMode) {
+//         $('#emailField').val(testLogin.email)
+//         $('#passwordField').val(testLogin.pw)
+//       }
+//       break
+//     case 'signup':
+//       target = authEvents.onSignupSubmit
+//       $('#emailFieldEnclosure').show()
+//       $('#passwordFieldEnclosure').show()
+//       $('#passwordConfFieldEnclosure').show()
+//       title = 'Sign Up'
+//       break
+//     case 'changepw':
+//       target = authEvents.onChangePasswordSubmit
+//       $('#oldPasswordFieldEnclosure').show()
+//       $('#newPasswordFieldEnclosure').show()
+//       title = 'Change Password'
+//   }
+//   $('#authModalTitle').text(title)
+//   $('#authenticationForm').on('submit', target)
+//
+//   // make this button submit the modal form and also close the modal
+//   $('#authSubmitBtn').on('click', () => {
+//     $('#authenticationForm').submit()
+//     $('#authModal').modal('hide')
+//   })
+//
+//   $('#authModal').modal('show')
+// }
