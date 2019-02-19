@@ -1,8 +1,48 @@
 'use strict'
 // main/utility.js
 
+const config = require('../config')
 const store = require('../store')
-const themes = require('./theme.js')
+const themes = require('./theme')
+const test = require('../test/events')
+
+// ButtonId: [timestamp, timestamp, timestamp]
+const _btnCounters = {
+  'btnId': []
+}
+
+const incrementButtonCounter = function (event, timestamp = Date.now()) {
+  const buttonId = event.target.id
+  if (!_btnCounters[buttonId]) {
+    _btnCounters[buttonId] = []
+  }
+  const cntrs = _btnCounters[buttonId]
+  cntrs.push(timestamp)
+  return tooManyClicks(buttonId)
+}
+
+// check for more than 5 clicks in 3 seconds
+const tooManyClicks = function (buttonId) {
+  let clicks = _btnCounters[buttonId]
+  if (clicks.length > 5) {
+    clicks = _btnCounters[buttonId].slice(-5)
+  }
+  const diff = clicks.slice(-1) - clicks[0]
+  console.log('Element ' + buttonId + ' has been clicked 5 times in ' + (diff / 1000) + ' seconds')
+  return (diff < 3000)
+}
+
+const getTestLogin = function () {
+  if (isTestMode()) {
+    return test.testCredentials
+  } else {
+    return false
+  }
+}
+
+const isTestMode = function () {
+  return (config.testMode === true)
+}
 
 // returns boolean value for whether token exists
 const isAuthenticated = () => {
@@ -32,7 +72,7 @@ const errorMessage = function (message) {
 }
 
 const fatalError = function () {
-  errorMessage('You know what? Go fuck yourself!')
+  alertMessage('You know what? Go fuck yourself!', 'danger', 1000)
 }
 
 const alertMessage = function (message, cls = 'info', timeout = 5000) {
@@ -106,6 +146,9 @@ const allowReset = function () {
 }
 
 module.exports = {
+  incrementButtonCounter,
+  isTestMode,
+  getTestLogin,
   isAuthenticated,
   userMessage,
   failure,
