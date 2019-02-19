@@ -10,6 +10,11 @@ const authUi = require('../auth/ui')
 const TEST_EMAIL = 'tictactoe@cantimaginewhy.com'
 const TEST_PW = 'password'
 
+const testCredentials = {
+  email: TEST_EMAIL,
+  password: TEST_PW
+}
+
 const testSignUp = () => {
   console.log('Testing SignUp')
   const formData = {
@@ -27,7 +32,7 @@ const testSignUp = () => {
     })
 }
 
-const testLogin = () => {
+const testSignIn = () => {
   console.log('Testing Login')
   const formData = {
     credentials: {
@@ -44,6 +49,7 @@ const testLogin = () => {
 }
 
 module.exports = {
-  testLogin,
-  testSignUp
+  testSignIn,
+  testSignUp,
+  testCredentials
 }
