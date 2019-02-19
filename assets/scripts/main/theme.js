@@ -2,37 +2,45 @@
 // main/theme.js
 //
 
-const Theme = function (id, themeName, folder, xColor, oColor, bsColor, bsBackground) {
+const Theme = function (id, themeName, folder, xColor, oColor, bsColor, bsBackground, disabledSquare, readySquare) {
   this.id = id
   this.name = themeName
   this.short = folder
   this.className = folder + '-theme'
   this.path = 'public/images/' + folder + '/'
-  this.background = this.path + 'bkg.png'
   this.xColor = xColor
   this.oColor = oColor
   this.bsColor = bsColor
   this.bsBackground = bsBackground
+  this.disableSquare = disabledSquare
+  this.readySquare = readySquare
 }
 
-Theme.prototype.getImage = function (img) {
+Theme.prototype.getImageTag = function (img) {
   const src = this.path + img + '.png'
   return `<img src="${src}" alt="${img}">`
 }
 
-const primaryTheme = new Theme(0, 'Primary', 'primary', '#f00', '#00f', 'text-primary', 'bg-primary')
-const bwTheme = new Theme(1, 'B+W', 'bw', '#333', '#ccc', 'text-black', 'bg-white')
-const gothicTheme = new Theme(2, 'Gothic', 'gothic', '#000', '#999', 'text-white', 'bg-black')
+const primaryTheme = new Theme(0, 'Primary', 'primary', '#f00', '#00f', 'text-primary', 'bg-primary', '#000', '#fff')
+const minimalTheme = new Theme(1, 'Minimalist', 'minimal', '#666', '#ccc', 'text-black', 'bg-white', '#000', '#fff')
+const gothicTheme = new Theme(2, 'Gothic', 'gothic', '#dedede', '#020202', 'text-white', 'bg-black', '#333', '#bbb')
+// More Theme ideas:
+// Valenties (hearts & arrows, pinks and reds)
+// StPatricks (shamrocks & celtic crosses, greens)
+// Pets (cats & dogs, orange & brown)
 
 const availableThemes = [
   primaryTheme,
-  bwTheme,
+  minimalTheme,
   gothicTheme
 ]
 
 let _currentThemeIndex = 0
 
 const getCurrentTheme = function () {
+  if (isNaN(_currentThemeIndex)) {
+    _currentThemeIndex = 0
+  }
   return availableThemes[_currentThemeIndex]
 }
 

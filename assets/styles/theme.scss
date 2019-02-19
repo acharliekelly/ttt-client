@@ -1,18 +1,45 @@
 // Theme Colors
 
+$primaryX: #f00;
+$primaryO: #00f;
+
+
 .panel {
   // default
   background-image: url('public/images/wavegrid.png')
 }
 
-.primaryTheme .panel {
-  background-image: url('public/images/primary/bkg.png');
+.primaryTheme {
+  .panel {
+    background-image: url('public/images/primary/bkg.png');
+  }
+  .x-text {
+    color: $primaryX;
+  }
+  .x-bg {
+    background-color: $primaryX;
+  }
+  .o-text {
+    color: $primaryO;
+  }
+  .o-bg {
+    background-color: $primaryO;
+  }
+  .readySquare {
+    background-color: #fff;
+  }
+  .disableSquare {
+    background-color: #000;
+  }
+
 }
 
-.bwTheme .panel {
-  // TODO: get background
+
+
+.bwTheme {
+  // TODO: set up theme
 }
 
-.gothicTheme .panel {
-  // TODO: get background
+.gothicTheme {
+  // TODO: set up theme
 }

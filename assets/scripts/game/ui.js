@@ -46,6 +46,11 @@ const gameApi = require('./api')
 const store = require('../store')
 const logic = require('./logic')
 
+const DEFAULT_TEXT_COLOR = '#000'
+const DEFAULT_TEXT_BG = 'transparent'
+const USED_CELL_BG = 'transparent'
+const ACTIVE_TEXT_COLOR = '#fff'
+
 /* RESPONSE DATA HANDLERS -
 .then() callbacks from game/events -> game/api */
 
@@ -58,8 +63,9 @@ const createGameSuccess = function (responseData) {
   $('#currentGame').text(responseData.game.id)
   $('#gameStatus').text('In Progress')
   $('#resetBtn').text('Reset')
-  // set to white for new game
-  $('#GameBoard .square').css('background-color', '#fff')
+  // set to ready-color for new game
+  $('#GameBoard .square').css('background-color',
+    utils.getTheme().readySquare)
 }
 
 /**
@@ -136,61 +142,17 @@ const showUnfinishedGames = function (responseData) {
   showGameHistory(responseData, false)
 }
 
-// show game from history
+// show single game from history
 const displayGame = function (responseData) {
   console.log('Display Game:', responseData.game)
   clearBoard()
   $('#currentGame').text('#' + responseData.game.id)
-  const isOver = responseData.game.over
-  const cells = responseData.game.cells
-  if (logic.isEmpty(cells)) {
-    console.log('Board is empty')
-    $('#GameBoard .square').data('enabled', isOver ? 'true' : 'false')
+  // if isOver -> displayFinishedGame
+  // else -> displayGameInProgress
+  if (responseData.game.over) {
+    displayFinishedGame(responseData.game)
   } else {
-    console.log('Cell Array:', cells)
-    for (let idx = 0; idx < cells.length; idx++) {
-      const mark = cells[idx]
-      console.log('Cell ' + idx + ': ' + mark)
-      const sq = '#' + logic.indexToSquare(idx)
-      if (mark !== '') {
-        const img = utils.getMarkImage(mark)
-        $(sq).addClass(mark)
-          .css('background-color', 'transparent')
-          .data('enabled', 'false')
-          .html(img)
-      } else { // cell is empty
-        $(sq).data('enabled', isOver ? 'true' : 'false')
-      }
-    }
-
-    if (isOver) {
-      // show winner
-      // can't use events.js method because we
-      // can't reach it without circular reference
-      if (logic.isDraw(cells)) {
-        // stalemate
-        $('#gameStatus').text('Draw')
-      } else {
-        // somebody won
-        let bgColor
-        const winX = logic.isWin(cells, 'x')
-        const winO = logic.isWin(cells, 'o')
-        if (winX >= 0) {
-          // x won
-          bgColor = utils.getMarkColor('x')
-          logic.highlightWinningSquares(winX, bgColor)
-          $('#gameStatus').text('Won by X')
-        } else {
-          // o won
-          bgColor = utils.getMarkColor('o')
-          logic.highlightWinningSquares(winO, bgColor)
-          $('#gameStatus').text('Won by O')
-        }
-      }
-    } else {
-      // play
-      playGame(responseData.game)
-    }
+    displayGameInProgress(responseData.game)
   }
 }
 
@@ -223,12 +185,14 @@ const showStalemate = function () {
 }
 
 // Clear the board for new game
-const clearBoard = function () {
+const clearBoard = function (enable = true) {
+  const squareBgColor = enable ? utils.getTheme().readySquare : utils.getTheme().disableSquare
   $('#GameBoard .square').empty()
     .removeClass('x o')
-    .data('enabled', 'true')
-  $('.turn-status').css('background-color', 'transparent')
-  $('#currentTurn').text('--').css('color', '#000')
+    .data('enabled', enable)
+    .css('background-color', squareBgColor)
+  $('.turn-status').css('background-color', DEFAULT_TEXT_BG)
+  $('#currentTurn').text('--').css('color', DEFAULT_TEXT_COLOR)
 }
 
 const gameOver = function () {
@@ -242,7 +206,7 @@ const initTurn = function (player) {
   const th = utils.getTheme()
   $('#statusPanel .turn-status').css('background-color', player.getColor(th))
   $('#currentTurn').text(player.name)
-    .css('color', '#fff')
+    .css('color', ACTIVE_TEXT_COLOR)
 }
 
 /* PRIVATE FUNCTIONS -
@@ -264,6 +228,69 @@ const showGameHistory = function (responseData, isFinished) {
   $('#gameHistory .card').show()
 }
 
+// display single finished game
+const displayFinishedGame = function (gameData) {
+  const cells = gameData.cells
+  markCells(cells, false)
+
+  // show winner
+  if (logic.isDraw(cells)) {
+    // stalemate
+    $('#gameStatus').text('Draw')
+  } else {
+    // somebody won
+    let bgColor
+    const winX = logic.isWin(cells, 'x')
+    const winO = logic.isWin(cells, 'o')
+    if (winX >= 0) {
+      // x won
+      bgColor = utils.getMarkColor('x')
+      logic.highlightWinningSquares(winX, bgColor)
+      $('#gameStatus').text('Won by X')
+    } else {
+      // o won
+      bgColor = utils.getMarkColor('o')
+      logic.highlightWinningSquares(winO, bgColor)
+      $('#gameStatus').text('Won by O')
+    }
+  }
+}
+
+// display single unfinished game
+const displayGameInProgress = function (gameData) {
+  if (logic.isBlank(gameData)) {
+    clearBoard(true)
+  } else {
+    // show used cells
+    markCells(gameData.cells, true)
+  }
+  playGame(gameData)
+}
+
+// mark board from historical game
+const markCells = function (cells, enableEmptyCells) {
+  // loop through cell array, mark board where appropriate
+  for (let idx = 0; idx < cells.length; idx++) {
+    const mark = cells[idx]
+    const sq = '#' + logic.indexToSquare(idx)
+    if (mark === '') {
+      // cell is empty
+      if (enableEmptyCells) {
+        $(sq).data('enabled', 'false').css('background-color', utils.getTheme().disableSquare)
+      } else {
+        $(sq).data('enabled', 'true').css('background-color', utils.getTheme().readySquare)
+      }
+    } else {
+      // cell contains mark
+      const img = utils.getMarkImage(mark)
+      $(sq).addClass(mark)
+        .css('background-color', USED_CELL_BG)
+        .data('enabled', 'false')
+        .html(img)
+    }
+  }
+}
+
 // takes unfinished game data from API, restarts game play
 const playGame = function (game) {
   store.currentGame = game
@@ -273,14 +300,20 @@ const playGame = function (game) {
     console.log('board is full')
     // utils.userMessage('Board is Full!')
   } else {
+    debugger
+    // TODO: FIX!!
     const player = players.getPlayer(xo)
     initTurn(player)
   }
   utils.userMessage(`Game #${game.id} re-started`)
+  $('#gameStatus').text('In Progress')
   $('#resetBtn').text('Reset')
 }
 
 // event handler
+// TODO: move this to events, move handler assignment (currently in showGameHistory)
+// to app.js, but write as:
+// $('#pastGames').on('click', 'button', events.showGameHistory)
 const onShowGame = function (event) {
   const gameId = event.target.id.substring(1)
   console.log('Show Game #' + gameId)
