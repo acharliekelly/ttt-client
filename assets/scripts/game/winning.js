@@ -20,11 +20,11 @@ const jQueryWins = [
  * checks for win by player
  * via string replacement/jQuery search
  */
-const checkForWin = (player) => {
+const checkForWin = (player, theme) => {
   for (let i = 0; i < jQueryWins.length; i++) {
     const selector = jQueryWins[i].replace(/PLAYER/g, player.squareClass)
     if ($(selector).length === 3) {
-      $(selector).css('background-color', player.color)
+      $(selector).css('background-color', player.getColor(theme))
       // player has won
       return true
     }
@@ -32,9 +32,9 @@ const checkForWin = (player) => {
   return false
 }
 
-// Public: check for stalemate via jquery search
+// Public: check for stalemate (all squares contain images)
 const checkForDraw = () => {
-  const squares = $('#GameBoard .x').add('#GameBoard .o')
+  const squares = $('#GameBoard .square:has(img)')
   return (squares.length === maximumMoves)
 }
 
