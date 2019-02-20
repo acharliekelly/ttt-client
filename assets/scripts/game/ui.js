@@ -110,6 +110,12 @@ const displayStatistics = function (responseData) {
   const unstartedCnt = unstarted.length
   $('#playerStats .unstarted-games').text(unstartedCnt)
 
+  let compRate = 0
+  if (finishedCnt > 0) {
+    compRate = Math.trunc((finishedCnt / numTotal) * 100)
+  }
+  $('#playerStats .completion-rate').text(compRate + '%')
+
   const wonByX = logic.gamesWonByX(finishedGames)
   const wonCnt = wonByX.length
   $('#playerStats .games-won').text(wonCnt)
@@ -134,12 +140,37 @@ const displayStatistics = function (responseData) {
 
 // Display finished games
 const showFinishedGames = function (responseData) {
-  showGameHistory(responseData, true)
+  const title = 'Completed Games'
+  $('#gameHistory .card-header').text(title)
+  $('#pastGames').html('')
+  responseData.games.forEach(game => {
+    // find out who won
+    let btnCls
+    const winner = logic.whoWon(game)
+    if (winner === '') {
+      btnCls = 'btn-secondary'
+    } else {
+      btnCls = winner + '-bg'
+    }
+
+    const item = `<li class="list-group-item"><button id="g${game.id}" class="btn ${btnCls}">Game #${game.id}</button></li>`
+    $('#pastGames').append(item)
+  })
+
+  $('#gameHistory .card').show()
 }
 
 // Display unfinished games
 const showUnfinishedGames = function (responseData) {
-  showGameHistory(responseData, false)
+  const title = 'Games In-Progress'
+  $('#gameHistory .card-header').text(title)
+  $('#pastGames').html('')
+  responseData.games.forEach(game => {
+    const item = `<li class="list-group-item"><button id="g${game.id}" class="btn btn-dark">Game #${game.id}</button></li>`
+    $('#pastGames').append(item)
+  })
+
+  $('#gameHistory .card').show()
 }
 
 // show single game from history
@@ -211,22 +242,6 @@ const initTurn = function (player) {
 
 /* PRIVATE FUNCTIONS -
 not exported, only referenced from within game/ui.js */
-
-// takes API response from showFinishedGames & showUnfinishedGames,
-// displays game history
-const showGameHistory = function (responseData, isFinished) {
-  const title = isFinished ? 'Completed Games' : 'Games In-Progress'
-  $('#gameHistory .card-header').text(title)
-  $('#pastGames').html('')
-  responseData.games.forEach(game => {
-    // TODO: for finished games, change button color to show who won
-    const btnColor = isFinished ? 'light' : 'dark'
-    const item = `<li class="list-group-item"><button id="g${game.id}" class="btn btn-${btnColor}">Game #${game.id}</button></li>`
-    $('#pastGames').append(item)
-  })
-
-  $('#gameHistory .card').show()
-}
 
 // display single finished game
 const displayFinishedGame = function (gameData) {

@@ -80,6 +80,17 @@ const isBlank = (game) => {
   return isEmpty(game.cells)
 }
 
+// takes single game, returns 'x', 'o', or ''
+const whoWon = (game) => {
+  if (isWin(game.cells, 'x') >= 0) {
+    return 'x'
+  } else if (isWin(game.cells, 'o') >= 0) {
+    return 'o'
+  } else {
+    return ''
+  }
+}
+
 /* FUNCTIONS THAT TAKE AN ARRAY OF GAMES */
 
 // takes array of games, returns filtered list of games won by X
@@ -160,6 +171,7 @@ module.exports = {
   isEmpty,
   isDraw,
   isBlank,
+  whoWon,
   gamesWonByX,
   gamesWonByO,
   gamesUnstarted,
