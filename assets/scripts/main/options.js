@@ -46,6 +46,38 @@ const themeOptionHtml = function (optionType, theme) {
   return html
 }
 
+const restoreThemeButtons = function () {
+  $('#optionsForm .theme-button').removeClass('active')
+  $('#optionsForm .theme-text').removeClass('active')
+}
+
+const onPrimaryThemeClick = function () {
+  restoreThemeButtons()
+  $(this).addClass('active')
+  $('.primary-text').addClass('active')
+  if (themes.getCurrentTheme().id !== 0) {
+    changeTheme(0)
+  }
+}
+
+const onMinimalThemeClick = function () {
+  restoreThemeButtons()
+  $(this).addClass('active')
+  $('.minimal-text').addClass('active')
+  if (themes.getCurrentTheme().id !== 1) {
+    changeTheme(1)
+  }
+}
+
+const onGothicThemeClick = function () {
+  restoreThemeButtons()
+  $(this).addClass('active')
+  $('.goth-text').addClass('active')
+  if (themes.getCurrentTheme().id !== 2) {
+    changeTheme(2)
+  }
+}
+
 const changeTheme = function (themeId) {
   console.log('changing theme: ' + themeId)
 
@@ -59,5 +91,8 @@ module.exports = {
   onOptionsClick,
   onOptionSubmit,
   loadThemeOptions,
-  changeTheme
+  changeTheme,
+  onPrimaryThemeClick,
+  onMinimalThemeClick,
+  onGothicThemeClick
 }

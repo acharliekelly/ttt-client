@@ -16,7 +16,7 @@ $(() => {
   // Game Reset button
   $('#resetBtn').on('click', (event) => {
     if (utils.watchButtonClicks(event)) {
-      utils.warningMessage('How about you lighten up with all the clicking?')
+      utils.warningMessage('How about you relax with all the clicking? It\'s not going to get it done any faster.')
     } else {
       gameEvents.onReset()
     }
@@ -38,10 +38,14 @@ $(() => {
   $('#unfinishedGamesBtn').on('click', gameEvents.onGetUnfinishedGames)
 
   $('#gameOptionsBtn').on('click', options.onOptionsClick)
-  $('#optionsForm').on('submit', options.onOptionSubmit)
-  $('#optionSubmitBtn').on('click', () => {
-    $('#optionsForm').trigger('submit')
-  })
+  $('#primaryThemeBtn').on('click', options.onPrimaryThemeClick)
+  $('#minimalThemeBtn').on('click', options.onMinimalThemeClick)
+  $('#gothicThemeBtn').on('click', options.onGothicThemeClick)
+
+  // $('#optionsForm').on('submit', options.onOptionSubmit)
+  // $('#optionSubmitBtn').on('click', () => {
+  //   $('#optionsForm').trigger('submit')
+  // })
 
   utils.refreshTheme()
   // // show/hide/disable objects based on auth status

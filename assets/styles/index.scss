@@ -25,6 +25,24 @@
   margin: 5px;
 }
 
+.theme-button {
+  border: thin outset;
+  padding: 1vw 1vw 2vw 1vw;
+  margin: 1vw 2vw;
+  & .active {
+    border: thin inset;
+  }
+  img {
+   width: 85%;
+   height: 85%;
+ }
+}
+.theme-text {
+  font-weight: normal;
+  & .active {
+    font-weight: bold;
+  }
+}
 
 .info {
 
