@@ -1,13 +1,4 @@
-// Theme Colors
-
-$primaryX: #f00;
-$primaryO: #00f;
-
-$minimalX: #ddd;
-$minimalO: #333;
-
-$gothX: #000;
-$gothO: #fff;
+// Theme Styles
 
 
 body.primary-theme {
@@ -89,14 +80,14 @@ body.goth-theme {
     background-image: url('public/images/goth/bkg.png');
   }
   .x-text {
-    color: $gothX;
+    color: $gothX; // black
   }
   .x-bg {
     background-color: $gothX;
     color: #fff;
   }
   .o-text {
-    color: $gothO;
+    color: $gothO; // white
   }
   .o-bg {
     background-color: $gothO;
@@ -123,10 +114,84 @@ body.goth-theme {
 }
 
 
-body.circuit {
-  // TODO
+body.circuit-theme {
+  // background-image: url('public/images/circuit/body-bkg.png');
+  // background-repeat: repeat;
+
+  .panel {
+    background-image: url('public/images/circuit/bkg.png');
+  }
+
+  .x-text {
+    color: $circuitX; // yellow
+  }
+  .x-bg {
+    background-color: $circuitX;
+    color: #fff;
+  }
+  .o-text {
+    color: $circuitO; // green
+  }
+  .o-bg {
+    background-color: $circuitO;
+    color: #000;
+  }
+  .readySquare {
+    background-color: #fff;
+  }
+  .disableSquare {
+    background-color: #000;
+  }
+  .game-status {
+    background-color: #fff;
+  }
+  .theme-button1 {
+    background-color: $circuitO;
+    color: #fff;
+  }
+  .theme-button2 {
+    background-color: $circuitX;
+    color: #000;
+  }
 }
 
-body.steampunk {
-  // TODO
+body.steampunk-theme {
+  background-image: url('public/images/steampunk/body-bkg.png');
+  background-repeat: repeat;
+
+  .panel {
+    background-image: url('public/images/steampunk/bkg.png');
+  }
+
+  .x-text {
+    color: $steampunkX; // gold
+  }
+  .x-bg {
+    background-color: $steampunkX;
+    color: #fff;
+  }
+  .o-text {
+    color: $steampunkO; // silver
+  }
+  .o-bg {
+    background-color: $steampunkO;
+    color: #000;
+  }
+  .readySquare {
+    background-color: #fff;
+  }
+  .disableSquare {
+    background-color: #000;
+  }
+  .game-status {
+    background-color: #fff;
+  }
+  .theme-button1 {
+    background-color: $steampunkO;
+    color: #fff;
+  }
+  .theme-button2 {
+    background-color: $steampunkX;
+    color: #fff;
+  }
 }
