@@ -110,6 +110,9 @@ body.goth-theme {
     background-color: $gothX;
     color: #fff;
   }
+  .square img {
+    opacity: .7;
+  }
 
 }
 
@@ -152,6 +155,9 @@ body.circuit-theme {
     background-color: $circuitX;
     color: #000;
   }
+  .square img {
+    opacity: .8;
+  }
 }
 
 body.steampunk-theme {
@@ -192,5 +198,8 @@ body.steampunk-theme {
   .theme-button2 {
     background-color: $steampunkX;
     color: #fff;
+  }
+  .square img {
+    opacity: .5;
   }
 }

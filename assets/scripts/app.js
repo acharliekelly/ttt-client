@@ -15,15 +15,11 @@ $(() => {
 
   // Game Reset button
   $('#resetBtn').on('click', (event) => {
-    if (utils.watchButtonClicks(event)) {
-      utils.warningMessage('How about you relax with all the clicking?')
-      $('#resetBtn').attr('diabled', true)
-      setTimeout(() => {
-        $('#resetBtn').attr('disabled', false)
-      }, 5000)
-    } else {
-      gameEvents.onReset()
-    }
+    gameEvents.onReset()
+  })
+
+  $('.modal:has(form)').on('show.bs.modal', function () {
+    $(this).find('input').val('')
   })
 
   // ALL EXPLICIT!!!
