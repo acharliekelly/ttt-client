@@ -3,17 +3,12 @@
 $primaryX: #f00;
 $primaryO: #00f;
 
-$minimalX: #666;
-$minimalO: #ccc;
+$minimalX: #ddd;
+$minimalO: #333;
 
 $gothX: #000;
 $gothO: #fff;
 
-
-.panel {
-  // default
-  background-image: url('public/images/wavegrid.png')
-}
 
 body.primary-theme {
   .panel {
@@ -24,12 +19,14 @@ body.primary-theme {
   }
   .x-bg {
     background-color: $primaryX;
+    color: #fff;
   }
   .o-text {
     color: $primaryO;
   }
   .o-bg {
     background-color: $primaryO;
+    color: #fff;
   }
   .readySquare {
     background-color: #fff;
@@ -37,30 +34,50 @@ body.primary-theme {
   .disableSquare {
     background-color: #000;
   }
+  .theme-button1 {
+    border: thin outset;
+    background-color: yellow;
+    color: #000;
+  }
+  .theme-button2 {
+    border: thin outset;
+    background-color: blue;
+    color: #fff;
+  }
 }
 
 
 body.minimal-theme {
   .panel {
-    background-image: url('public/images/minimal/bkg.png');
+    background-color: #666;
   }
   .x-text {
     color: $minimalX;
   }
   .x-bg {
     background-color: $minimalX;
+    color: #000;
   }
   .o-text {
     color: $minimalO;
   }
   .o-bg {
     background-color: $minimalO;
+    color: #fff;
   }
   .readySquare {
     background-color: #bbb;
   }
   .disableSquare {
-    background-color: #444;
+    background-color: #333;
+  }
+  .theme-button1 {
+    background-color: $minimalO;
+    color: #fff;
+  }
+  .theme-button2 {
+    background-color: $minimalX;
+    color: #000;
   }
 
 }
@@ -76,12 +93,14 @@ body.goth-theme {
   }
   .x-bg {
     background-color: $gothX;
+    color: #fff;
   }
   .o-text {
     color: $gothO;
   }
   .o-bg {
     background-color: $gothO;
+    color: #000;
   }
   .readySquare {
     background-color: #333;
@@ -92,4 +111,22 @@ body.goth-theme {
   .game-status {
     background-color: #fff;
   }
+  .theme-button1 {
+    background-color: $gothO;
+    color: #000;
+  }
+  .theme-button2 {
+    background-color: $gothX;
+    color: #fff;
+  }
+
+}
+
+
+body.circuit {
+  // TODO
+}
+
+body.steampunk {
+  // TODO
 }

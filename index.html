@@ -34,13 +34,14 @@
         <div class="col-md-4 col-12 grid">
           <div id="authPanel" class="panel">
             <div class="button-set row justify-content-center">
-              <div class="col-6 center-block">
-                <button id="loginBtn" class="no-token modal-btn btn btn-primary" data-toggle="modal" data-target="#modalLoginFormDialog">Log In</button>
-                <button id="changepwBtn" class="auth-token modal-btn btn btn-primary" data-toggle="modal" data-target="#modalChangePasswordFormDialog">Change Password</button>
+              <div class="col-4 center-block">
+                <button id="loginBtn" class="no-token modal-btn btn theme-button1" data-toggle="modal" data-target="#modalLoginFormDialog">Log In</button>
+                <button id="changepwBtn" class="auth-token modal-btn btn theme-button1" data-toggle="modal" data-target="#modalChangePasswordFormDialog">Change Password</button>
               </div>
-              <div class="col-6 center-block">
-                <button id="signupBtn" class="no-token modal-btn btn btn-primary" data-toggle="modal" data-target="#modalSignupFormDialog">Sign Up</button>
-                <button id="signoutBtn" class="auth-token btn btn-primary">Sign Out</button>
+              <div class="col-4"></div>
+              <div class="col-4 center-block">
+                <button id="signupBtn" class="no-token modal-btn btn theme-button1" data-toggle="modal" data-target="#modalSignupFormDialog">Sign Up</button>
+                <button id="signoutBtn" class="auth-token btn theme-button1">Sign Out</button>
               </div>
             </div>
           </div>
@@ -66,8 +67,8 @@
               <!-- User Feedback message -->
               <div id="userMessage" class="col-md-8"></div>
               <div class="button-group col-md-4">
-                <button id="resetBtn" class="btn btn-primary auth-enable">Start Game</button>
-                <button id="gameOptionsBtn" class="btn btn-secondary auth-enable" data-form="options">Options</button>
+                <button id="resetBtn" class="btn theme-button1 auth-enable">Start Game</button>
+                <button id="gameOptionsBtn" class="btn theme-button2 auth-enable" data-form="options">Options</button>
               </div>
 
             </div>
@@ -86,13 +87,13 @@
 
               <div>Current User: <span id="userEmail"></span></div>
               <section id="playerStats" class="card">
-                <div class="card-header">Statistics</div>
-                <button id="statsBtn" class="btn btn-info">View Stats</button>
+                <button id="statsBtn" class="btn theme-button2">View Statistics</button>
                 <!-- Player Stats -->
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item">Games Created: <span class="all-games"></span></li>
                   <li class="list-group-item">Games Finished: <span class="complete-games"></span></li>
                   <li class="list-group-item">Games Not Started: <span class="unstarted-games"></span></li>
+                  <li class="list-group-item">Game Completion Rate: <span class="completion-rate"></span></li>
                   <li class="list-group-item">Games Won: <span class="games-won"></span></li>
                   <li class="list-group-item">Games Lost: <span class="games-lost"></span></li>
                   <li class="list-group-item">Games Tied: <span class="games-tied"></span></li>
@@ -101,10 +102,10 @@
               </section>
 
               <section id="gameHistory">
-                <h5 class="section-head">Game History</h5>
+                <h5 class="section-head text-center">Game History</h5>
                 <div class="button-group">
-                  <button id="finishedGamesBtn" type="button" class="btn btn-dark">Finished Games</button>
-                  <button id="unfinishedGamesBtn" type="button" class="btn btn-dark">Unfinished Games</button>
+                  <button id="finishedGamesBtn" type="button" class="btn btn-dark mr-auto">Finished Games</button>
+                  <button id="unfinishedGamesBtn" type="button" class="btn btn-dark mr-auto">Unfinished Games</button>
                 </div>
                 <div class="card">
                   <div class="card-header"></div>
@@ -181,8 +182,8 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button id="modalLoginSubmitBtn" type="button" class="btn btn-primary modal-submit" data-target="#modalLoginForm">Submit</button>
+            <button type="button" class="btn theme-button2" data-dismiss="modal">Close</button>
+            <button id="modalLoginSubmitBtn" type="button" class="btn theme-button1 modal-submit" data-target="#modalLoginForm">Submit</button>
           </div>
         </div>
       </div>
@@ -227,8 +228,8 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button id="modalSignupSubmitBtn" type="button" class="btn btn-primary modal-submit" data-target="#modalSignupForm">Submit</button>
+            <button type="button" class="btn theme-button2" data-dismiss="modal">Close</button>
+            <button id="modalSignupSubmitBtn" type="button" class="btn theme-button1 modal-submit" data-target="#modalSignupForm">Submit</button>
           </div>
         </div>
       </div>
@@ -273,8 +274,8 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button id="modalChangePasswordSubmitBtn" type="button" class="btn btn-primary modal-submit" data-target="#modalChangePasswordForm">Submit</button>
+            <button type="button" class="btn theme-button2" data-dismiss="modal">Close</button>
+            <button id="modalChangePasswordSubmitBtn" type="button" class="btn theme-button1 modal-submit" data-target="#modalChangePasswordForm">Submit</button>
           </div>
         </div>
       </div>
@@ -313,7 +314,7 @@
 
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn theme-button2" data-dismiss="modal">Close</button>
 
           </div>
         </div>

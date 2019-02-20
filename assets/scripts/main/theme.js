@@ -22,8 +22,8 @@ Theme.prototype.getImageTag = function (img) {
 }
 
 const primaryTheme = new Theme(0, 'Primary', 'primary', '#f00', '#00f', 'text-primary', 'bg-primary', '#000', '#fff')
-const minimalTheme = new Theme(1, 'Minimalist', 'minimal', '#666', '#ccc', 'text-black', 'bg-white', '#000', '#fff')
-const gothicTheme = new Theme(2, 'Gothic', 'goth', '#dedede', '#232323', 'text-white', 'bg-black', '#333', '#bbb')
+const minimalTheme = new Theme(1, 'Minimalist', 'minimal', '#ddd', '#333', 'text-black', 'bg-white', '#000', '#fff')
+const gothicTheme = new Theme(2, 'Gothic', 'goth', '#000', '#fff', 'text-white', 'bg-black', '#333', '#bbb')
 // More Theme ideas:
 // Valenties (hearts & arrows, pinks and reds)
 // StPatricks (shamrocks & celtic crosses, greens)

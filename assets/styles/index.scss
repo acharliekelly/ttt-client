@@ -25,24 +25,39 @@
   margin: 5px;
 }
 
-.theme-button {
-  border: thin outset;
-  padding: 1vw 1vw 2vw 1vw;
-  margin: 1vw 2vw;
-  & .active {
-    border: thin inset;
+.modal-body {
+  .theme-button {
+    border: thin outset;
+    padding: 1vw;
+    margin: 1vw 2vw;
+    & .active {
+      border: thin inset;
+    }
+    img {
+     width: 85%;
+     height: 85%;
+   }
   }
-  img {
-   width: 85%;
-   height: 85%;
- }
-}
-.theme-text {
-  font-weight: normal;
-  & .active {
-    font-weight: bold;
+  .theme-text {
+    font-weight: normal;
+    & .active {
+      font-weight: bold;
+    }
   }
 }
+
+#authPanel {
+  .btn {
+    min-width: 5vw;
+  }
+}
+
+#userEmail {
+  background-color: #444;
+  color: #fff;
+  padding: 0 1px;
+}
+
 
 .info {
 
@@ -57,9 +72,28 @@
     font-weight: bold;
   }
 }
+#pastGames ul {
+  margin: 0 auto;
+}
+#pastGames li .btn {
+  width: 40%;
+  margin: 2px auto;
+}
 
+#statusPanel .row {
+  min-height: 4vh;
+  margin: 3px 0;
+}
+.game-status {
+  border-radius: 3px;
+  padding: 1px 2px;
+}
+.turn-status {
+  border-radius: 3px;
+  padding: 1px 2px;
+}
 
 #userMessage {
-
-
+  min-height: 6vh;
+  padding: 0;
 }
