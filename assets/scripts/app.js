@@ -15,11 +15,11 @@ $(() => {
 
   // Game Reset button
   $('#resetBtn').on('click', (event) => {
-    if (utils.incrementButtonCounter(event)) {
-      console.log('Too many clicks!!')
+    if (utils.watchButtonClicks(event)) {
+      utils.warningMessage('How about you lighten up with all the clicking?')
+    } else {
+      gameEvents.onReset()
     }
-    initBoardBindings() // initialize game board
-    gameEvents.onReset()
   })
 
   // set click events for all the modal form buttons
@@ -31,12 +31,23 @@ $(() => {
   // get player stats
   $('#statsBtn').on('click', gameEvents.onPlayerStats)
 
+  $('#pastGames').on('click', 'button', gameEvents.onShowGame)
+
   $('#finishedGamesBtn').on('click', gameEvents.onGetFinishedGames)
 
   $('#unfinishedGamesBtn').on('click', gameEvents.onGetUnfinishedGames)
 
+  $('#gameOptionsBtn').on('click', options.onOptionsClick)
+  $('#optionsForm').on('submit', options.onOptionSubmit)
+  $('#optionSubmitBtn').on('click', () => {
+    $('#optionsForm').trigger('submit')
+  })
+
+  utils.refreshTheme()
   // // show/hide/disable objects based on auth status
   authUi.refreshAuthElements()
+
+  initBoardBindings() // initialize game board
 })
 
 const modalForm = (event) => {
@@ -62,7 +73,7 @@ const modalForm = (event) => {
       target = authEvents.onChangePasswordSubmit
       title = 'Change Password'
       break
-    case 'options':
+    case 'options': // removed
       target = options.onOptionSubmit
       title = 'Game Options'
       // options.loadThemeOptions('radio')
@@ -76,17 +87,19 @@ const modalForm = (event) => {
   $('#modalSubmitBtn').on('click', () => {
     $('#modalForm').trigger('submit')
     $('#modalFormDialog').modal('hide')
+    $('#modalForm').html('') // remove form content
   })
 
   // finally, display the modal form
   $('#modalFormDialog').modal('show')
 }
 
+// set bindings, but disable board until game started
 const initBoardBindings = function () {
   $('#GameBoard .square')
     .on('click', gameEvents.onClickSquare)
     .on('mouseover', gameEvents.onHoverSquare)
     .on('mouseout', gameEvents.onLeaveSquare)
-    .css('background-color', utils.getTheme().readySquare)
-    .data('enabled', 'true')
+    .css('background-color', utils.getTheme().disableSquare)
+    .data('enabled', 'false')
 }
