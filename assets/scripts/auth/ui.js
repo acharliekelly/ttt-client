@@ -39,6 +39,8 @@ const clearUserData = () => {
 // Public
 const authFail = () => {
   utils.errorMessage('Unable to authenticate')
+  $('#modalFormDialog').modal('hide')
+  $('#modalForm').html('')
   refreshAuthElements()
 }
 
@@ -49,29 +51,38 @@ const loginSuccess = (responseData) => {
   utils.successMessage(msg)
   $('#userEmail').text(store.user.email)
   refreshAuthElements()
+  $('#modalFormDialog').modal('hide')
   $('#modalForm').html('')
 }
 
 // Public
 const authenticationError = () => {
   utils.errorMessage('Unable to authenticate')
+  $('#modalFormDialog').modal('hide')
+  $('#modalForm').html('')
 }
 
 // Public
 const changePasswordSuccess = () => {
   utils.userMessage('Password changed.')
+  $('#modalFormDialog').modal('hide')
+  $('#modalForm').html('')
 }
 
 // Public
 const signUpSuccess = (responseData) => {
   utils.userMessage(`Account created for "${responseData.user.email}".`)
   // TODO: automatically login after account creation
+  $('#modalFormDialog').modal('hide')
+  $('#modalForm').html('')
 }
 
 // Public
 const signOutSuccess = () => {
   store.user = null
   utils.userMessage('You are signed out')
+  $('#modalFormDialog').modal('hide')
+  $('#modalForm').html('')
   refreshAuthElements()
 }
 
@@ -79,6 +90,8 @@ const signOutSuccess = () => {
 const signOutFail = () => {
   store.user = null
   utils.userMessage('OK, technically the sign-out failed, but the effect is the same.', 'warning')
+  $('#modalFormDialog').modal('hide')
+  $('#modalForm').html('')
   refreshAuthElements()
 }
 
