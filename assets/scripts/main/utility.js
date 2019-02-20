@@ -56,11 +56,11 @@ const errorMessage = function (message) {
 }
 
 const fatalError = function () {
-  alertMessage('You know what? Go fuck yourself!', 'danger', 1000)
+  alertMessage('You know what? Go fuck yourself!', 'danger', 5000)
 }
 
 const alertMessage = function (message, cls = 'info', timeout = 5000) {
-  const html = `<div class="alert alert-${cls} fade show" role="alert" height="90%">${message}</div>`
+  const html = `<div class="alert alert-${cls} fade show" role="alert" height="80%">${message}</div>`
   $('#userMessage').html(html).alert()
   setTimeout(() => {
     $('#userMessage')
