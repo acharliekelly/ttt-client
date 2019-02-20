@@ -49,7 +49,15 @@ const onClickSquare = function (event) {
       .then(successFn)
       .catch(gameUi.gameApiFailure)
   } else {
-    utils.userMessage('Invalid Move', 'warning')
+    // find out why the move is invalid
+    if (utils.getCurrentGameId() === 0) {
+      $('#resetBtn').text('New Game')
+      utils.userMessage('Click the "New Game" Button to start a new game')
+    } else if (square.has('img')) {
+      utils.warningMessage('That square is already taken, please pick another square')
+    } else {
+      utils.warningMessage('That move is invalid, but I\'m not sure why')
+    }
   }
 }
 

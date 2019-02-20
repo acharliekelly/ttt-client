@@ -62,7 +62,7 @@ const createGameSuccess = function (responseData) {
   initTurn(players.getCurrentPlayer())
   $('#currentGame').text(responseData.game.id)
   $('#gameStatus').text('In Progress')
-  $('#resetBtn').text('Reset')
+  $('#resetBtn').text('New Game')
   // set to ready-color for new game
   $('#GameBoard .square').css('background-color',
     utils.getTheme().readySquare)
@@ -231,6 +231,7 @@ const gameOver = function () {
   // disable squares
   $('#GameBoard .square').data('enabled', 'false')
   $('#gameStatus').text('Over')
+  $('#resetBtn').text('New Game')
 }
 
 const initTurn = function (player) {
@@ -319,7 +320,7 @@ const playGame = function (game) {
   }
   utils.userMessage(`Game #${game.id} re-started`)
   $('#gameStatus').text('In Progress')
-  $('#resetBtn').text('Reset')
+  $('#resetBtn').text('New Game')
 }
 
 module.exports = {
