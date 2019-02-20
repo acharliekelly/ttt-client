@@ -5,31 +5,15 @@ const config = require('../config')
 const store = require('../store')
 const themes = require('./theme')
 const test = require('../test/events')
+const anti = require('../test/anti')
 
-// ButtonId: [timestamp, timestamp, timestamp]
-const _btnCounters = {
-  'btnId': []
-}
+const ALLOW_ANTI_TEST = true
 
-const incrementButtonCounter = function (event, timestamp = Date.now()) {
-  const buttonId = event.target.id
-  if (!_btnCounters[buttonId]) {
-    _btnCounters[buttonId] = []
+const watchButtonClicks = function (event, timestamp = Date.now()) {
+  if (!ALLOW_ANTI_TEST) return false
+  if (anti.incrementButtonCounter(event, timestamp)) {
+    warningMessage('How\'s about you lighten up with all the clicking?')
   }
-  const cntrs = _btnCounters[buttonId]
-  cntrs.push(timestamp)
-  return tooManyClicks(buttonId)
-}
-
-// check for more than 5 clicks in 3 seconds
-const tooManyClicks = function (buttonId) {
-  let clicks = _btnCounters[buttonId]
-  if (clicks.length > 5) {
-    clicks = _btnCounters[buttonId].slice(-5)
-  }
-  const diff = clicks.slice(-1) - clicks[0]
-  console.log('Element ' + buttonId + ' has been clicked 5 times in ' + (diff / 1000) + ' seconds')
-  return (diff < 3000)
 }
 
 const getTestLogin = function () {
@@ -76,7 +60,7 @@ const fatalError = function () {
 }
 
 const alertMessage = function (message, cls = 'info', timeout = 5000) {
-  const html = `<div class="alert alert-${cls} fade show" role="alert">${message}</div>`
+  const html = `<div class="alert alert-${cls} fade show" role="alert" height="90%">${message}</div>`
   $('#userMessage').html(html).alert()
   setTimeout(() => {
     $('#userMessage')
@@ -118,7 +102,7 @@ const getStoreValue = function (propertyName) {
 
 const getCurrentGameId = function () {
   try {
-    return store.currentGame.id
+    return parseInt(store.currentGame.id)
   } catch (e) {
     return 0
   }
@@ -140,13 +124,32 @@ const getMarkColor = function (mark) {
   return (mark === 'x' ? theme.xColor : theme.oColor)
 }
 
+// disallow game reset if new game started and no squares used
 const allowReset = function () {
+  if (!ALLOW_ANTI_TEST) return true
   const squaresUsed = $('#GameBoard .squares img').length
-  return (getCurrentGameId() === 0 || squaresUsed > 0)
+  const currentGame = $('#currentGame').text() // means old game was replayed
+  const gameStatus = $('#gameStatus').text()
+  if (currentGame !== '' ||
+    gameStatus === 'Not Started' ||
+    getCurrentGameId() === 0 ||
+    squaresUsed > 0) {
+    return true
+  } else {
+    // if none of those are true,
+    // then there's already a new game created
+    // and the user hasn't make a move yet,
+    // is just clicking Reset for fun
+    return false
+  }
+}
+
+const refreshTheme = function () {
+  themes.initTheme()
 }
 
 module.exports = {
-  incrementButtonCounter,
+  watchButtonClicks,
   isTestMode,
   getTestLogin,
   isAuthenticated,
@@ -162,5 +165,6 @@ module.exports = {
   getTheme,
   getMarkImage,
   getMarkColor,
-  allowReset
+  allowReset,
+  refreshTheme
 }

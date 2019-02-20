@@ -49,6 +49,7 @@ const loginSuccess = (responseData) => {
   utils.successMessage(msg)
   $('#userEmail').text(store.user.email)
   refreshAuthElements()
+  $('#modalForm').html('')
 }
 
 // Public

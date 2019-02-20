@@ -95,7 +95,8 @@ const onGetUnfinishedGames = function () {
   }
 }
 
-const onShowGame = function (gameId) {
+const onShowGame = function (event) {
+  const gameId = event.target.id.substring(1)
   gameApi.showGame(gameId)
     .then(gameUi.displayGame)
     .catch(gameUi.gameApiFailure)

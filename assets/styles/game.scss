@@ -46,14 +46,3 @@ $square-gutter: 1vh;
   margin: 10px auto;
   text-align: center;
 }
-
-
-#playerInfo {
-  font-size: 12px;
-}
-.x-turn #playerTurn {
-  color: #f00;
-}
-.o-turn #playerTurn {
-  color: #00f;
-}

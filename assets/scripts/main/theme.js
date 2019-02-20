@@ -23,7 +23,7 @@ Theme.prototype.getImageTag = function (img) {
 
 const primaryTheme = new Theme(0, 'Primary', 'primary', '#f00', '#00f', 'text-primary', 'bg-primary', '#000', '#fff')
 const minimalTheme = new Theme(1, 'Minimalist', 'minimal', '#666', '#ccc', 'text-black', 'bg-white', '#000', '#fff')
-const gothicTheme = new Theme(2, 'Gothic', 'gothic', '#dedede', '#020202', 'text-white', 'bg-black', '#333', '#bbb')
+const gothicTheme = new Theme(2, 'Gothic', 'goth', '#dedede', '#232323', 'text-white', 'bg-black', '#333', '#bbb')
 // More Theme ideas:
 // Valenties (hearts & arrows, pinks and reds)
 // StPatricks (shamrocks & celtic crosses, greens)
@@ -48,8 +48,29 @@ const setCurrentTheme = function (index) {
   _currentThemeIndex = index
 }
 
+// display themed items
+const initTheme = function () {
+  const currentTheme = getCurrentTheme()
+  const titleImgSrc = currentTheme.path + 'title.png'
+  $('header .page-title img').attr('src', titleImgSrc)
+  $('body').addClass(currentTheme.className)
+  $('#GameBoard .square.x img').attr('src', currentTheme.path + 'x.png')
+  $('#GameBoard .square.o img').attr('src', currentTheme.path + 'o.png')
+  // set empty square bkg color
+  const status = $('#gameStatus').text()
+  if (status === 'In Progress') {
+    $('#GameBoard .square:empty').css('background-color', currentTheme.readySquare)
+    // set current player color
+    const player = $('#currentTurn').text()
+    $('.turn-status').css('background-color', (player === 'X') ? currentTheme.xColor : currentTheme.oColor)
+  } else {
+    $('#GameBoard .square:empty').css('background-color', currentTheme.disableSquare)
+  }
+}
+
 module.exports = {
   availableThemes,
   getCurrentTheme,
-  setCurrentTheme
+  setCurrentTheme,
+  initTheme
 }

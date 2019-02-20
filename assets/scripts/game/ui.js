@@ -76,8 +76,7 @@ const createGameSuccess = function (responseData) {
  */
 const showWinner = function (responseData) {
   const player = players.getCurrentPlayer()
-  console.log('displaying winner: Player ' + player.name)
-  // TODO: indicate winner status, highlight winning squares
+  // TODO: indicate winner status
 
   utils.userMessage(`Player ${player.name} Wins!`)
 
@@ -98,6 +97,7 @@ const finishTurn = function (responseData) {
 // Show user stats
 const displayStatistics = function (responseData) {
   // Calculate player stats
+  $('#playerStats').addClass('display-info')
   const games = responseData.games
   const numTotal = games.length
   $('#playerStats .all-games').text(numTotal)
@@ -144,7 +144,6 @@ const showUnfinishedGames = function (responseData) {
 
 // show single game from history
 const displayGame = function (responseData) {
-  console.log('Display Game:', responseData.game)
   clearBoard()
   $('#currentGame').text('#' + responseData.game.id)
   // if isOver -> displayFinishedGame
@@ -178,9 +177,11 @@ const startGame = function () {
  * @return {undefined}
  */
 const showStalemate = function () {
-  console.log('no winner')
-  // TODO: display status
   utils.userMessage('No winner')
+  $('#gameStatus').text('Draw')
+  // TODO: display somewhere else
+  $('.turn-status').css('background-color', DEFAULT_TEXT_BG)
+  $('#currentTurn').text('--').css('color', DEFAULT_TEXT_COLOR)
   gameOver()
 }
 
@@ -189,17 +190,16 @@ const clearBoard = function (enable = true) {
   const squareBgColor = enable ? utils.getTheme().readySquare : utils.getTheme().disableSquare
   $('#GameBoard .square').empty()
     .removeClass('x o')
-    .data('enabled', enable)
+    .data('enabled', enable ? 'true' : 'false')
     .css('background-color', squareBgColor)
   $('.turn-status').css('background-color', DEFAULT_TEXT_BG)
   $('#currentTurn').text('--').css('color', DEFAULT_TEXT_COLOR)
 }
 
 const gameOver = function () {
-  console.log('Game Over')
   // disable squares
   $('#GameBoard .square').data('enabled', 'false')
-  $('#currentGame').text('Over')
+  $('#gameStatus').text('Over')
 }
 
 const initTurn = function (player) {
@@ -219,11 +219,11 @@ const showGameHistory = function (responseData, isFinished) {
   $('#gameHistory .card-header').text(title)
   $('#pastGames').html('')
   responseData.games.forEach(game => {
+    // TODO: for finished games, change button color to show who won
     const btnColor = isFinished ? 'light' : 'dark'
     const item = `<li class="list-group-item"><button id="g${game.id}" class="btn btn-${btnColor}">Game #${game.id}</button></li>`
     $('#pastGames').append(item)
   })
-  $('#pastGames button').on('click', onShowGame)
 
   $('#gameHistory .card').show()
 }
@@ -276,9 +276,9 @@ const markCells = function (cells, enableEmptyCells) {
     if (mark === '') {
       // cell is empty
       if (enableEmptyCells) {
-        $(sq).data('enabled', 'false').css('background-color', utils.getTheme().disableSquare)
-      } else {
         $(sq).data('enabled', 'true').css('background-color', utils.getTheme().readySquare)
+      } else {
+        $(sq).data('enabled', 'false').css('background-color', utils.getTheme().disableSquare)
       }
     } else {
       // cell contains mark
@@ -297,29 +297,14 @@ const playGame = function (game) {
   const xo = logic.playerTurn(game.cells)
   if (xo === null) {
     // board is full, yet somehow inexplicably the game is not over
-    console.log('board is full')
-    // utils.userMessage('Board is Full!')
+    utils.warningMessage('Board is Full!')
   } else {
-    debugger
-    // TODO: FIX!!
     const player = players.getPlayer(xo)
     initTurn(player)
   }
   utils.userMessage(`Game #${game.id} re-started`)
   $('#gameStatus').text('In Progress')
   $('#resetBtn').text('Reset')
-}
-
-// event handler
-// TODO: move this to events, move handler assignment (currently in showGameHistory)
-// to app.js, but write as:
-// $('#pastGames').on('click', 'button', events.showGameHistory)
-const onShowGame = function (event) {
-  const gameId = event.target.id.substring(1)
-  console.log('Show Game #' + gameId)
-  gameApi.showGame(gameId)
-    .then(displayGame)
-    .catch(gameApiFailure)
 }
 
 module.exports = {
