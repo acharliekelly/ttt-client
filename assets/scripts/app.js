@@ -16,14 +16,46 @@ $(() => {
   // Game Reset button
   $('#resetBtn').on('click', (event) => {
     if (utils.watchButtonClicks(event)) {
-      utils.warningMessage('How about you relax with all the clicking? It\'s not going to get it done any faster.')
+      utils.warningMessage('How about you relax with all the clicking?')
+      $('#resetBtn').attr('diabled', true)
+      setTimeout(() => {
+        $('#resetBtn').attr('disabled', false)
+      }, 5000)
     } else {
       gameEvents.onReset()
     }
   })
 
-  // set click events for all the modal form buttons
-  $('.modal-btn').on('click', modalForm)
+  // ALL EXPLICIT!!!
+  //
+  // // set click events for all the modal form buttons
+  // $('.modal-btn').on('click', function (event) {
+  //   $(this).data('target').modal('show')
+  // })
+
+  $('#modalLoginForm').on('submit', authEvents.onLoginSubmit)
+  $('#modalSignupForm').on('submit', authEvents.onSignupSubmit)
+  $('#modalChangePasswordForm').on('submit', authEvents.onChangePasswordSubmit)
+
+  $('#modalLoginSubmitBtn').on('click', () => {
+    $('#modalLoginForm').trigger('submit')
+    $('#modalLoginFormDialog').modal('hide')
+  })
+
+  $('#modalSignupSubmitBtn').on('click', () => {
+    $('#modalSignupForm').trigger('submit')
+    $('#modalSignupFormDialog').modal('hide')
+  })
+
+  $('#modalChangePasswordSubmitBtn').on('click', () => {
+    $('#modalChangePasswordForm').trigger('submit')
+    $('#modalChangePasswordFormDialog').modal('hide')
+  })
+
+  // $('.modal-submit').on('click', function (event) {
+  //   $(this).data('target').trigger('submit')
+  //   $(this).parent('modal').modal('hide')
+  // })
 
   // just sign out, no need to confirm
   $('#signoutBtn').on('click', authEvents.onSignoutConfirm)
@@ -42,61 +74,12 @@ $(() => {
   $('#minimalThemeBtn').on('click', options.onMinimalThemeClick)
   $('#gothicThemeBtn').on('click', options.onGothicThemeClick)
 
-  // $('#optionsForm').on('submit', options.onOptionSubmit)
-  // $('#optionSubmitBtn').on('click', () => {
-  //   $('#optionsForm').trigger('submit')
-  // })
-
   utils.refreshTheme()
   // // show/hide/disable objects based on auth status
   authUi.refreshAuthElements()
 
   initBoardBindings() // initialize game board
 })
-
-const modalForm = (event) => {
-  const btn = $(event.target)
-  const form = btn.data('form')
-  const formId = form + 'FormContent'
-  $('#modalForm').load('public/snippets/forms.html #' + formId)
-  let target, title
-  switch (form) {
-    case 'login':
-      target = authEvents.onLoginSubmit
-      title = 'Login'
-      if (utils.isTestMode()) {
-        $('#emailField').val(utils.getTestLogin().email)
-        $('#passwordField').val(utils.getTestLogin().pw)
-      }
-      break
-    case 'signup':
-      target = authEvents.onSignupSubmit
-      title = 'Sign Up'
-      break
-    case 'changePassword':
-      target = authEvents.onChangePasswordSubmit
-      title = 'Change Password'
-      break
-    case 'options': // removed
-      target = options.onOptionSubmit
-      title = 'Game Options'
-      // options.loadThemeOptions('radio')
-      break
-  }
-  // set the modal title and form target according to which button was clicked
-  $('#modalTitle').text(title)
-  $('#modalForm').on('submit', target)
-
-  // make the modal submit button submit the form, and also close the modal
-  $('#modalSubmitBtn').on('click', () => {
-    $('#modalForm').trigger('submit')
-    $('#modalFormDialog').modal('hide')
-    $('#modalForm').html('') // remove form content
-  })
-
-  // finally, display the modal form
-  $('#modalFormDialog').modal('show')
-}
 
 // set bindings, but disable board until game started
 const initBoardBindings = function () {

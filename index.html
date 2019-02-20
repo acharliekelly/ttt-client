@@ -35,11 +35,11 @@
           <div id="authPanel" class="panel">
             <div class="button-set row justify-content-center">
               <div class="col-6 center-block">
-                <button id="loginBtn" class="no-token modal-btn btn btn-primary" data-form="login">Log In</button>
-                <button id="changepwBtn" class="auth-token modal-btn btn btn-primary" data-form="changePassword">Change Password</button>
+                <button id="loginBtn" class="no-token modal-btn btn btn-primary" data-toggle="modal" data-target="#modalLoginFormDialog">Log In</button>
+                <button id="changepwBtn" class="auth-token modal-btn btn btn-primary" data-toggle="modal" data-target="#modalChangePasswordFormDialog">Change Password</button>
               </div>
               <div class="col-6 center-block">
-                <button id="signupBtn" class="no-token modal-btn btn btn-primary" data-form="signup">Sign Up</button>
+                <button id="signupBtn" class="no-token modal-btn btn btn-primary" data-toggle="modal" data-target="#modalSignupFormDialog">Sign Up</button>
                 <button id="signoutBtn" class="auth-token btn btn-primary">Sign Out</button>
               </div>
             </div>
@@ -149,27 +149,138 @@
 
   <!-- Modal Form -->
   <!-- invisible when not in use -->
-    <div class="modal fade" id="modalFormDialog" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal fade" id="modalLoginFormDialog" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modalTitle"></h5>
+            <h5 class="modal-title" id="modalLoginTitle">Login</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <form id="modalForm" method="post">
 
+                <!-- Login Form -->
+            <form id="modalLoginForm">
+              <div id="loginFormContent">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">@</span>
+                  </div>
+                  <input id="emailField" class="form-control" name="credentials[email]"
+                    type="email" placeholder="E-mail Address" autocomplete="true" value="tictactoe@cantimaginewhy.com">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">*</span>
+                  </div>
+                  <input id="passwordField" class="form-control" name="credentials[password]"
+                    type="password" placeholder="Password" autocomplete="true" value="password">
+                </div>
+              </div>
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button id="modalSubmitBtn" type="button" class="btn btn-primary">Submit</button>
+            <button id="modalLoginSubmitBtn" type="button" class="btn btn-primary modal-submit" data-target="#modalLoginForm">Submit</button>
           </div>
         </div>
       </div>
     </div>
+
+
+    <div class="modal fade" id="modalSignupFormDialog" tabindex="-1" role="dialog" aria-labelledby="modalSignupTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalSignupTitle">Sign Up</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="modalSignupForm">
+              <!-- Sign Up Form -->
+              <div id="signupFormContent">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">@</span>
+                  </div>
+                  <input id="emailField" class="form-control" name="credentials[email]" type="email" placeholder="E-mail Address" autocomplete="true">
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">*</span>
+                  </div>
+                  <input id="passwordField" class="form-control" name="credentials[password]" type="password" placeholder="Password" autocomplete="true">
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Confirm</span>
+                  </div>
+                  <input id="passwordConfField" class="form-control" name="credentials[password_confirmation]" type="password" placeholder="Confirm Password">
+                </div>
+
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button id="modalSignupSubmitBtn" type="button" class="btn btn-primary modal-submit" data-target="#modalSignupForm">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="modalChangePasswordFormDialog" tabindex="-1" role="dialog" aria-labelledby="modalChangePasswordTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalChangePasswordTitle">Change Password</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="modalChangePasswordForm">
+              <!-- Change Password Form -->
+              <div id="changePasswordFormContent">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Old Password</span>
+                  </div>
+                  <input id="oldPasswordField" class="form-control" name="passwords[old]" type="password" placeholder="Old Password">
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">New Password</span>
+                  </div>
+                  <input id="newPasswordField" class="form-control" name="passwords[new]" type="password" placeholder="New Password">
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Re-type New Password</span>
+                  </div>
+                  <input id="newPasswordField2" class="form-control" type="password" placeholder="New Password">
+                </div>
+
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button id="modalChangePasswordSubmitBtn" type="button" class="btn btn-primary modal-submit" data-target="#modalChangePasswordForm">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 
 
     <div class="modal fade" id="optionsFormDialog" tabindex="-1" role="dialog" aria-labelledby="optionsTitle" aria-hidden="true">
@@ -199,33 +310,7 @@
               <div class="col text-center theme-text goth-text">Gothic</div>
             </div>
 
-                <!-- <fieldset class="form-group" id="themeSelect">
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="theme" id="themePrimary" value="0" checked>
-                    <label class="form-check-label" for="themePrimary">Primary</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="theme" id="themeMinimalist" value="1">
-                    <label class="form-check-label" for="themeBW">Minimalist</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="theme" id="themeGothic" value="2">
-                    <label class="form-check-label" for="themeGothic">Gothic</label>
-                  </div>
-                </fieldset> -->
 
-
-                <!-- <div class="form-group">
-                  <label for="themeSelect">Theme: </label>
-                  <select id="themeSelect" name="theme">
-                    <option value="0">Primary</option>
-                    <option value="1">Minimal</option>
-                    <option value="2">Gothic</option>
-                  </select>
-                </div> -->
-              <!-- </div>
-
-            </form> -->
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
