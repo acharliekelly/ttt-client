@@ -12,7 +12,8 @@ const onLoginSubmit = (event) => {
   authApi.signIn(formData)
     .then(authUi.loginSuccess)
     .catch(authUi.authFail)
-  $('#modalForm').modal('hide')
+  // $('#modalFormDialog').modal('hide')
+  // $('#modalForm').html('')
 }
 
 const onSignupSubmit = (event) => {
@@ -20,7 +21,8 @@ const onSignupSubmit = (event) => {
   authApi.signUp(formData)
     .then(authUi.signUpSuccess)
     .catch(authUi.authFail)
-  $('#modalForm').modal('hide')
+  // $('#modalFormDialog').modal('hide')
+  // $('#modalForm').html('')
 }
 
 const onChangePasswordSubmit = (event) => {
@@ -28,7 +30,8 @@ const onChangePasswordSubmit = (event) => {
   authApi.changePassword(formData)
     .then(authUi.changePasswordSuccess)
     .catch(authUi.authenticationError)
-  $('#modalForm').modal('hide')
+  // $('#modalFormDialog').modal('hide')
+  // $('#modalForm').html('')
 }
 
 const onSignoutConfirm = (event) => {
