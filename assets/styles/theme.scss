@@ -115,11 +115,10 @@ body.goth-theme {
 
 
 body.circuit-theme {
-  // background-image: url('public/images/circuit/body-bkg.png');
-  // background-repeat: repeat;
+  background-image: url('public/images/circuit/bkg.png');
 
   .panel {
-    background-image: url('public/images/circuit/bkg.png');
+    background-color: #666;
   }
 
   .x-text {
@@ -160,7 +159,7 @@ body.steampunk-theme {
   background-repeat: repeat;
 
   .panel {
-    background-image: url('public/images/steampunk/bkg.png');
+    background-color: #999;
   }
 
   .x-text {

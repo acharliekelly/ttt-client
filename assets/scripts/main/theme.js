@@ -22,7 +22,7 @@ Theme.prototype.getImageTag = function (img) {
 const primaryTheme = new Theme(0, 'Primary', 'primary', '#f00', '#00f', '#000', '#fff')
 const minimalTheme = new Theme(1, 'Minimalist', 'minimal', '#ddd', '#333', '#000', '#fff')
 const gothicTheme = new Theme(2, 'Gothic', 'goth', '#000', '#fff', '#333', '#bbb')
-const circuitTheme = new Theme(3, 'Circuit', 'circuit', '#bb0', '#060', '#000', '#fff')
+const circuitTheme = new Theme(3, 'Circuit', 'circuit', '#bb0', '#090', '#000', '#fff')
 const steampunkTheme = new Theme(4, 'Steampunk', 'steampunk', '#ffd700', '#c0c0c0', '#000', '#fff')
 
 const availableThemes = [

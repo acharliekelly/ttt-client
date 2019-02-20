@@ -46,6 +46,7 @@ const themeOptionHtml = function (optionType, theme) {
   return html
 }
 
+// Excessively inelegant, but didn't feel like refactoring and it's getting late
 const restoreThemeButtons = function () {
   $('#optionsForm .theme-button').removeClass('active')
   $('#optionsForm .theme-text').removeClass('active')

@@ -169,14 +169,14 @@
                     <span class="input-group-text">@</span>
                   </div>
                   <input id="emailField" class="form-control" name="credentials[email]"
-                    type="email" placeholder="E-mail Address" autocomplete="true" value="tictactoe@cantimaginewhy.com">
+                    type="email" placeholder="E-mail Address" autocomplete="false">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">*</span>
                   </div>
                   <input id="passwordField" class="form-control" name="credentials[password]"
-                    type="password" placeholder="Password" autocomplete="true" value="password">
+                    type="password" placeholder="Password" autocomplete="false">
                 </div>
               </div>
             </form>
@@ -295,13 +295,13 @@
           </div>
           <div class="modal-body">
             <div id="optionsFormContent" class="row">
-              <button id="primaryThemeBtn" class="btn btn-default theme-button col">
+              <button id="primaryThemeBtn" class="btn btn-default theme-button col" data-theme="primary">
                 <img src="public/images/primary/o.png" alt="Primary Theme" class="primary">
               </button>
-              <button id="minimalThemeBtn" class="btn btn-default theme-button col">
+              <button id="minimalThemeBtn" class="btn btn-default theme-button col" data-theme="minimal">
                 <img src="public/images/minimal/o.png" alt="Minimalist Theme" class="minimal">
               </button>
-              <button id="gothicThemeBtn" class="btn btn-default theme-button col">
+              <button id="gothicThemeBtn" class="btn btn-default theme-button col" data-theme="goth">
                 <img src="public/images/goth/o.png" alt="Gothic Theme" class="goth">
               </button>
             </div>
@@ -311,10 +311,10 @@
               <div class="col text-center theme-text goth-text">Gothic</div>
             </div>
             <div class="row">
-              <button id="circuitThemeBtn" class="btn btn-default theme-button col">
+              <button id="circuitThemeBtn" class="btn btn-default theme-button col" data-theme="circuit">
                 <img src="public/images/circuit/o.png" alt="Circuit Theme" class="circuit">
               </button>
-              <button id="steampunkThemeBtn" class="btn btn-default theme-button col">
+              <button id="steampunkThemeBtn" class="btn btn-default theme-button col" data-theme="steampunk">
                 <img src="public/images/steampunk/o.png" alt="Steampunk Theme" class="steampunk">
               </button>
             </div>
