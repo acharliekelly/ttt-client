@@ -27,11 +27,6 @@ $(() => {
   })
 
   // ALL EXPLICIT!!!
-  //
-  // // set click events for all the modal form buttons
-  // $('.modal-btn').on('click', function (event) {
-  //   $(this).data('target').modal('show')
-  // })
 
   $('#modalLoginForm').on('submit', authEvents.onLoginSubmit)
   $('#modalSignupForm').on('submit', authEvents.onSignupSubmit)
@@ -52,12 +47,6 @@ $(() => {
     $('#modalChangePasswordFormDialog').modal('hide')
   })
 
-  // $('.modal-submit').on('click', function (event) {
-  //   $(this).data('target').trigger('submit')
-  //   $(this).parent('modal').modal('hide')
-  // })
-
-  // just sign out, no need to confirm
   $('#signoutBtn').on('click', authEvents.onSignoutConfirm)
 
   // get player stats
