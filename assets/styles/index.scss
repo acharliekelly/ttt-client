@@ -46,6 +46,8 @@
   }
 }
 
+
+
 #authPanel {
   .btn {
     min-width: 5vw;
@@ -90,10 +92,16 @@
 }
 .turn-status {
   border-radius: 3px;
-  padding: 1px 2px;
+  padding: 1px;
+  padding-left: 5px;
 }
 
 #userMessage {
-  min-height: 6vh;
+  max-height: 20px;
   padding: 0;
+
+  .alert {
+    overflow: hidden;
+    margin-top: -10px;
+  }
 }
