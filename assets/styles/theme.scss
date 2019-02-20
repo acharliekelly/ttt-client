@@ -3,13 +3,19 @@
 $primaryX: #f00;
 $primaryO: #00f;
 
+$minimalX: #666;
+$minimalO: #ccc;
+
+$gothX: #dedede;
+$gothO: #232323;
+
 
 .panel {
   // default
   background-image: url('public/images/wavegrid.png')
 }
 
-.primaryTheme {
+body.primary-theme {
   .panel {
     background-image: url('public/images/primary/bkg.png');
   }
@@ -31,15 +37,56 @@ $primaryO: #00f;
   .disableSquare {
     background-color: #000;
   }
-
 }
 
 
+body.minimal-theme {
+  .panel {
+    background-image: url('public/images/minimal/bkg.png');
+  }
+  .x-text {
+    color: $minimalX;
+  }
+  .x-bg {
+    background-color: $minimalX;
+  }
+  .o-text {
+    color: $minimalO;
+  }
+  .o-bg {
+    background-color: $minimalO;
+  }
+  .readySquare {
+    background-color: #fff;
+  }
+  .disableSquare {
+    background-color: #000;
+  }
 
-.bwTheme {
-  // TODO: set up theme
 }
 
-.gothicTheme {
-  // TODO: set up theme
+body.goth-theme {
+  background-image: url('public/images/goth/body-bkg.png');
+  background-repeat: repeat;
+  .panel {
+    background-image: url('public/images/goth/bkg.png');
+  }
+  .x-text {
+    color: $gothX;
+  }
+  .x-bg {
+    background-color: $gothX;
+  }
+  .o-text {
+    color: $gothO;
+  }
+  .o-bg {
+    background-color: $gothO;
+  }
+  .readySquare {
+    background-color: #333;
+  }
+  .disableSquare {
+    background-color: #bbb;
+  }
 }
