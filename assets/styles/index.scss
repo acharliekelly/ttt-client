@@ -30,7 +30,17 @@
 
 }
 
+#playerStats .list-group li {
+  background-color: #aaa;
+}
+#playerStats.display-info .list-group li {
+  background-color: #fff;
+  > span {
+    font-weight: bold;
+  }
+}
+
 #userMessage {
-  max-width: 70%;
+
 
 }
