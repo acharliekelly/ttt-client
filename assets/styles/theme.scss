@@ -6,8 +6,8 @@ $primaryO: #00f;
 $minimalX: #666;
 $minimalO: #ccc;
 
-$gothX: #dedede;
-$gothO: #232323;
+$gothX: #000;
+$gothO: #fff;
 
 
 .panel {
@@ -57,10 +57,10 @@ body.minimal-theme {
     background-color: $minimalO;
   }
   .readySquare {
-    background-color: #fff;
+    background-color: #bbb;
   }
   .disableSquare {
-    background-color: #000;
+    background-color: #444;
   }
 
 }
@@ -88,5 +88,8 @@ body.goth-theme {
   }
   .disableSquare {
     background-color: #bbb;
+  }
+  .game-status {
+    background-color: #fff;
   }
 }
