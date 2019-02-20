@@ -62,6 +62,8 @@ $(() => {
   $('#primaryThemeBtn').on('click', options.onPrimaryThemeClick)
   $('#minimalThemeBtn').on('click', options.onMinimalThemeClick)
   $('#gothicThemeBtn').on('click', options.onGothicThemeClick)
+  $('#circuitThemeBtn').on('click', options.onCircuitThemeClick)
+  $('#steampunkThemeBtn').on('click', options.onSteampunkThemeClick)
 
   utils.refreshTheme()
   // // show/hide/disable objects based on auth status

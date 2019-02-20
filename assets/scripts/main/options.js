@@ -78,9 +78,25 @@ const onGothicThemeClick = function () {
   }
 }
 
-const changeTheme = function (themeId) {
-  console.log('changing theme: ' + themeId)
+const onCircuitThemeClick = function () {
+  restoreThemeButtons()
+  $(this).addClass('active')
+  $('.circuit-text').addClass('active')
+  if (themes.getCurrentTheme().id !== 3) {
+    changeTheme(3)
+  }
+}
 
+const onSteampunkThemeClick = function () {
+  restoreThemeButtons()
+  $(this).addClass('active')
+  $('.steampunk-text').addClass('active')
+  if (themes.getCurrentTheme().id !== 4) {
+    changeTheme(4)
+  }
+}
+
+const changeTheme = function (themeId) {
   const oldTheme = themes.getCurrentTheme().className
   $('body').removeClass(oldTheme)
   themes.setCurrentTheme(themeId)
@@ -94,5 +110,7 @@ module.exports = {
   changeTheme,
   onPrimaryThemeClick,
   onMinimalThemeClick,
-  onGothicThemeClick
+  onGothicThemeClick,
+  onCircuitThemeClick,
+  onSteampunkThemeClick
 }

@@ -2,7 +2,7 @@
 // main/theme.js
 //
 
-const Theme = function (id, themeName, folder, xColor, oColor, bsColor, bsBackground, disabledSquare, readySquare) {
+const Theme = function (id, themeName, folder, xColor, oColor, disabledSquare, readySquare) {
   this.id = id
   this.name = themeName
   this.short = folder
@@ -10,8 +10,6 @@ const Theme = function (id, themeName, folder, xColor, oColor, bsColor, bsBackgr
   this.path = 'public/images/' + folder + '/'
   this.xColor = xColor
   this.oColor = oColor
-  this.bsColor = bsColor
-  this.bsBackground = bsBackground
   this.disableSquare = disabledSquare
   this.readySquare = readySquare
 }
@@ -21,18 +19,18 @@ Theme.prototype.getImageTag = function (img) {
   return `<img src="${src}" alt="${img}">`
 }
 
-const primaryTheme = new Theme(0, 'Primary', 'primary', '#f00', '#00f', 'text-primary', 'bg-primary', '#000', '#fff')
-const minimalTheme = new Theme(1, 'Minimalist', 'minimal', '#ddd', '#333', 'text-black', 'bg-white', '#000', '#fff')
-const gothicTheme = new Theme(2, 'Gothic', 'goth', '#000', '#fff', 'text-white', 'bg-black', '#333', '#bbb')
-// More Theme ideas:
-// Valenties (hearts & arrows, pinks and reds)
-// StPatricks (shamrocks & celtic crosses, greens)
-// Pets (cats & dogs, orange & brown)
+const primaryTheme = new Theme(0, 'Primary', 'primary', '#f00', '#00f', '#000', '#fff')
+const minimalTheme = new Theme(1, 'Minimalist', 'minimal', '#ddd', '#333', '#000', '#fff')
+const gothicTheme = new Theme(2, 'Gothic', 'goth', '#000', '#fff', '#333', '#bbb')
+const circuitTheme = new Theme(3, 'Circuit', 'circuit', '#bb0', '#060', '#000', '#fff')
+const steampunkTheme = new Theme(4, 'Steampunk', 'steampunk', '#ffd700', '#c0c0c0', '#000', '#fff')
 
 const availableThemes = [
   primaryTheme,
   minimalTheme,
-  gothicTheme
+  gothicTheme,
+  circuitTheme,
+  steampunkTheme
 ]
 
 let _currentThemeIndex = 0
