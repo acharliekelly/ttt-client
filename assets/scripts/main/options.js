@@ -2,19 +2,23 @@
 // main/options.js
 
 const themes = require('./theme.js')
-// const getFormFields = require('../../../lib/get-form-fields')
+
+const onOptionsClick = function (event) {
+  $('#optionsFormDialog').modal('show')
+}
 
 const onOptionSubmit = function (event) {
   event.preventDefault()
-  // const formData = getFormFields(event.target)
   // don't actually need formData since currently only one option,
   // which does not require any API calls
   const newThemeId = $('#themeSelect').val()
+  console.log('new theme id: ' + newThemeId)
+
   if (newThemeId !== themes.getCurrentTheme().id) {
     changeTheme(newThemeId)
   }
 
-  $('#modalForm').modal('hide')
+  $('#optionsFormDialog').modal('hide')
 }
 
 // not used - just use HTML for now
@@ -30,11 +34,11 @@ const themeOptionHtml = function (optionType, theme) {
   let html
   switch (optionType) {
     case 'select':
-      html = `<option value="${theme.short}">${theme.name}</option>`
+      html = `<option value="${theme.id}">${theme.name}</option>`
       break
     case 'radio':
       html = '<div class="form-check">'
-      html += `<input class="form-check-input" type="radio" name="theme" id="theme${theme.name}" value="${theme.short}">`
+      html += `<input class="form-check-input" type="radio" name="theme" id="theme${theme.name}" value="${theme.id}">`
       html += `<label class="form-check-label" for="theme${theme.name}">${theme.name}</label>`
       html += '</div>'
       break
@@ -48,22 +52,12 @@ const changeTheme = function (themeId) {
   const oldTheme = themes.getCurrentTheme().className
   $('body').removeClass(oldTheme)
   themes.setCurrentTheme(themeId)
-  initTheme()
-}
-
-// display themed items
-const initTheme = function () {
-  const currentTheme = themes.getCurrentTheme()
-  const titleImgSrc = currentTheme.path + 'title.png'
-  $('header .page-title img').attr('src', titleImgSrc)
-  $('body').addClass(currentTheme.className)
-  $('#GameBoard .square.x img').attr('src', currentTheme.path + 'x.png')
-  $('#GameBoard .square.o img').attr('src', currentTheme.path + 'o.png')
+  themes.initTheme()
 }
 
 module.exports = {
+  onOptionsClick,
   onOptionSubmit,
   loadThemeOptions,
-  changeTheme,
-  initTheme
+  changeTheme
 }
