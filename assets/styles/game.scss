@@ -9,7 +9,7 @@ $square-gutter: 1vh;
   justify-content: center;
   margin-top: 1em;
 	padding: 3px;
-  min-height: ($square-size + ($square-gutter*2)) * 3;
+  // min-height: ($square-size + ($square-gutter*2)) * 3;
 
   .column {
     display: flex;

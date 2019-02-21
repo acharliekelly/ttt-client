@@ -4,10 +4,10 @@
 const config = require('../config')
 const store = require('../store')
 const themes = require('./theme')
-const test = require('../test/events')
+// const test = require('../test/events')
 const anti = require('../test/anti')
 
-const ALLOW_ANTI_TEST = true
+const ALLOW_ANTI_TEST = false
 
 const watchButtonClicks = function (event, timestamp = Date.now()) {
   if (!ALLOW_ANTI_TEST) return false
@@ -16,12 +16,23 @@ const watchButtonClicks = function (event, timestamp = Date.now()) {
   }
 }
 
-const getTestLogin = function () {
-  if (isTestMode()) {
-    return test.testCredentials
+const getUserName = function (emailAddress) {
+  let email = emailAddress
+  if (!emailAddress) email = store.user.email
+  if (!email) {
+    return null
   } else {
-    return false
+    return email[0].toUpperCase() + email.substring(1, email.indexOf('@'))
   }
+}
+
+const getTestLogin = function () {
+  // if (isTestMode()) {
+  //   return test.testCredentials
+  // } else {
+  //
+  // }
+  return false
 }
 
 const isTestMode = function () {
@@ -150,6 +161,7 @@ const refreshTheme = function () {
 
 module.exports = {
   watchButtonClicks,
+  getUserName,
   isTestMode,
   getTestLogin,
   isAuthenticated,

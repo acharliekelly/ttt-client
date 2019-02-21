@@ -38,7 +38,7 @@ const clearUserData = () => {
 
 // Public
 const authFail = () => {
-  utils.errorMessage('Unable to authenticate')
+  utils.errorMessage('Unable to log in')
   $('#modalFormDialog').modal('hide')
   $('#modalForm').html('')
   refreshAuthElements()
@@ -46,7 +46,9 @@ const authFail = () => {
 
 // Public
 const loginSuccess = (responseData) => {
-  const msg = 'Authentication successful'
+  const email = responseData.user.email
+  const name = email[0].toUpperCase() + email.substring(1, email.indexOf('@'))
+  const msg = `Welcome back, ${name}!`
   store.user = responseData.user
   utils.successMessage(msg)
   $('#userEmail').text(store.user.email)

@@ -50,12 +50,18 @@ const onClickSquare = function (event) {
       .catch(gameUi.gameApiFailure)
   } else {
     // find out why the move is invalid
-    if (utils.getCurrentGameId() === 0) {
+    if (!utils.isAuthenticated()) {
+      // not logged in
+      utils.warningMessage('You must be logged in to play')
+    } else if (utils.getCurrentGameId() === 0) {
+      // logged in, but need to start a new game
       $('#resetBtn').text('New Game')
       utils.userMessage('Click the "New Game" Button to start a new game')
     } else if (square.has('img')) {
+      // square is already taken
       utils.warningMessage('That square is already taken, please pick another square')
     } else {
+      // some other reason
       utils.warningMessage('That move is invalid, but I\'m not sure why')
     }
   }
