@@ -43,12 +43,12 @@ As a user, I want to be able to ...
 
 ## Wireframes
 These are my original wireframes. The final product differs somewhat.
-1. [Sign Up](../public/wireframes/signup.pdf)
-2. [Log In](../public/wireframes/login.pdf)
-3. [Start Game](../public/wireframes/start-game.pdf)
-4. [2nd Move](../public/wireframes/2nd-move.pdf)
-5. [Game Options](../public/wireframes/game-options.pdf)
-6. [Signed Out](../public/wireframes/signed-out.pdf)
+1. [Sign Up](public/wireframes/signup.pdf)
+2. [Log In](public/wireframes/login.pdf)
+3. [Start Game](public/wireframes/start-game.pdf)
+4. [2nd Move](public/wireframes/2nd-move.pdf)
+5. [Game Options](public/wireframes/game-options.pdf)
+6. [Signed Out](public/wireframes/signed-out.pdf)
 
 ### Development Process
 I started with a version of Tic-Tac-Toe that I made a few weeks ago, before I knew the full specs of the project. It's basically just the game without the API, so it allows 2 players at the same computer, without any logging in or saving games. I figured it would be a snap to stitch that together with the API, but I ended up going down a number of rabbit holes, and spent much longer than I feel like I should have.
