@@ -16,7 +16,7 @@ const testCredentials = {
 }
 
 const testSignUp = () => {
-  console.log('Testing SignUp')
+  // console.log('Testing SignUp')
   const formData = {
     credentials: {
       email: TEST_EMAIL,
@@ -27,13 +27,13 @@ const testSignUp = () => {
   authApi.signUp(formData)
     .then(authUi.authenticationSuccess)
     .catch(function () {
-      console.log('Test Login failed')
+      // console.log('Test Login failed')
       authUi.authenticationError()
     })
 }
 
 const testSignIn = () => {
-  console.log('Testing Login')
+  // console.log('Testing Login')
   const formData = {
     credentials: {
       email: TEST_EMAIL,
@@ -43,7 +43,7 @@ const testSignIn = () => {
   authApi.signIn(formData)
     .then(authUi.authenticationSuccess)
     .catch(function () {
-      console.log('Test Login failed')
+      // console.log('Test Login failed')
       authUi.authFail()
     })
 }

@@ -12,7 +12,7 @@ const onOptionSubmit = function (event) {
   // don't actually need formData since currently only one option,
   // which does not require any API calls
   const newThemeId = $('#themeSelect').val()
-  console.log('new theme id: ' + newThemeId)
+  // console.log('new theme id: ' + newThemeId)
 
   if (newThemeId !== themes.getCurrentTheme().id) {
     changeTheme(newThemeId)

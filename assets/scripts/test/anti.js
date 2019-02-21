@@ -27,7 +27,7 @@ const tooManyClicks = function (buttonId) {
   } else {
     const clicks = _btnCounters[buttonId].slice(-MAXIMUM_CLICKS)
     const diff = clicks.slice(-1) - clicks[0]
-    console.log('Element ' + buttonId + ' has been clicked 5 times in ' + (diff / 1000) + ' seconds')
+    // console.log('Element ' + buttonId + ' has been clicked 5 times in ' + (diff / 1000) + ' seconds')
     return (diff < (MINIMUM_SECONDS * 1000))
   }
 }
