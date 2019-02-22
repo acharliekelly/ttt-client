@@ -19,10 +19,16 @@ const gameUi = require('../game/ui')
 // Public: check for token, update all elements
 const refreshAuthElements = () => {
   const token = utils.isAuthenticated()
-  $('.auth-token').toggle(token)
-  $('.no-token').toggle(!(token))
-  $('.auth-enable').prop('disabled', !(token))
-  if (!(token)) {
+  if (token) {
+    // logged in
+    $('.auth-token').show()
+    $('.no-token').hide()
+    $('.auth-enable').prop('disabled', false)
+  } else {
+    // not logged in
+    $('.auth-token').hide()
+    $('.no-token').show()
+    $('.auth-enable').prop('disabled', true)
     clearUserData()
     gameUi.clearBoard(false) // disable squares
   }
@@ -53,6 +59,7 @@ const loginSuccess = (responseData) => {
   utils.successMessage(msg)
   $('#userEmail').text(store.user.email)
   refreshAuthElements()
+  $('#statsBtn').trigger('click')
   $('#modalFormDialog').modal('hide')
   $('#modalForm').html('')
 }
