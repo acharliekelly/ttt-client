@@ -21,35 +21,18 @@ const onOptionSubmit = function (event) {
   $('#optionsFormDialog').modal('hide')
 }
 
-// not used - just use HTML for now
-const loadThemeOptions = function (optionType) {
-  $('#themeSelect').html('')
-  const themeOptions = themes.availableThemes
-  themeOptions.forEach((item) => {
-    $('#themeSelect').append(themeOptionHtml(optionType, item))
-  })
+const onThemeClick = function (event) {
+  restoreThemeButtons()
+  const key = $(event.target).className()
+  $(`#optionsFormDialog .${key}-text`).addClass('active')
+  $(event.target).parent('.theme-button').addClass('active')
+  const id = themes.getTheme(key).id
+  changeTheme(id)
 }
 
-const themeOptionHtml = function (optionType, theme) {
-  let html
-  switch (optionType) {
-    case 'select':
-      html = `<option value="${theme.id}">${theme.name}</option>`
-      break
-    case 'radio':
-      html = '<div class="form-check">'
-      html += `<input class="form-check-input" type="radio" name="theme" id="theme${theme.name}" value="${theme.id}">`
-      html += `<label class="form-check-label" for="theme${theme.name}">${theme.name}</label>`
-      html += '</div>'
-      break
-  }
-  return html
-}
-
-// Excessively inelegant, but didn't feel like refactoring and it's getting late
 const restoreThemeButtons = function () {
-  $('#optionsForm .theme-button').removeClass('active')
-  $('#optionsForm .theme-text').removeClass('active')
+  $('#optionsFormDialog .theme-button').removeClass('active')
+  $('#optionsFormDialog .theme-text').removeClass('active')
 }
 
 const onPrimaryThemeClick = function () {
@@ -107,8 +90,8 @@ const changeTheme = function (themeId) {
 module.exports = {
   onOptionsClick,
   onOptionSubmit,
-  loadThemeOptions,
   changeTheme,
+  onThemeClick,
   onPrimaryThemeClick,
   onMinimalThemeClick,
   onGothicThemeClick,

@@ -46,6 +46,34 @@ const setCurrentTheme = function (index) {
   _currentThemeIndex = index
 }
 
+const setTheme = function (idOrKey) {
+  if (isNaN(idOrKey)) {
+    const theme = availableThemes.find(theme => theme.short === idOrKey)
+    if (!theme) {
+      return false
+    } else {
+      _currentThemeIndex = theme.id
+      return true
+    }
+  } else if (idOrKey < availableThemes.length) {
+    _currentThemeIndex = idOrKey
+    return true
+  }
+  return false
+}
+
+const getTheme = function (idOrKey) {
+  if (isNaN(idOrKey)) {
+    const theme = availableThemes.find(theme => theme.short === idOrKey)
+    if (theme) {
+      return theme
+    }
+  } else if (idOrKey < availableThemes.length) {
+    return availableThemes[idOrKey]
+  }
+  return false
+}
+
 // display themed items
 const initTheme = function () {
   const currentTheme = getCurrentTheme()
@@ -66,9 +94,23 @@ const initTheme = function () {
   }
 }
 
+const generateThemeButton = function (theme) {
+  return `<button id="${theme.short}ThemeBtn" class="btn btn-default theme-button col" data-theme="${theme.short}" data-tid="${theme.id}">
+    <img src="public/images/${theme.short}/o.png" alt="${theme.name} Theme" class="${theme.short}">
+  </button>`
+}
+
+const generateThemeLabel = function (theme) {
+  return `<div class="col text-center theme-text primary-text">${theme.name}</div>`
+}
+
 module.exports = {
   availableThemes,
   getCurrentTheme,
   setCurrentTheme,
-  initTheme
+  getTheme,
+  setTheme,
+  initTheme,
+  generateThemeLabel,
+  generateThemeButton
 }
