@@ -22,8 +22,6 @@ $(() => {
     $(this).find('input').val('')
   })
 
-  // ALL EXPLICIT!!!
-
   $('#modalLoginForm').on('submit', authEvents.onLoginSubmit)
   $('#modalSignupForm').on('submit', authEvents.onSignupSubmit)
   $('#modalChangePasswordForm').on('submit', authEvents.onChangePasswordSubmit)
@@ -55,6 +53,9 @@ $(() => {
   $('#unfinishedGamesBtn').on('click', gameEvents.onGetUnfinishedGames)
 
   $('#gameOptionsBtn').on('click', options.onOptionsClick)
+
+  // $('#optionsFormDialog .theme-button img').on('click', options.onThemeClick)
+
   $('#primaryThemeBtn').on('click', options.onPrimaryThemeClick)
   $('#minimalThemeBtn').on('click', options.onMinimalThemeClick)
   $('#gothicThemeBtn').on('click', options.onGothicThemeClick)
