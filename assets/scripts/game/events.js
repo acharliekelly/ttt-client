@@ -57,7 +57,11 @@ const onClickSquare = function (event) {
       // logged in, but need to start a new game
       $('#resetBtn').text('New Game')
       utils.userMessage('Click the "New Game" Button to start a new game')
-    } else if (square.has('img')) {
+      // } else if (square.has('img')) { // source of the one MVP-breaking error
+    } else if ($('#gameStatus').text() === 'Over') {
+      // game is over
+      utils.userMessage('The game is over. Click the "New Game" button to play again')
+    } else if ($(event.target).has('img')) {
       // square is already taken
       utils.warningMessage('That square is already taken, please pick another square')
     } else {
