@@ -59,7 +59,7 @@ const loginSuccess = (responseData) => {
   utils.successMessage(msg)
   $('#userEmail').text(store.user.email)
   refreshAuthElements()
-  $('#statsBtn').trigger('click')
+  // $('#statsBtn').trigger('click')
   $('#modalFormDialog').modal('hide')
   $('#modalForm').html('')
 }
