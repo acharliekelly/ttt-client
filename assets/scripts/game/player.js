@@ -25,6 +25,15 @@ const gamePlayers = [playerX, playerO]
 
 let _currentPlayerIndex = 0
 
+const resetGame = function () {
+  _currentPlayerIndex = 0
+}
+
+// use when reloading game from history - sets index
+const setNextTurn = function (xo) {
+  _currentPlayerIndex = (xo === 'x' ? 0 : 1)
+}
+
 const getCurrentPlayer = function () {
   return gamePlayers[_currentPlayerIndex]
 }
@@ -45,6 +54,8 @@ const getPlayer = function (mark) {
 }
 
 module.exports = {
+  resetGame,
+  setNextTurn,
   getCurrentPlayer,
   nextPlayerTurn,
   getPlayer

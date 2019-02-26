@@ -59,6 +59,7 @@ const createGameSuccess = function (responseData) {
   const msg = `Game #${responseData.game.id} created`
   utils.userMessage(msg)
 
+  players.resetGame() // fixes player/signout bug
   initTurn(players.getCurrentPlayer())
   $('#currentGame').text(responseData.game.id)
   $('#gameStatus').text('In Progress')
@@ -316,6 +317,11 @@ const playGame = function (game) {
     utils.warningMessage('Board is Full!')
   } else {
     const player = players.getPlayer(xo)
+    // tell players who has next turn, or else next getCurrentPlayer() may be wrong
+    if (xo !== players.getCurrentPlayer().xo) {
+      // update players
+      players.setNextTurn(xo)
+    }
     initTurn(player)
   }
   utils.userMessage(`Game #${game.id} re-started`)
