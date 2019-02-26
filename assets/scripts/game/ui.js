@@ -59,6 +59,8 @@ const createGameSuccess = function (responseData) {
   const msg = `Game #${responseData.game.id} created`
   utils.userMessage(msg)
 
+  players.resetGame()
+
   initTurn(players.getCurrentPlayer())
   $('#currentGame').text(responseData.game.id)
   $('#gameStatus').text('In Progress')
