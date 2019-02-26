@@ -29,6 +29,10 @@ const getCurrentPlayer = function () {
   return gamePlayers[_currentPlayerIndex]
 }
 
+const resetGame = function () {
+  _currentPlayerIndex = 0
+}
+
 const nextPlayerTurn = function () {
   _currentPlayerIndex = (_currentPlayerIndex + 1) % 2
   return getCurrentPlayer()
@@ -45,6 +49,7 @@ const getPlayer = function (mark) {
 }
 
 module.exports = {
+  resetGame,
   getCurrentPlayer,
   nextPlayerTurn,
   getPlayer
