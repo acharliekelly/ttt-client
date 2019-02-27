@@ -53,14 +53,13 @@ const onClickSquare = function (event) {
     if (!utils.isAuthenticated()) {
       // not logged in
       utils.warningMessage('You must be logged in to play')
+    } else if (($('#gameStatus').text() === 'Over') || ($('#gameStatus').text().startsWith('Won by'))) {
+      // game is over
+      utils.userMessage('The game is over. Click the "New Game" button to play again')
     } else if (utils.getCurrentGameId() === 0) {
       // logged in, but need to start a new game
       $('#resetBtn').text('New Game')
       utils.userMessage('Click the "New Game" Button to start a new game')
-      // } else if (square.has('img')) { // source of the one MVP-breaking error
-    } else if ($('#gameStatus').text() === 'Over') {
-      // game is over
-      utils.userMessage('The game is over. Click the "New Game" button to play again')
     } else if ($(event.target).has('img')) {
       // square is already taken
       utils.warningMessage('That square is already taken, please pick another square')
