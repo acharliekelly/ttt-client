@@ -40,6 +40,9 @@ const clearUserData = () => {
   // Clear stats
   $('#playerStats li span').text('')
   $('#pastGames').children().empty()
+  // reset game status
+  $('#currentGame').text('')
+  $('#gameStatus').text('Not Started')
 }
 
 // Public
