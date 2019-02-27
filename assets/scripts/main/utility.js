@@ -126,7 +126,7 @@ const getTheme = function () {
 
 const getMarkImage = function (mark) {
   const theme = themes.getCurrentTheme()
-  const src = theme.path + mark + '.png'
+  const src = theme.path + mark.toLowerCase() + '.png'
   return `<img src="${src}" alt="${mark}" class="${mark}">`
 }
 
