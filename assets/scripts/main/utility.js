@@ -66,10 +66,6 @@ const errorMessage = function (message) {
   alertMessage(message, 'danger')
 }
 
-const fatalError = function () {
-  alertMessage('You know what? Go fuck yourself!', 'danger', 5000)
-}
-
 const alertMessage = function (message, cls = 'info', timeout = 5000) {
   const html = `<div class="alert alert-${cls} fade show" role="alert" height="80%">${message}</div>`
   $('#userMessage').html(html).alert()
@@ -78,28 +74,6 @@ const alertMessage = function (message, cls = 'info', timeout = 5000) {
       .alert('close')
       .html('')
   }, timeout)
-}
-
-/**  NOT WORKING
- * toastMessage - sends Bootstrap Toast message to #userMessage element
- * @param  {type} message          description
- * @param  {type} title            description
- * @param  {type} type = 'default' description
- * @param  {type} timeout = 5000   description
- * @return {type}                  description
- */
-const toastMessage = function (message, title, header = 'bg-info', timeout = 5000) {
-  $('#userMessage').load('public/snippets/toast.html', function () {
-    if (timeout !== 5000) {
-      $('#userMessage .toast').data('delay', timeout)
-    }
-    if (header !== 'bg-info') {
-      $('#userMessage .toast-header').removeClass('bg-info').addClass(header)
-    }
-    $('#userMessage .toast .mr-auto').text(title)
-    $('#userMessage .toast-body').html(message)
-    $('#userMessage .toast').toast('show')
-  })
 }
 
 const getStoreValue = function (propertyName) {
@@ -170,8 +144,6 @@ module.exports = {
   errorMessage,
   warningMessage,
   successMessage,
-  fatalError,
-  toastMessage,
   getStoreValue,
   getCurrentGameId,
   getTheme,

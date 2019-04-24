@@ -34,14 +34,13 @@
         <div class="col-md-4 col-12 grid">
           <div id="authPanel" class="panel">
             <div class="button-set row justify-content-center">
-              <div class="col-4 center-block">
-                <button id="loginBtn" class="no-token modal-btn btn theme-button1" data-toggle="modal" data-target="#modalLoginFormDialog">Log In</button>
-                <button id="changepwBtn" class="auth-token modal-btn btn theme-button1" data-toggle="modal" data-target="#modalChangePasswordFormDialog">Change Password</button>
+              <div class="center-block no-token">
+                <button id="signupBtn" class="modal-btn btn theme-button1" data-toggle="modal" data-target="#modalSignupFormDialog">Sign Up</button>
+                <button id="loginBtn" class="modal-btn btn theme-button1" data-toggle="modal" data-target="#modalLoginFormDialog">Log In</button>
               </div>
-              <div class="col-4"></div>
-              <div class="col-4 center-block">
-                <button id="signupBtn" class="no-token modal-btn btn theme-button1" data-toggle="modal" data-target="#modalSignupFormDialog">Sign Up</button>
-                <button id="signoutBtn" class="auth-token btn theme-button1">Sign Out</button>
+              <div class="center-block auth-token">
+                <button id="changepwBtn" class="modal-btn btn theme-button2" data-toggle="modal" data-target="#modalChangePasswordFormDialog">Change Password</button>
+                <button id="signoutBtn" class="auth-token btn theme-button2">Sign Out</button>
               </div>
             </div>
           </div>
