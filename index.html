@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tic Tac Toe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Do not add `link` tags-->
+    <link id="favicon" rel="shortcut icon" type="image/x-icon" href="public/images/favicon.png">
+
+    <!-- Do not add `script` tags-->
+    <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+    <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+<!-- prevent flash of unstyled content before jQuery loads -->
+    <style type="text/css">
+      body {
+      animation: fadein 2s;
+      }
+      @keyframes fadein {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="page-title">
+        <!-- Theme-->
+        <img id="theme-title" class="title-image" src="public/images/primary/title.png" alt="Tic-Tac-Toe" >
+      </div>
+
+    </header>
+    <main class="container">
+      <div class="row">
+        <div class="col-md-4 col-12 grid">
+          <div id="authPanel" class="panel">
+            <div class="button-set row justify-content-center">
+              <div class="center-block no-token">
+                <button id="signupBtn" class="modal-btn btn theme-button1" data-toggle="modal" data-target="#modalSignupFormDialog">Sign Up</button>
+                <button id="loginBtn" class="modal-btn btn theme-button1" data-toggle="modal" data-target="#modalLoginFormDialog">Log In</button>
+              </div>
+              <div class="center-block auth-token">
+                <button id="changepwBtn" class="modal-btn btn theme-button2" data-toggle="modal" data-target="#modalChangePasswordFormDialog">Change Password</button>
+                <button id="signoutBtn" class="auth-token btn theme-button2">Sign Out</button>
+              </div>
+            </div>
+          </div>
+        </div> <!--end of auth grid -->
+
+        <!-- Status Panel -->
+        <!-- displays user feedback, turn indicator, game status, and game controls -->
+         <div class="col-md-8 col-12 grid">
+          <div id="statusPanel" class="panel">
+            <div class="game-info row">
+              <div class="col-md">
+                <div class="game-status auth-token">
+                  Game <span id="currentGame"></span>: <span id="gameStatus">Not Started</span>
+                </div>
+              </div>
+              <div class="col-md">
+                <div class="turn-status auth-token">
+                  Player: <span id="currentTurn">-</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- User Feedback message -->
+              <div id="userMessage" class="col-md-8"></div>
+              <div class="button-group auth-token col-md-4">
+                <button id="resetBtn" class="btn theme-button1 auth-enable">Start Game</button>
+                <button id="gameOptionsBtn" class="btn theme-button2 auth-enable" data-form="options">Options</button>
+              </div>
+
+            </div>
+          </div><!-- end status panel -->
+        </div><!-- end grid -->
+      </div> <!-- end of top row -->
+
+      <div class="row"> <!-- bottom row -->
+        <div class="col-md-4 col-12 grid">
+          <div id="playerPanel" class="panel">
+            <!-- Player Panel -->
+            <!-- displays user info & statistics -->
+            <strong class="no-token">You must be logged in to see stats</strong>
+            <!-- player info / stats -->
+            <div id="playerInfo" class="auth-token">
+
+              <div>Current User: <span id="userEmail"></span></div>
+              <section id="playerStats" class="card">
+                <button id="statsBtn" class="btn theme-button2">View Statistics</button>
+                <!-- Player Stats -->
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Games Created: <span class="all-games"></span></li>
+                  <li class="list-group-item">Games Finished: <span class="complete-games"></span></li>
+                  <li class="list-group-item">Games Not Started: <span class="unstarted-games"></span></li>
+                  <li class="list-group-item">Game Completion Rate: <span class="completion-rate"></span></li>
+                  <li class="list-group-item">Games Won: <span class="games-won"></span></li>
+                  <li class="list-group-item">Games Lost: <span class="games-lost"></span></li>
+                  <li class="list-group-item">Games Tied: <span class="games-tied"></span></li>
+                  <li class="list-group-item">Win Percent: <span class="win-pct"></span></li>
+                </ul>
+              </section>
+
+              <section id="gameHistory">
+                <h5 class="section-head text-center">Game History</h5>
+                <div class="button-group">
+                  <button id="finishedGamesBtn" type="button" class="btn btn-dark mr-auto">Finished Games</button>
+                  <button id="unfinishedGamesBtn" type="button" class="btn btn-dark mr-auto">Unfinished Games</button>
+                </div>
+                <div class="card">
+                  <div class="card-header"></div>
+                  <ul id="pastGames" class="list-group list-group-flush"></ul>
+                </div>
+              </section>
+            </div>
+
+          </div> <!-- end player panel -->
+        </div>
+        <div class="col-md-8 col-12 grid">
+          <div id="gamePanel" class="panel">
+            <!-- Game Panel -->
+            <!-- displays game board -->
+            <strong class="no-token">You must be logged in to play.</strong>
+            <div id="GameBoard">
+              <div class="column" id="column-0">
+                <span id="cell-0-0" class="square" data-index="0" data-enabled="false"></span>
+                <span id="cell-0-1" class="square" data-index="3" data-enabled="false"></span>
+                <span id="cell-0-2" class="square" data-index="6" data-enabled="false"></span>
+              </div>
+              <div class="column" id="column-1">
+                <span id="cell-1-0" class="square" data-index="1" data-enabled="false"></span>
+                <span id="cell-1-1" class="square" data-index="4" data-enabled="false"></span>
+                <span id="cell-1-2" class="square" data-index="7" data-enabled="false"></span>
+              </div>
+              <div class="column" id="column-2">
+                <span id="cell-2-0" class="square" data-index="2" data-enabled="false"></span>
+                <span id="cell-2-1" class="square" data-index="5" data-enabled="false"></span>
+                <span id="cell-2-2" class="square" data-index="8" data-enabled="false"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- row -->
+    </main>
+
+    <!-- <footer class="fixed-bottom">
+      <span class="copyright">&copy; 2019</span>
+    </footer> -->
+
+
+  <!-- Modal Form -->
+  <!-- invisible when not in use -->
+    <div class="modal fade" id="modalLoginFormDialog" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalLoginTitle">Login</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+                <!-- Login Form -->
+            <form id="modalLoginForm">
+              <div id="loginFormContent">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">@</span>
+                  </div>
+                  <input id="emailField" class="form-control" name="credentials[email]"
+                    type="email" placeholder="E-mail Address" autocomplete="false">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">*</span>
+                  </div>
+                  <input id="passwordField" class="form-control" name="credentials[password]"
+                    type="password" placeholder="Password" autocomplete="false">
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn theme-button2" data-dismiss="modal">Close</button>
+            <button id="modalLoginSubmitBtn" type="button" class="btn theme-button1 modal-submit" data-target="#modalLoginForm">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="modalSignupFormDialog" tabindex="-1" role="dialog" aria-labelledby="modalSignupTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalSignupTitle">Sign Up</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="modalSignupForm">
+              <!-- Sign Up Form -->
+              <div id="signupFormContent">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">@</span>
+                  </div>
+                  <input id="emailField2" class="form-control" name="credentials[email]" type="email" placeholder="E-mail Address" autocomplete="false">
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">*</span>
+                  </div>
+                  <input id="passwordField2" class="form-control" name="credentials[password]" type="password" placeholder="Password" autocomplete="false">
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Confirm</span>
+                  </div>
+                  <input id="passwordConfField" class="form-control" name="credentials[password_confirmation]" type="password" placeholder="Confirm Password" autocomplete="false">
+                </div>
+
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn theme-button2" data-dismiss="modal">Close</button>
+            <button id="modalSignupSubmitBtn" type="button" class="btn theme-button1 modal-submit" data-target="#modalSignupForm">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="modalChangePasswordFormDialog" tabindex="-1" role="dialog" aria-labelledby="modalChangePasswordTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalChangePasswordTitle">Change Password</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="modalChangePasswordForm">
+              <!-- Change Password Form -->
+              <div id="changePasswordFormContent">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Old Password</span>
+                  </div>
+                  <input id="oldPasswordField" class="form-control" name="passwords[old]" type="password" placeholder="Old Password" autocomplete="false">
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">New Password</span>
+                  </div>
+                  <input id="newPasswordField" class="form-control" name="passwords[new]" type="password" placeholder="New Password" autocomplete="false">
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Re-type New Password</span>
+                  </div>
+                  <input id="newPasswordField2" class="form-control" type="password" placeholder="New Password" autocomplete="false">
+                </div>
+
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn theme-button2" data-dismiss="modal">Close</button>
+            <button id="modalChangePasswordSubmitBtn" type="button" class="btn theme-button1 modal-submit" data-target="#modalChangePasswordForm">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="modal fade" id="optionsFormDialog" tabindex="-1" role="dialog" aria-labelledby="optionsTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="optionsTitle">Options</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="optionsFormContent" class="row">
+              <button id="primaryThemeBtn" class="btn btn-default theme-button col" data-theme="primary">
+                <img src="public/images/primary/o.png" alt="Primary Theme" class="primary">
+              </button>
+              <button id="minimalThemeBtn" class="btn btn-default theme-button col" data-theme="minimal">
+                <img src="public/images/minimal/o.png" alt="Minimalist Theme" class="minimal">
+              </button>
+              <button id="gothicThemeBtn" class="btn btn-default theme-button col" data-theme="goth">
+                <img src="public/images/goth/o.png" alt="Gothic Theme" class="goth">
+              </button>
+            </div>
+            <div class="row">
+              <div class="col text-center theme-text primary-text">Primary</div>
+              <div class="col text-center theme-text minimal-text">Minimalist</div>
+              <div class="col text-center theme-text goth-text">Gothic</div>
+            </div>
+            <div class="row">
+              <button id="circuitThemeBtn" class="btn btn-default theme-button col" data-theme="circuit">
+                <img src="public/images/circuit/o.png" alt="Circuit Theme" class="circuit">
+              </button>
+              <button id="steampunkThemeBtn" class="btn btn-default theme-button col" data-theme="steampunk">
+                <img src="public/images/steampunk/o.png" alt="Steampunk Theme" class="steampunk">
+              </button>
+            </div>
+            <div class="row">
+              <div class="col text-center theme-text circuit-text">Circuit</div>
+              <div class="col text-center theme-text steampunk-text">Steampunk</div>
+            </div>
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn theme-button2" data-dismiss="modal">Close</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
